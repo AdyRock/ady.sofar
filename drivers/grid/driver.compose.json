@@ -1,0 +1,184 @@
+{
+    "name": {
+        "en": "Grid (SoFar)"
+    },
+    "class": "sensor",
+    "capabilities": [
+        "measure_power",
+        "measure_voltage",
+        "measure_current",
+        "measure_frequency",
+        "meter_power.today_import",
+        "meter_cost.today_import",
+        "meter_power.hi_rate_import",
+        "meter_cost.hi_rate_import",
+        "meter_power.low_rate_import",
+        "meter_cost.low_rate_import",
+        "meter_power.today_export",
+        "meter_power.total_import",
+        "meter_power.total_export",
+        "meter_cost.today_export",
+        "meter_cost.today_total"
+    ],
+    "capabilitiesOptions": {
+        "meter_power.today_import": {
+            "title": {"en": "Import Today"}
+        },
+        "meter_cost.today_import": {
+            "title": {"en": "Import Cost Today"}
+        },
+        "meter_power.hi_rate_import": {
+            "title": {"en": "Import at Standard Rate"}
+        },
+        "meter_cost.hi_rate_import": {
+            "title": {"en": "Cost at Standard Rate"}
+        },
+        "meter_power.low_rate_import": {
+            "title": {"en": "Import at Low Rate"}
+        },
+        "meter_cost.low_rate_import": {
+            "title": {"en": "Cost at Low Rate"}
+        },
+        "meter_power.today_export": {
+            "title": {"en": "Export Today"}
+        },
+        "meter_power.total_import": {
+            "title": {"en": "Import Total"}
+        },
+        "meter_power.total_export": {
+            "title": {"en": "Export Total"}
+        },
+        "meter_cost.today_export": {
+            "title": {"en": "Export Cost Today"}
+        },
+        "meter_cost.today_total": {
+            "title": {"en": "Total Cost Today"}
+        }
+    },
+    "energy": {
+        "cumulative": true
+    },
+    "settings": [
+        {
+            "type": "group",
+            "label": {
+                "en": "Tarrif"
+            },
+            "children": [
+                {
+                    "id": "cost_units",
+                    "type": "text",
+                    "label": {
+                        "en": "Currency Unit"
+                    },
+                    "value": "£",
+                    "hint": {
+                        "en": "The currency unit symbol."
+                    }
+                },
+                {
+                    "id": "standard",
+                    "type": "number",
+                    "label": {
+                        "en": "Standard Rate Tarrif"
+                    },
+                    "value": 0.35,
+                    "min": 0.01,
+                    "hint": {
+                        "en": "The standard tarrif cost (in the specified Currency unit) per kW/H."
+                    }
+                },
+                {
+                    "id": "dual_rate",
+                    "type": "checkbox",
+                    "label": {
+                        "en": "Use Dual Rate Tarrif"
+                    },
+                    "value": false,
+                    "hint": {
+                        "en": "When ticked, the cost is based on two rates per day, Low and Standard."
+                    }
+                },
+                {
+                    "id": "start_hour",
+                    "type": "number",
+                    "label": {
+                        "en": "Start Time (hour)"
+                    },
+                    "value": 0,
+                    "min": 0,
+                    "max": 23,
+                    "hint": {
+                        "en": "The hour that the low rate starts."
+                    }
+                },
+                {
+                    "id": "start_minute",
+                    "type": "number",
+                    "label": {
+                        "en": "Start Time (minute)"
+                    },
+                    "value": 0,
+                    "min": 0,
+                    "max": 59,
+                    "hint": {
+                        "en": "The minute that the low rate starts."
+                    }
+                },
+                {
+                    "id": "end_hour",
+                    "type": "number",
+                    "label": {
+                        "en": "End Time (hour"
+                    },
+                    "value": 4,
+                    "min": 0,
+                    "max": 23,
+                    "hint": {
+                        "en": "The hour that the low rate finishes."
+                    }
+                },
+                {
+                    "id": "end_minute",
+                    "type": "number",
+                    "label": {
+                        "en": "End Time (minute)"
+                    },
+                    "value": 0,
+                    "min": 0,
+                    "max": 59,
+                    "hint": {
+                        "en": "The minute that the low rate finishes."
+                    }
+                },
+                {
+                    "id": "lo",
+                    "type": "number",
+                    "label": {
+                        "en": "Low Rate Tarrif"
+                    },
+                    "value": 0.2,
+                    "min": 0.01,
+                    "hint": {
+                        "en": "The low tarrif cost (in the specified Currency unit) per kW/H."
+                    }
+                },
+                {
+                    "id": "export",
+                    "type": "number",
+                    "label": {
+                        "en": "Export Rate Tarrif"
+                    },
+                    "value": 0.0,
+                    "min": 0,
+                    "hint": {
+                        "en": "The export tarrif cost (in the specified Currency unit) per kW/H."
+                    }
+                }
+            ]
+        }
+    ],
+    "$extends": [
+        "lanDriver"
+    ]
+}

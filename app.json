@@ -1,0 +1,679 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "ady.sofar",
+  "version": "1.1.12",
+  "compatibility": ">=6.0.0",
+  "platforms": [
+    "local"
+  ],
+  "sdk": 3,
+  "brandColor": "#00adfc",
+  "name": {
+    "en": "Sofar"
+  },
+  "description": {
+    "en": "React to your solar panel output"
+  },
+  "tags": {
+    "en": [
+      "SoFar",
+      "Solar"
+    ]
+  },
+  "category": [
+    "appliances"
+  ],
+  "support": "https://github.com/AdyRock/ady.sofar/issues",
+  "homepage": "https://www.sofar.com/",
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "adyrock"
+      }
+    }
+  },
+  "homeyCommunityTopicId": 70830,
+  "bugs": {
+    "url": "https://github.com/AdyRock/ady.sofar/issues"
+  },
+  "source": "https://github.com/AdyRock/ady.sofar",
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "author": {
+    "name": "Adrian Rockall",
+    "email": "ady@rockalls.uk"
+  },
+  "api": {
+    "getLog": {
+      "method": "get",
+      "path": "/getLog/"
+    },
+    "getDetect": {
+      "method": "get",
+      "path": "/getDetect/"
+    },
+    "clearLog": {
+      "method": "post",
+      "path": "/clearLog/"
+    },
+    "sendLog": {
+      "method": "post",
+      "path": "/sendLog/"
+    },
+    "sendCmd": {
+      "method": "post",
+      "path": "/sendCmd/"
+    }
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Adrian Rockall",
+        "email": "ady@rockalls.uk"
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "icon": "/drivers/battery/assets/icon.svg",
+      "images": {
+        "large": "/drivers/battery/assets/images/large.jpg",
+        "small": "/drivers/battery/assets/images/small.jpg"
+      },
+      "name": {
+        "en": "Battery (SoFar)"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_power",
+        "measure_battery",
+        "meter_power.charge_today",
+        "meter_power.discharge_today",
+        "meter_power.charge_total",
+        "meter_power.discharge_total",
+        "measure_voltage.battery",
+        "measure_current.battery",
+        "measure_temperature.battery",
+        "measure_cycles.battery"
+      ],
+      "capabilitiesOptions": {
+        "meter_power.charge_today": {
+          "title": {
+            "en": "Charge Today"
+          }
+        },
+        "meter_power.discharge_today": {
+          "title": {
+            "en": "Discharge Today"
+          }
+        },
+        "meter_power.charge_total": {
+          "title": {
+            "en": "Charge Total"
+          }
+        },
+        "meter_power.discharge_total": {
+          "title": {
+            "en": "Discharge Total"
+          }
+        },
+        "measure_voltage.battery": {
+          "title": {
+            "en": "Voltage"
+          }
+        },
+        "measure_current.battery": {
+          "title": {
+            "en": "Current"
+          }
+        },
+        "measure_temperature.battery": {
+          "title": {
+            "en": "Temperature"
+          }
+        },
+        "measure_cycles.battery": {
+          "title": {
+            "en": "Cycles"
+          }
+        }
+      },
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ],
+        "cumulative": true
+      },
+      "id": "battery"
+    },
+    {
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "icon": "/drivers/grid/assets/icon.svg",
+      "images": {
+        "large": "/drivers/grid/assets/images/large.jpg",
+        "small": "/drivers/grid/assets/images/small.jpg"
+      },
+      "name": {
+        "en": "Grid (SoFar)"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_power",
+        "measure_voltage",
+        "measure_current",
+        "measure_frequency",
+        "meter_power.today_import",
+        "meter_cost.today_import",
+        "meter_power.hi_rate_import",
+        "meter_cost.hi_rate_import",
+        "meter_power.low_rate_import",
+        "meter_cost.low_rate_import",
+        "meter_power.today_export",
+        "meter_power.total_import",
+        "meter_power.total_export",
+        "meter_cost.today_export",
+        "meter_cost.today_total"
+      ],
+      "capabilitiesOptions": {
+        "meter_power.today_import": {
+          "title": {
+            "en": "Import Today"
+          }
+        },
+        "meter_cost.today_import": {
+          "title": {
+            "en": "Import Cost Today"
+          }
+        },
+        "meter_power.hi_rate_import": {
+          "title": {
+            "en": "Import at Standard Rate"
+          }
+        },
+        "meter_cost.hi_rate_import": {
+          "title": {
+            "en": "Cost at Standard Rate"
+          }
+        },
+        "meter_power.low_rate_import": {
+          "title": {
+            "en": "Import at Low Rate"
+          }
+        },
+        "meter_cost.low_rate_import": {
+          "title": {
+            "en": "Cost at Low Rate"
+          }
+        },
+        "meter_power.today_export": {
+          "title": {
+            "en": "Export Today"
+          }
+        },
+        "meter_power.total_import": {
+          "title": {
+            "en": "Import Total"
+          }
+        },
+        "meter_power.total_export": {
+          "title": {
+            "en": "Export Total"
+          }
+        },
+        "meter_cost.today_export": {
+          "title": {
+            "en": "Export Cost Today"
+          }
+        },
+        "meter_cost.today_total": {
+          "title": {
+            "en": "Total Cost Today"
+          }
+        }
+      },
+      "energy": {
+        "cumulative": true
+      },
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Tarrif"
+          },
+          "children": [
+            {
+              "id": "cost_units",
+              "type": "text",
+              "label": {
+                "en": "Currency Unit"
+              },
+              "value": "£",
+              "hint": {
+                "en": "The currency unit symbol."
+              }
+            },
+            {
+              "id": "standard",
+              "type": "number",
+              "label": {
+                "en": "Standard Rate Tarrif"
+              },
+              "value": 0.35,
+              "min": 0.01,
+              "hint": {
+                "en": "The standard tarrif cost (in the specified Currency unit) per kW/H."
+              }
+            },
+            {
+              "id": "dual_rate",
+              "type": "checkbox",
+              "label": {
+                "en": "Use Dual Rate Tarrif"
+              },
+              "value": false,
+              "hint": {
+                "en": "When ticked, the cost is based on two rates per day, Low and Standard."
+              }
+            },
+            {
+              "id": "start_hour",
+              "type": "number",
+              "label": {
+                "en": "Start Time (hour)"
+              },
+              "value": 0,
+              "min": 0,
+              "max": 23,
+              "hint": {
+                "en": "The hour that the low rate starts."
+              }
+            },
+            {
+              "id": "start_minute",
+              "type": "number",
+              "label": {
+                "en": "Start Time (minute)"
+              },
+              "value": 0,
+              "min": 0,
+              "max": 59,
+              "hint": {
+                "en": "The minute that the low rate starts."
+              }
+            },
+            {
+              "id": "end_hour",
+              "type": "number",
+              "label": {
+                "en": "End Time (hour"
+              },
+              "value": 4,
+              "min": 0,
+              "max": 23,
+              "hint": {
+                "en": "The hour that the low rate finishes."
+              }
+            },
+            {
+              "id": "end_minute",
+              "type": "number",
+              "label": {
+                "en": "End Time (minute)"
+              },
+              "value": 0,
+              "min": 0,
+              "max": 59,
+              "hint": {
+                "en": "The minute that the low rate finishes."
+              }
+            },
+            {
+              "id": "lo",
+              "type": "number",
+              "label": {
+                "en": "Low Rate Tarrif"
+              },
+              "value": 0.2,
+              "min": 0.01,
+              "hint": {
+                "en": "The low tarrif cost (in the specified Currency unit) per kW/H."
+              }
+            },
+            {
+              "id": "export",
+              "type": "number",
+              "label": {
+                "en": "Export Rate Tarrif"
+              },
+              "value": 0,
+              "min": 0,
+              "hint": {
+                "en": "The export tarrif cost (in the specified Currency unit) per kW/H."
+              }
+            }
+          ]
+        }
+      ],
+      "id": "grid"
+    },
+    {
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "icon": "/drivers/solar_panel/assets/icon.svg",
+      "images": {
+        "large": "/drivers/solar_panel/assets/images/large.jpg",
+        "small": "/drivers/solar_panel/assets/images/small.jpg"
+      },
+      "name": {
+        "en": "Solar Panel (SoFar)"
+      },
+      "class": "solarpanel",
+      "capabilities": [
+        "measure_power",
+        "meter_power.today",
+        "meter_power",
+        "measure_generation_time",
+        "measure_power.pv1",
+        "measure_power.pv2",
+        "measure_voltage.pv1",
+        "measure_voltage.pv2",
+        "measure_current.pv1",
+        "measure_current.pv2",
+        "measure_generation_time_total"
+      ],
+      "capabilitiesOptions": {
+        "meter_power.today": {
+          "title": {
+            "en": "Today"
+          }
+        },
+        "meter_power": {
+          "title": {
+            "en": "Total"
+          }
+        },
+        "measure_power.pv1": {
+          "title": {
+            "en": "PV1 power"
+          }
+        },
+        "measure_voltage.pv1": {
+          "title": {
+            "en": "PV1 voltage"
+          }
+        },
+        "measure_current.pv1": {
+          "title": {
+            "en": "PV1 current"
+          }
+        },
+        "measure_power.pv2": {
+          "title": {
+            "en": "PV2 power"
+          }
+        },
+        "measure_voltage.pv2": {
+          "title": {
+            "en": "PV2 voltage"
+          }
+        },
+        "measure_current.pv2": {
+          "title": {
+            "en": "PV2 current"
+          }
+        }
+      },
+      "id": "solar_panel"
+    },
+    {
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "icon": "/drivers/summary/assets/icon.svg",
+      "images": {
+        "large": "/drivers/summary/assets/images/large.jpg",
+        "small": "/drivers/summary/assets/images/small.jpg"
+      },
+      "name": {
+        "en": "Summary / Inverter (SoFar)"
+      },
+      "class": "other",
+      "capabilities": [
+        "measure_power.consumption",
+        "meter_power.today_solar",
+        "meter_power.today_consumption",
+        "measure_temperature.internal",
+        "measure_temperature.heatsink",
+        "system_status",
+        "system_status.country",
+        "system_status.fault_1",
+        "system_status.fault_2",
+        "system_status.fault_3",
+        "system_status.fault_4",
+        "system_status.fault_5"
+      ],
+      "capabilitiesOptions": {
+        "measure_power.consumption": {
+          "title": {
+            "en": "Consumption Now"
+          }
+        },
+        "meter_power.today_solar": {
+          "title": {
+            "en": "Solar Today"
+          }
+        },
+        "meter_power.today_consumption": {
+          "title": {
+            "en": "Consumption Today"
+          }
+        },
+        "measure_temperature.internal": {
+          "title": {
+            "en": "Internal Temperature"
+          }
+        },
+        "measure_temperature.heatsink": {
+          "title": {
+            "en": "Heatsink Temperature"
+          }
+        },
+        "system_status.country": {
+          "title": {
+            "en": "Country"
+          }
+        },
+        "system_status.fault_1": {
+          "title": {
+            "en": "Fault Code 1"
+          }
+        },
+        "system_status.fault_2": {
+          "title": {
+            "en": "Fault Code 2"
+          }
+        },
+        "system_status.fault_3": {
+          "title": {
+            "en": "Fault Code 3"
+          }
+        },
+        "system_status.fault_4": {
+          "title": {
+            "en": "Fault Code 4"
+          }
+        },
+        "system_status.fault_5": {
+          "title": {
+            "en": "Fault Code 5"
+          }
+        }
+      },
+      "id": "summary"
+    }
+  ],
+  "capabilities": {
+    "measure_cycles": {
+      "type": "number",
+      "title": {
+        "en": "Cycles"
+      },
+      "units": {
+        "en": ""
+      },
+      "decimals": 0,
+      "insights": true,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/wave.svg"
+    },
+    "measure_frequency": {
+      "type": "number",
+      "title": {
+        "en": "Frequency"
+      },
+      "units": {
+        "en": "Hz"
+      },
+      "decimals": 2,
+      "insights": true,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/wave.svg"
+    },
+    "measure_generation_time": {
+      "type": "number",
+      "title": {
+        "en": "Generation Time Today"
+      },
+      "units": {
+        "en": "M"
+      },
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/clock.svg"
+    },
+    "measure_generation_time_total": {
+      "type": "number",
+      "title": {
+        "en": "Generation Time Total"
+      },
+      "units": {
+        "en": "H"
+      },
+      "decimals": 2,
+      "insights": true,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/clock.svg"
+    },
+    "measure_update_time": {
+      "type": "string",
+      "title": {
+        "en": "Update Time"
+      },
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/clock.svg"
+    },
+    "meter_cost": {
+      "type": "number",
+      "title": {
+        "en": "Cost"
+      },
+      "units": {
+        "en": "£"
+      },
+      "decimals": 2,
+      "insights": true,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/cost.svg"
+    },
+    "system_status": {
+      "type": "string",
+      "title": {
+        "en": "Status"
+      },
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icon.svg"
+    }
+  }
+}

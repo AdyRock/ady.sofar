@@ -1,0 +1,58 @@
+{
+    "name": {
+        "en": "Summary / Inverter (SoFar)"
+    },
+    "class": "other",
+    "capabilities": [
+        "measure_power.consumption",
+        "meter_power.today_solar",
+        "meter_power.today_consumption",
+        "measure_temperature.internal",
+        "measure_temperature.heatsink",
+        "system_status",
+        "system_status.country",
+        "system_status.fault_1",
+        "system_status.fault_2",
+        "system_status.fault_3",
+        "system_status.fault_4",
+        "system_status.fault_5"
+    ],
+    "capabilitiesOptions": {
+        "measure_power.consumption": {
+            "title": {"en": "Consumption Now"}
+        },
+        "meter_power.today_solar": {
+            "title": {"en": "Solar Today"}
+        },
+        "meter_power.today_consumption": {
+            "title": {"en": "Consumption Today"}
+        },
+        "measure_temperature.internal": {
+            "title": {"en": "Internal Temperature"}
+        },
+        "measure_temperature.heatsink": {
+            "title": {"en": "Heatsink Temperature"}
+        },
+        "system_status.country": {
+            "title": {"en": "Country"}
+        },
+        "system_status.fault_1": {
+            "title": {"en": "Fault Code 1"}
+        },
+        "system_status.fault_2": {
+            "title": {"en": "Fault Code 2"}
+        },
+        "system_status.fault_3": {
+            "title": {"en": "Fault Code 3"}
+        },
+        "system_status.fault_4": {
+            "title": {"en": "Fault Code 4"}
+        },
+        "system_status.fault_5": {
+            "title": {"en": "Fault Code 5"}
+        }
+    },
+    "$extends": [
+        "lanDriver"
+    ]
+}

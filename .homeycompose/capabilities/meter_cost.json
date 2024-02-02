@@ -1,0 +1,15 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Cost"
+    },
+    "units": {
+      "en": "£"
+    },
+    "decimals": 2,
+    "insights": true,
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "icon": "/assets/cost.svg"
+}

@@ -1,0 +1,86 @@
+{
+    "0.0.1": {
+        "en": "First test version"
+    },
+    "0.0.2": {
+        "en": "Updated Forum link"
+    },
+    "0.0.3": {
+        "en": "Fixed cloud connection"
+    },
+    "0.0.4": {
+        "en": "Added Solarman history capabilities."
+    },
+    "0.0.5": {
+        "en": "Tidy up for publishing."
+    },
+    "0.0.6": {
+        "en": "Added support for lsw inverters."
+    },
+    "0.0.7": {
+        "en": "Fix Total Power for lsw inverters. Added extra data to Summary / Inverter (Status, Fault code, Internal Temperature and Heatsinh temperature)."
+    },
+    "0.0.8": {
+        "en": "Prevent sending realtime update on Homey cloud."
+    },
+    "0.0.9": {
+        "en": "Fixed update issue for cloud history data."
+    },
+    "0.0.10": {
+        "en": "Check for API limit and back off to allow recovery."
+    },
+    "0.0.11": {
+        "en": "Fetch history once per hour but no longer on the hour to prevent all Homeys call the API at the same time."
+    },
+    "1.0.0": {
+        "en": "Fix OAuth so it is no longer dependent on the Athom Node modules."
+    },
+    "1.0.1": {
+        "en": "Fix path issue."
+    },
+    "1.0.2": {
+        "en": "Fix Today and Yesterday data on Cloud station."
+    },
+    "1.1.0": {
+        "en": "Updated to new Solarman server URL. Fixed Repair option to allow authentication on the new server."
+    },
+    "1.1.1": {
+        "en": "Added support for displaying costs, with optional dual tarrif support. Added PV data to cloud station. Added map for G3hyd inverters."
+    },
+    "1.1.2": {
+        "en": "Fixed an issue caused by the new Station features with an old device. Add temperatures to cloud station"
+    },
+    "1.1.3": {
+        "en": "Fixed another issue caused by the new Station features with an old device."
+    },
+    "1.1.4": {
+        "en": "Fixed issue caused by missing data from API."
+    },
+    "1.1.5": {
+        "en": "Added diagnostics message for checking local connection."
+    },
+    "1.1.6": {
+        "en": "Fix up map for G3hyd inverters."
+    },
+    "1.1.7": {
+        "en": "Fix time check for low rate."
+    },
+    "1.1.8": {
+        "en": "Check for less that one days history. Added Export tariff to settings so export cost today and total cost today can be provided."
+    },
+    "1.1.9": {
+        "en": "Fix refresh token. Fix export, standard rate import and cost today during low rate period."
+    },
+    "1.1.10": {
+        "en": "Catch Homey errors."
+    },
+    "1.1.11": {
+        "en": "Block connections for two hours when the call rate has been exceeded."
+    },
+    "1.1.12": {
+        "en": "Fix missing username issue."
+    },
+    "1.1.13": {
+        "en": "Renamed app and removed Solarman support due to undocumented API rate restrictions."
+    }
+}

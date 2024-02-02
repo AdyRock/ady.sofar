@@ -1,0 +1,1587 @@
+{
+    "requests": [
+        {
+            "start": 512,
+            "end": 517,
+            "mb_functioncode": 3
+        },
+        {
+            "start": 518,
+            "end": 519,
+            "mb_functioncode": 3
+        },
+        {
+            "start": 524,
+            "end": 534,
+            "mb_functioncode": 3
+        },
+        {
+            "start": 535,
+            "end": 545,
+            "mb_functioncode": 3
+        },
+        {
+            "start": 546,
+            "end": 561,
+            "mb_functioncode": 3
+        },
+        {
+            "start": 556,
+            "end": 556,
+            "mb_functioncode": 3
+        },
+        {
+            "start": 567,
+            "end": 570,
+            "mb_functioncode": 3
+        },
+        {
+            "start": 573,
+            "end": 581,
+            "mb_functioncode": 3
+        },
+        {
+            "start": 592,
+            "end": 597,
+            "mb_functioncode": 3
+        }
+    ],
+    "parameters": [
+        {
+            "group": "panel",
+            "items": [
+                {
+                    "name": "PV_Power",
+                    "uom": "W",
+                    "scale": 10,
+                    "rule": 1,
+                    "registers": [
+                        533
+                    ]
+                },
+                {
+                    "name": "Daily_Production",
+                    "uom": "kWh",
+                    "scale": 0.01,
+                    "rule": 1,
+                    "registers": [
+                        536
+                    ]
+                },
+                {
+                    "name": "PV1_Voltage",
+                    "uom": "V",
+                    "scale": 0.1,
+                    "rule": 1,
+                    "registers": [
+                        592
+                    ]
+                },
+                {
+                    "name": "PV1_Current",
+                    "uom": "A",
+                    "scale": 0.01,
+                    "rule": 1,
+                    "registers": [
+                        593
+                    ]
+                },
+                {
+                    "name": "PV1_Power",
+                    "uom": "W",
+                    "scale": 10,
+                    "rule": 1,
+                    "registers": [
+                        594
+                    ]
+                },
+                {
+                    "name": "PV2_Voltage",
+                    "uom": "V",
+                    "scale": 0.1,
+                    "rule": 1,
+                    "registers": [
+                        595
+                    ]
+                },
+                {
+                    "name": "PV2_Current",
+                    "uom": "A",
+                    "scale": 0.01,
+                    "rule": 1,
+                    "registers": [
+                        596
+                    ]
+                },
+                {
+                    "name": "PV2_Power",
+                    "uom": "W",
+                    "scale": 10,
+                    "rule": 1,
+                    "registers": [
+                        597
+                    ]
+                },
+                {
+                    "name": "Generation_Time_Today",
+                    "uom": "m",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        579
+                    ]
+                },
+                {
+                    "name": "Generation_Time_Total",
+                    "uom": "H",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        581,
+                        580
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "battery",
+            "items": [
+                {
+                    "name": "Battery_Power",
+                    "uom": "W",
+                    "scale": 10,
+                    "rule": 2,
+                    "registers": [
+                        525
+                    ]
+                },
+                {
+                    "name": "Battery_Charge",
+                    "uom": "%",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        528
+                    ]
+                },
+                {
+                    "name": "Battery_Charge_Today",
+                    "uom": "kWh",
+                    "scale": 0.01,
+                    "rule": 1,
+                    "registers": [
+                        548
+                    ]
+                },
+                {
+                    "name": "Battery_Discharge_Today",
+                    "uom": "kWh",
+                    "scale": 0.01,
+                    "rule": 1,
+                    "registers": [
+                        549
+                    ]
+                },
+                {
+                    "name": "Battery_Charge_Total",
+                    "uom": "kWH",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        551,
+                        550
+                    ]
+                },
+                {
+                    "name": "Battery_Discharge_Total",
+                    "uom": "kWh",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        553,
+                        552
+                    ]
+                },
+                {
+                    "name": "Battery_Voltage",
+                    "uom": "V",
+                    "scale": 0.11,
+                    "rule": 2,
+                    "registers": [
+                        526
+                    ]
+                },
+                {
+                    "name": "Battery_Current",
+                    "uom": "A",
+                    "scale": 0.01,
+                    "rule": 2,
+                    "registers": [
+                        527
+                    ]
+                },
+                {
+                    "name": "Battery_Temperature",
+                    "uom": "°C",
+                    "scale": 1,
+                    "rule": 2,
+                    "registers": [
+                        529
+                    ]
+                },
+                {
+                    "name": "Battery_Cycles",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        556
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "grid",
+            "items": [
+                {
+                    "name": "Grid_Power",
+                    "uom": "W",
+                    "scale": 10,
+                    "rule": 2,
+                    "registers": [
+                        530
+                    ]
+                },
+                {
+                    "name": "Grid_Voltage",
+                    "uom": "V",
+                    "scale": 0.1,
+                    "rule": 1,
+                    "registers": [
+                        560
+                    ]
+                },
+                {
+                    "name": "Grid_Current",
+                    "uom": "A",
+                    "scale": 0.01,
+                    "rule": 1,
+                    "registers": [
+                        561
+                    ]
+                },
+                {
+                    "name": "Grid_Frequency",
+                    "uom": "Hz",
+                    "scale": 0.01,
+                    "rule": 1,
+                    "registers": [
+                        524
+                    ]
+                },
+                {
+                    "name": "Import_Today",
+                    "uom": "kWh",
+                    "scale": 0.01,
+                    "rule": 1,
+                    "registers": [
+                        538
+                    ]
+                },
+                {
+                    "name": "Export_Today",
+                    "uom": "kWh",
+                    "scale": 0.01,
+                    "rule": 1,
+                    "registers": [
+                        537
+                    ]
+                },
+                {
+                    "name": "Total_Import",
+                    "uom": "kWh",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        545,
+                        544
+                    ]
+                },
+                {
+                    "name": "Total_Export",
+                    "uom": "kWh",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        543,
+                        542
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "inverter",
+            "items": [
+                {
+                    "name": "Consumption",
+                    "uom": "W",
+                    "scale": 10,
+                    "rule": 1,
+                    "registers": [
+                        531
+                    ]
+                },
+                {
+                    "name": "Consumed_Today",
+                    "uom": "kWh",
+                    "scale": 0.01,
+                    "rule": 1,
+                    "registers": [
+                        539
+                    ]
+                },
+                {
+                    "name": "Total_Consumption",
+                    "uom": "kWh",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        547,
+                        546
+                    ]
+                },
+                {
+                    "name": "Total_Generation",
+                    "uom": "kWh",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        541,
+                        540
+                    ]
+                },
+                {
+                    "name": "Inverter_Status",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        512
+                    ],
+                    "lookup": [
+                        {
+                            "key": 0,
+                            "value": "OK"
+                        },
+                        {
+                            "key": 1,
+                            "value": "Checking"
+                        },
+                        {
+                            "key": 2,
+                            "value": "On-grid"
+                        },
+                        {
+                            "key": 3,
+                            "value": "Emergency Mode"
+                        },
+                        {
+                            "key": 4,
+                            "value": "Recoverable Fault"
+                        },
+                        {
+                            "key": 5,
+                            "value": "Permanent Fault"
+                        },
+                        {
+                            "key": 6,
+                            "value": "Upgrading"
+                        },
+                        {
+                            "key": 7,
+                            "value": "Self=charging"
+                        }
+                    ]
+                },
+                {
+                    "name": "Internal_Temperature",
+                    "uom": "°C",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        568
+                    ]
+                },
+                {
+                    "name": "Heatsink_Temperature",
+                    "uom": "°C",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        569
+                    ]
+                },
+                {
+                    "name": "Country",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        570
+                    ],
+                    "lookup": [
+                        {
+                            "key": 0,
+                            "value": "Germany VDE AR-N4105"
+                        },
+                        {
+                            "key": 1,
+                            "value": "CEI0-21 Internal"
+                        },
+                        {
+                            "key": 2,
+                            "value": "Australia"
+                        },
+                        {
+                            "key": 3,
+                            "value": "Spain RD1699"
+                        },
+                        {
+                            "key": 4,
+                            "value": "Turkey"
+                        },
+                        {
+                            "key": 5,
+                            "value": "Denmark"
+                        },
+                        {
+                            "key": 6,
+                            "value": "Greece Continent"
+                        },
+                        {
+                            "key": 7,
+                            "value": "Netherland"
+                        },
+                        {
+                            "key": 8,
+                            "value": "Belgium"
+                        },
+                        {
+                            "key": 9,
+                            "value": "UK-G99t"
+                        },
+                        {
+                            "key": 10,
+                            "value": "China"
+                        },
+                        {
+                            "key": 11,
+                            "value": "France"
+                        },
+                        {
+                            "key": 12,
+                            "value": "Poland"
+                        },
+                        {
+                            "key": 13,
+                            "value": "Germany BDEW"
+                        },
+                        {
+                            "key": 14,
+                            "value": "Germany VDE 0126"
+                        },
+                        {
+                            "key": 15,
+                            "value": "Italy CEI0-16"
+                        },
+                        {
+                            "key": 16,
+                            "value": "UK-G98"
+                        },
+                        {
+                            "key": 17,
+                            "value": "Greece island"
+                        },
+                        {
+                            "key": 18,
+                            "value": "EU EN50438"
+                        },
+                        {
+                            "key": 19,
+                            "value": "IEC EN61727"
+                        },
+                        {
+                            "key": 20,
+                            "value": "Korea"
+                        },
+                        {
+                            "key": 21,
+                            "value": "Sweden"
+                        },
+                        {
+                            "key": 22,
+                            "value": "Europe General"
+                        },
+                        {
+                            "key": 23,
+                            "value": "CEI0-21 External"
+                        },
+                        {
+                            "key": 24,
+                            "value": "Cyprus"
+                        },
+                        {
+                            "key": 25,
+                            "value": "India"
+                        },
+                        {
+                            "key": 26,
+                            "value": "Philippines"
+                        },
+                        {
+                            "key": 27,
+                            "value": "New Zealand"
+                        },
+                        {
+                            "key": 28,
+                            "value": "Brazil"
+                        },
+                        {
+                            "key": 29,
+                            "value": "Slovakia VSD"
+                        },
+                        {
+                            "key": 30,
+                            "value": "Slovakia SSE"
+                        },
+                        {
+                            "key": 31,
+                            "value": "Slovakia ZSD"
+                        },
+                        {
+                            "key": 32,
+                            "value": "CEI0-21 In Areti"
+                        },
+                        {
+                            "key": 33,
+                            "value": "Ukraine"
+                        },
+                        {
+                            "key": 34,
+                            "value": "Brazil"
+                        },
+                        {
+                            "key": 35,
+                            "value": "Mexico"
+                        },
+                        {
+                            "key": 36,
+                            "value": "FAR Arrete23"
+                        },
+                        {
+                            "key": 37,
+                            "value": "Denmark Tr322"
+                        },
+                        {
+                            "key": 38,
+                            "value": "Wide-Range-60 Hz"
+                        },
+                        {
+                            "key": 39,
+                            "value": "Ireland EN504"
+                        },
+                        {
+                            "key": 40,
+                            "value": "Thailand PEA"
+                        },
+                        {
+                            "key": 41,
+                            "value": "Thailand MEA"
+                        },
+                        {
+                            "key": 42,
+                            "value": "LV-Range-50HZ"
+                        },
+                        {
+                            "key": 43,
+                            "value": "EU EN50549"
+                        },
+                        {
+                            "key": 44,
+                            "value": "South Africa"
+                        },
+                        {
+                            "key": 45,
+                            "value": "AU-WA"
+                        },
+                        {
+                            "key": 46,
+                            "value": "Dubai DEWG"
+                        },
+                        {
+                            "key": 47,
+                            "value": "Dubai DEWG MV"
+                        },
+                        {
+                            "key": 48,
+                            "value": "Taiwan"
+                        },
+                        {
+                            "key": 49,
+                            "value": "AU-VIC"
+                        },
+                        {
+                            "key": 100,
+                            "value": "AU-SA"
+                        },
+                        {
+                            "key": 101,
+                            "value": "AU-QLD"
+                        },
+                        {
+                            "key": 102,
+                            "value": "AU-VAR"
+                        },
+                        {
+                            "key": 103,
+                            "value": "AUSGRID"
+                        },
+                        {
+                            "key": 104,
+                            "value": "Horizon"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "emergency_power",
+            "items": [
+                {
+                    "name": "Emergency_Voltage",
+                    "uom": "V",
+                    "scale": 0.1,
+                    "rule": 1,
+                    "registers": [
+                        534
+                    ]
+                },
+                {
+                    "name": "Emergency_Power",
+                    "uom": "W",
+                    "scale": 10,
+                    "rule": 1,
+                    "registers": [
+                        535
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "Alert",
+            "items": [
+                {
+                    "name": "System Fault",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 6,
+                    "registers": [
+                        513,
+                        514,
+                        515,
+                        516,
+                        517
+                    ]
+                },
+                {
+                    "name": "Battery Fault",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 6,
+                    "registers": [
+                        573,
+                        574,
+                        575,
+                        576,
+                        577
+                    ]
+                },
+                {
+                    "name": "Fault_1",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        513
+                    ],
+                    "lookup": [
+                        {
+                            "key": 0,
+                            "mask": 65535,
+                            "value": "No error"
+                        },
+                        {
+                            "key": 1,
+                            "mask": 1,
+                            "value": "ID01 Grid Over Voltage Protection"
+                        },
+                        {
+                            "key": 2,
+                            "mask": 2,
+                            "value": "ID02 Grid Under Voltage Protection"
+                        },
+                        {
+                            "key": 4,
+                            "mask": 4,
+                            "value": "ID03 Grid Over Frequency Protection"
+                        },
+                        {
+                            "key": 8,
+                            "mask": 8,
+                            "value": "ID04 Grid Under Frequency Protection"
+                        },
+                        {
+                            "key": 16,
+                            "mask": 16,
+                            "value": "ID05 The battery voltage is too high"
+                        },
+                        {
+                            "key": 32,
+                            "mask": 32,
+                            "value": "ID06 OVRT function is faulty"
+                        },
+                        {
+                            "key": 64,
+                            "mask": 64,
+                            "value": "ID07 LVRT function is faulty"
+                        },
+                        {
+                            "key": 128,
+                            "mask": 128,
+                            "value": "ID08 The PV voltage is too high"
+                        },
+                        {
+                            "key": 256,
+                            "mask": 256,
+                            "value": "ID09 LLCBus voltage is too high"
+                        },
+                        {
+                            "key": 512,
+                            "mask": 512,
+                            "value": "ID10 Boost voltage is too high"
+                        },
+                        {
+                            "key": 1024,
+                            "mask": 1024,
+                            "value": "ID11 BuckBoost current is too high"
+                        },
+                        {
+                            "key": 2048,
+                            "mask": 2048,
+                            "value": "ID12 The battery current is too high"
+                        },
+                        {
+                            "key": 4096,
+                            "mask": 4096,
+                            "value": "ID13 The GFCI sampling error"
+                        },
+                        {
+                            "key": 8192,
+                            "mask": 8192,
+                            "value": "ID14 The PV current is too high"
+                        },
+                        {
+                            "key": 16384,
+                            "mask": 16384,
+                            "value": "ID15 The grid current is too high"
+                        },
+                        {
+                            "key": 32768,
+                            "mask": 32768,
+                            "value": "ID16 Input current is not balanced"
+                        }
+                    ]
+                },
+                {
+                    "name": "Fault_2",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        514
+                    ],
+                    "lookup": [
+                        {
+                            "key": 0,
+                            "mask": 65535,
+                            "value": "No error"
+                        },
+                        {
+                            "key": 1,
+                            "mask": 1,
+                            "value": "ID17 Grid current sampling error"
+                        },
+                        {
+                            "key": 2,
+                            "mask": 2,
+                            "value": "ID18 The DCI sampling error"
+                        },
+                        {
+                            "key": 4,
+                            "mask": 4,
+                            "value": "ID19 Grid voltage sampling error"
+                        },
+                        {
+                            "key": 8,
+                            "mask": 8,
+                            "value": "ID20 The GFCI sampling error"
+                        },
+                        {
+                            "key": 16,
+                            "mask": 16,
+                            "value": "ID21 The master chip fault"
+                        },
+                        {
+                            "key": 32,
+                            "mask": 32,
+                            "value": "ID22 The auxiliary voltage error"
+                        },
+                        {
+                            "key": 64,
+                            "mask": 64,
+                            "value": "ID23"
+                        },
+                        {
+                            "key": 128,
+                            "mask": 128,
+                            "value": "ID24"
+                        },
+                        {
+                            "key": 256,
+                            "mask": 256,
+                            "value": "ID25 LLCBus voltage is too high"
+                        },
+                        {
+                            "key": 512,
+                            "mask": 512,
+                            "value": "ID26 Bus voltage is too high"
+                        },
+                        {
+                            "key": 1024,
+                            "mask": 1024,
+                            "value": "ID27 Battery current is too high"
+                        },
+                        {
+                            "key": 2048,
+                            "mask": 2048,
+                            "value": "ID28 The DCI is too high"
+                        },
+                        {
+                            "key": 4096,
+                            "mask": 4096,
+                            "value": "ID29 The grid current is too high"
+                        },
+                        {
+                            "key": 8192,
+                            "mask": 8192,
+                            "value": "ID30 Buck current is too high"
+                        },
+                        {
+                            "key": 16384,
+                            "mask": 16384,
+                            "value": "ID31 The output current is too high"
+                        },
+                        {
+                            "key": 32768,
+                            "mask": 32768,
+                            "value": "ID32 The input current is too high"
+                        }
+                    ]
+                },
+                {
+                    "name": "Fault_3",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        515
+                    ],
+                    "lookup": [
+                        {
+                            "key": 0,
+                            "mask": 65535,
+                            "value": "No error"
+                        },
+                        {
+                            "key": 1,
+                            "mask": 1,
+                            "value": "ID033 Incorrect input mode"
+                        },
+                        {
+                            "key": 2,
+                            "mask": 2,
+                            "value": "ID034 The load is overloaded"
+                        },
+                        {
+                            "key": 4,
+                            "mask": 4,
+                            "value": "ID035 The CT is fault"
+                        },
+                        {
+                            "key": 8,
+                            "mask": 8,
+                            "value": "ID036"
+                        },
+                        {
+                            "key": 16,
+                            "mask": 16,
+                            "value": "ID037"
+                        },
+                        {
+                            "key": 32,
+                            "mask": 32,
+                            "value": "ID038"
+                        },
+                        {
+                            "key": 64,
+                            "mask": 64,
+                            "value": "ID039 "
+                        },
+                        {
+                            "key": 128,
+                            "mask": 128,
+                            "value": "ID040 "
+                        },
+                        {
+                            "key": 256,
+                            "mask": 256,
+                            "value": "ID041"
+                        },
+                        {
+                            "key": 512,
+                            "mask": 512,
+                            "value": "ID042"
+                        },
+                        {
+                            "key": 1024,
+                            "mask": 1024,
+                            "value": "ID043"
+                        },
+                        {
+                            "key": 2048,
+                            "mask": 2048,
+                            "value": "ID044"
+                        },
+                        {
+                            "key": 4096,
+                            "mask": 4096,
+                            "value": "ID045"
+                        },
+                        {
+                            "key": 8192,
+                            "mask": 8192,
+                            "value": "ID046"
+                        },
+                        {
+                            "key": 16384,
+                            "mask": 16384,
+                            "value": "ID047"
+                        },
+                        {
+                            "key": 32768,
+                            "mask": 32768,
+                            "value": "ID048 The GFCI sampling error"
+                        }
+                    ]
+                },
+                {
+                    "name": "Fault_4",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        516
+                    ],
+                    "lookup": [
+                        {
+                            "key": 0,
+                            "mask": 65535,
+                            "value": "No error"
+                        },
+                        {
+                            "key": 1,
+                            "mask": 1,
+                            "value": "ID049 The grid voltage sampling error"
+                        },
+                        {
+                            "key": 2,
+                            "mask": 2,
+                            "value": "ID050 The grid frequency sampling error"
+                        },
+                        {
+                            "key": 4,
+                            "mask": 4,
+                            "value": "ID051 The Dci sampling error"
+                        },
+                        {
+                            "key": 8,
+                            "mask": 8,
+                            "value": "ID052 Failed to communicate with battery"
+                        },
+                        {
+                            "key": 16,
+                            "mask": 16,
+                            "value": "ID053 SPI communication is fault"
+                        },
+                        {
+                            "key": 32,
+                            "mask": 32,
+                            "value": "ID054 SCI communication is fault"
+                        },
+                        {
+                            "key": 64,
+                            "mask": 64,
+                            "value": "ID055 The relays fault"
+                        },
+                        {
+                            "key": 128,
+                            "mask": 128,
+                            "value": "ID056 The insulation resistance is too low"
+                        },
+                        {
+                            "key": 256,
+                            "mask": 256,
+                            "value": "ID057 The battery temp is too high"
+                        },
+                        {
+                            "key": 512,
+                            "mask": 512,
+                            "value": "ID058 The heat sink temp is too high"
+                        },
+                        {
+                            "key": 1024,
+                            "mask": 1024,
+                            "value": "ID059 The environment temperature is too high"
+                        },
+                        {
+                            "key": 2048,
+                            "mask": 2048,
+                            "value": "ID060 Grounding not correct"
+                        },
+                        {
+                            "key": 4096,
+                            "mask": 4096,
+                            "value": "ID061"
+                        },
+                        {
+                            "key": 8192,
+                            "mask": 8192,
+                            "value": "ID062"
+                        },
+                        {
+                            "key": 16384,
+                            "mask": 16384,
+                            "value": "ID063 "
+                        },
+                        {
+                            "key": 32768,
+                            "mask": 32768,
+                            "value": "ID064 "
+                        }
+                    ]
+                },
+                {
+                    "name": "Fault_5",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        516
+                    ],
+                    "lookup": [
+                        {
+                            "key": 0,
+                            "mask": 65535,
+                            "value": "No error"
+                        },
+                        {
+                            "key": 1,
+                            "mask": 1,
+                            "value": "ID065 The grid current is too high"
+                        },
+                        {
+                            "key": 2,
+                            "mask": 2,
+                            "value": "ID066 The bus voltage is too high"
+                        },
+                        {
+                            "key": 4,
+                            "mask": 4,
+                            "value": "ID067 Unrecoverable fault of battery overcurrent in EPS mode"
+                        },
+                        {
+                            "key": 8,
+                            "mask": 8,
+                            "value": "ID068 The input current is unbalance"
+                        },
+                        {
+                            "key": 16,
+                            "mask": 16,
+                            "value": "ID069"
+                        },
+                        {
+                            "key": 32,
+                            "mask": 32,
+                            "value": "ID070 The grid current is too high"
+                        },
+                        {
+                            "key": 64,
+                            "mask": 64,
+                            "value": "ID071"
+                        },
+                        {
+                            "key": 128,
+                            "mask": 128,
+                            "value": "ID072"
+                        },
+                        {
+                            "key": 256,
+                            "mask": 256,
+                            "value": "ID073 Input mode is uncorrectly set"
+                        },
+                        {
+                            "key": 512,
+                            "mask": 512,
+                            "value": "ID074 Input current is too high"
+                        },
+                        {
+                            "key": 1024,
+                            "mask": 1024,
+                            "value": "ID075 Unrecoverable EEPROM write"
+                        },
+                        {
+                            "key": 2048,
+                            "mask": 2048,
+                            "value": "ID076 Unrecoverable EEPROM read"
+                        },
+                        {
+                            "key": 4096,
+                            "mask": 4096,
+                            "value": "ID077 Relay has triggered permanent fault"
+                        },
+                        {
+                            "key": 8192,
+                            "mask": 8192,
+                            "value": "ID078 "
+                        },
+                        {
+                            "key": 16384,
+                            "mask": 16384,
+                            "value": "ID079 "
+                        },
+                        {
+                            "key": 32768,
+                            "mask": 32768,
+                            "value": "ID080 "
+                        }
+                    ]
+                },
+                {
+                    "name": "Battery_Fault_1",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        573
+                    ],
+                    "lookup": [
+                        {
+                            "key": 0,
+                            "value": "No error"
+                        },
+                        {
+                            "key": 1,
+                            "value": "BF_ID001"
+                        },
+                        {
+                            "key": 2,
+                            "value": "BF_ID002"
+                        },
+                        {
+                            "key": 4,
+                            "value": "BF_ID003"
+                        },
+                        {
+                            "key": 8,
+                            "value": "BF_ID004"
+                        },
+                        {
+                            "key": 16,
+                            "value": "BF_ID005"
+                        },
+                        {
+                            "key": 32,
+                            "value": "BF_ID006"
+                        },
+                        {
+                            "key": 64,
+                            "value": "BF_ID007"
+                        },
+                        {
+                            "key": 128,
+                            "value": "BF_ID008"
+                        },
+                        {
+                            "key": 256,
+                            "value": "BF_ID009"
+                        },
+                        {
+                            "key": 512,
+                            "value": "BF_ID010"
+                        },
+                        {
+                            "key": 1024,
+                            "value": "BF_ID011"
+                        },
+                        {
+                            "key": 2048,
+                            "value": "BF_ID012"
+                        },
+                        {
+                            "key": 4096,
+                            "value": "BF_ID013"
+                        },
+                        {
+                            "key": 8192,
+                            "value": "BF_ID014"
+                        },
+                        {
+                            "key": 16384,
+                            "value": "BF_ID015"
+                        },
+                        {
+                            "key": 32768,
+                            "value": "BF_ID016"
+                        }
+                    ]
+                },
+                {
+                    "name": "Battery_Fault_2",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        574
+                    ],
+                    "lookup": [
+                        {
+                            "key": 0,
+                            "value": "No error"
+                        },
+                        {
+                            "key": 1,
+                            "value": "BF_ID017"
+                        },
+                        {
+                            "key": 2,
+                            "value": "BF_ID015"
+                        },
+                        {
+                            "key": 4,
+                            "value": "BF_ID019"
+                        },
+                        {
+                            "key": 8,
+                            "value": "BF_ID020"
+                        },
+                        {
+                            "key": 16,
+                            "value": "BF_ID021"
+                        },
+                        {
+                            "key": 32,
+                            "value": "BF_ID022"
+                        },
+                        {
+                            "key": 64,
+                            "value": "BF_ID023"
+                        },
+                        {
+                            "key": 128,
+                            "value": "BF_ID024"
+                        },
+                        {
+                            "key": 256,
+                            "value": "BF_ID025"
+                        },
+                        {
+                            "key": 512,
+                            "value": "BF_ID026"
+                        },
+                        {
+                            "key": 1024,
+                            "value": "BF_ID027"
+                        },
+                        {
+                            "key": 2048,
+                            "value": "BF_ID028"
+                        },
+                        {
+                            "key": 4096,
+                            "value": "BF_ID029"
+                        },
+                        {
+                            "key": 8192,
+                            "value": "BF_ID030"
+                        },
+                        {
+                            "key": 16384,
+                            "value": "BF_ID031"
+                        },
+                        {
+                            "key": 32768,
+                            "value": "BF_ID032"
+                        }
+                    ]
+                },
+                {
+                    "name": "Battery_Fault_3",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        575
+                    ],
+                    "lookup": [
+                        {
+                            "key": 0,
+                            "value": "No error"
+                        },
+                        {
+                            "key": 1,
+                            "value": "BF_ID033"
+                        },
+                        {
+                            "key": 2,
+                            "value": "BF_ID034"
+                        },
+                        {
+                            "key": 4,
+                            "value": "BF_ID035"
+                        },
+                        {
+                            "key": 8,
+                            "value": "BF_ID036"
+                        },
+                        {
+                            "key": 16,
+                            "value": "BF_ID037"
+                        },
+                        {
+                            "key": 32,
+                            "value": "BF_ID038"
+                        },
+                        {
+                            "key": 64,
+                            "value": "BF_ID039"
+                        },
+                        {
+                            "key": 128,
+                            "value": "BF_ID040"
+                        },
+                        {
+                            "key": 256,
+                            "value": "BF_ID041"
+                        },
+                        {
+                            "key": 512,
+                            "value": "BF_ID042"
+                        },
+                        {
+                            "key": 1024,
+                            "value": "BF_ID043"
+                        },
+                        {
+                            "key": 2048,
+                            "value": "BF_ID044"
+                        },
+                        {
+                            "key": 4096,
+                            "value": "BF_ID045"
+                        },
+                        {
+                            "key": 8192,
+                            "value": "BF_ID046"
+                        },
+                        {
+                            "key": 16384,
+                            "value": "BF_ID047"
+                        },
+                        {
+                            "key": 32768,
+                            "value": "BF_ID048"
+                        }
+                    ]
+                },
+                {
+                    "name": "Battery_Fault_4",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        576
+                    ],
+                    "lookup": [
+                        {
+                            "key": 0,
+                            "value": "No error"
+                        },
+                        {
+                            "key": 1,
+                            "value": "BF_ID049"
+                        },
+                        {
+                            "key": 2,
+                            "value": "BF_ID050"
+                        },
+                        {
+                            "key": 4,
+                            "value": "BF_ID051"
+                        },
+                        {
+                            "key": 8,
+                            "value": "BF_ID052"
+                        },
+                        {
+                            "key": 16,
+                            "value": "BF_ID053"
+                        },
+                        {
+                            "key": 32,
+                            "value": "BF_ID054"
+                        },
+                        {
+                            "key": 64,
+                            "value": "BF_ID055"
+                        },
+                        {
+                            "key": 128,
+                            "value": "BF_ID056"
+                        },
+                        {
+                            "key": 256,
+                            "value": "BF_ID057"
+                        },
+                        {
+                            "key": 512,
+                            "value": "BF_ID058"
+                        },
+                        {
+                            "key": 1024,
+                            "value": "BF_ID059"
+                        },
+                        {
+                            "key": 2048,
+                            "value": "BF_ID060"
+                        },
+                        {
+                            "key": 4096,
+                            "value": "BF_ID061"
+                        },
+                        {
+                            "key": 8192,
+                            "value": "BF_ID062"
+                        },
+                        {
+                            "key": 16384,
+                            "value": "BF_ID063"
+                        },
+                        {
+                            "key": 32768,
+                            "value": "BF_ID064"
+                        }
+                    ]
+                },
+                {
+                    "name": "Battery_Fault_5",
+                    "uom": "",
+                    "scale": 1,
+                    "rule": 1,
+                    "registers": [
+                        577
+                    ],
+                    "lookup": [
+                        {
+                            "key": 0,
+                            "value": "No error"
+                        },
+                        {
+                            "key": 1,
+                            "value": "BF_ID066"
+                        },
+                        {
+                            "key": 2,
+                            "value": "BF_ID067"
+                        },
+                        {
+                            "key": 4,
+                            "value": "BF_ID068"
+                        },
+                        {
+                            "key": 8,
+                            "value": "BF_ID069"
+                        },
+                        {
+                            "key": 16,
+                            "value": "BF_ID070"
+                        },
+                        {
+                            "key": 32,
+                            "value": "BF_ID071"
+                        },
+                        {
+                            "key": 64,
+                            "value": "BF_ID072"
+                        },
+                        {
+                            "key": 128,
+                            "value": "BF_ID073"
+                        },
+                        {
+                            "key": 256,
+                            "value": "BF_ID074"
+                        },
+                        {
+                            "key": 512,
+                            "value": "BF_ID075"
+                        },
+                        {
+                            "key": 1024,
+                            "value": "BF_ID077"
+                        },
+                        {
+                            "key": 2048,
+                            "value": "BF_ID078"
+                        },
+                        {
+                            "key": 4096,
+                            "value": "BF_ID079"
+                        },
+                        {
+                            "key": 8192,
+                            "value": "BF_ID080"
+                        },
+                        {
+                            "key": 16384,
+                            "value": "BF_ID081"
+                        },
+                        {
+                            "key": 32768,
+                            "value": "BF_ID083"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

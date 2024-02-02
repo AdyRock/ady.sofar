@@ -1,0 +1,12 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Generation Time Today"
+    },
+    "units": {
+      "en": "M"
+    },
+    "getable": true,
+    "setable": false,
+    "icon": "/assets/clock.svg"
+}

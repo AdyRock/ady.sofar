@@ -1,0 +1,15 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Generation Time Total"
+    },
+    "units": {
+      "en": "H"
+    },
+    "decimals": 2,
+    "insights": true,
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "icon": "/assets/clock.svg"
+}

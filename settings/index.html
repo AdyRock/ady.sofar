@@ -1,0 +1,300 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="lwsa.css">
+    <link rel="stylesheet" type="text/css" href="busy_indicator.css" />
+    <style>
+        label.a {
+            display: inline-block;
+            width: 200px;
+            height: 15px;
+            padding: 5px;
+        }
+    </style>
+
+    <style type="text/css">
+        .fog_div {
+            display: none;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 100%;
+            z-index: 100;
+            background-color: rgba(30, 30, 30, 0.5);
+        }
+
+        #busybox.show {
+            display: block;
+        }
+    </style>
+
+    <!-- The '/homey.js' script must be included in your settings view to work -->
+    <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+    <script type="text/javascript" src="busy_indicator.js"></script>
+</head>
+
+<body>
+    <!-- Busy indicator -->
+    <div id="busybox" class="fog_div">
+        <div></div>
+    </div>
+
+    <!-- Tab links -->
+    <div class="tab">
+        <button class="tablinks" onclick="setPage(event, 'log')" id="defaultOpen"><span data-i18n="settings.diagnosticsLog"></span></button>
+        <button class="tablinks" onclick="setPage(event, 'send')">Send Command</button>
+    </div>
+
+    <!-- LOG PAGE -->
+    <div id="log" class="tabcontent">
+            <div class="field row">
+                <label class="homey-form-checkbox">
+                    <input class="homey-form-checkbox-input" id="logEnabled" type="checkbox" value="logEnabled" />
+                    <span class="homey-form-checkbox-checkmark"></span>
+                    <span class="homey-form-checkbox-text"><span data-i18n="settings.logEnabled"></span></span>
+                </label>
+            </div>
+        <div class="field row">
+            <label class="homey-form-label"  for="email"><span data-i18n="settings.email"></span></label>
+            <input class="homey-form-input" id="email" type="text" value="" />
+            <P></P>
+        </div>
+            <p><button class="homey-button-secondary-shadow" id="clearDiagLog"><span data-i18n="settings.clearLog"></span></button> <button class="homey-button-secondary-shadow" id="sendDiagLog"><span data-i18n="settings.sendLog"></span></button></p>
+            <div class="field row">
+                <label class="homey-form-label"  for="diagLog"><span data-i18n="settings.logData"></span></label>
+                <textarea id="diagLog" style="white-space: nowrap;"></textarea>
+            </div>
+    </div>
+
+    <!--SEND COMMAND PAGE -->
+    <div id="send" class="tabcontent">
+            <h1>For debug use only</h1>
+                <div class="field row">
+                    <label class="homey-form-label"  for="commandData"><span data-i18n="settings.readRegister"></span></label>
+                    <input class="homey-form-input" id="commandData" type="text" value="" />
+                    <P></P>
+                    <p><button class="homey-button-secondary-shadow" id="sendCmd"><span data-i18n="settings.sendCommand"></span></button> <button class="homey-button-secondary-shadow" id="clearSend"><span data-i18n="settings.clearResponse"></span></button></p>
+                </div>
+            <div class="field row">
+                <label class="homey-form-label"  for="sendResponse"><span data-i18n="settings.response"></span></label>
+                <textarea id="sendResponse" style="white-space: nowrap;"></textarea>
+            </div>
+    </div>
+
+    <script type="text/javascript">
+        // Create the busy indicator
+        var busyi = new busy_indicator(document.getElementById("busybox"), document.querySelector("#busybox div"));
+
+        var diagLogElement = document.getElementById('diagLog');
+        var logEnabledElement = document.getElementById('logEnabled');
+        var logNetEnabledElement = document.getElementById('logNetEnabled');
+
+        var clearLogElement = document.getElementById('clearDiagLog');
+        var sendDiagLogElement = document.getElementById('sendDiagLog');
+
+        // Send data tab
+        var commandDataElement = document.getElementById('commandData');
+        var sendCmdElement = document.getElementById('sendCmd');
+        var clearSendElement = document.getElementById('clearSend');
+        var sendResponseElement = document.getElementById('sendResponse');
+
+        // a method named 'onHomeyReady' must be present in your code
+        function onHomeyReady(Homey)
+        {
+            Homey.get('debugMode', function(err, debugMode)
+            {
+                if (err) return Homey.alert(err);
+                if (debugMode)
+                {
+                    document.getElementById("send").style.visibility = 'visible';
+                }
+            });
+
+            document.getElementById("defaultOpen").click();
+
+            Homey.on('logupdated', function(data)
+            {
+                diagLogElement.value = data.log;
+            });
+
+            Homey.get('logEnabled', function(err, logEnabled)
+            {
+                if (err) return Homey.alert(err);
+                logEnabledElement.checked = logEnabled;
+            });
+
+            Homey.api('GET', '/getLog/',
+            {
+                notify: true
+            }, function(err, result)
+            {
+                if (err)
+                {
+                    return Homey.alert(err);
+                }
+                else
+                {
+                    diagLogElement.value = result;
+                }
+            });
+
+            logEnabledElement.addEventListener('click', function(e)
+            {
+                Homey.set('logEnabled', logEnabledElement.checked, function(err)
+                {
+                    if (err) return Homey.alert(err);
+                });
+            });
+
+            clearLogElement.addEventListener('click', function(e)
+            {
+                Homey.api('POST', '/clearLog/',
+                {
+                    notify: true
+                }, function(err, result)
+                {
+                    if (err)
+                    {
+                        return Homey.alert(err);
+                    }
+                    else
+                    {
+                        diagLogElement.value = "";
+                    }
+                });
+            });
+
+            sendDiagLogElement.addEventListener('click', function(e)
+            {
+                Homey.confirm(Homey.__('settings.confirmSend'), null, function(e, ok)
+                {
+                    if (ok)
+                    {
+                        waitCursor(true);
+                        Homey.api('POST', '/sendLog/',
+                        {
+                            notify: true,
+                            logType: "diag"
+                        }, function(err, result)
+                        {
+                            waitCursor(false);
+                            if (err)
+                            {
+                                return Homey.alert(err);
+                            }
+                            else
+                            {
+                                return Homey.alert(result);
+                            }
+                        });
+                    }
+                });
+            });
+
+            sendCmdElement.addEventListener('click', function(e)
+            {
+                waitCursor(true);
+
+                Homey.api('POST', '/sendCmd/',
+                {
+                    command: commandDataElement.value,
+                    notify: true
+                }, function(err, result)
+                {
+                    waitCursor(false);
+                    if (err)
+                    {
+                        return Homey.alert(err);
+                    }
+                    else
+                    {
+                        sendResponseElement.value = JSON.stringify(result, null, 2);
+                    }
+                });
+            });
+
+            clearSendElement.addEventListener('click', function(e)
+            {
+                Homey.set('sendResponse', "", function(err)
+                {
+                    if (err)
+                    {
+                        return Homey.alert(err);
+                    }
+                    else
+                    {
+                        sendResponseElement.value = "";
+                    }
+                });
+            });
+
+            // Tell Homey we're ready to be displayed
+            Homey.ready();
+        }
+
+        function setPage(evt, tabPage)
+        {
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++)
+            {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++)
+            {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(tabPage).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            if (tabPage == 'log')
+            {
+                // Refresh the log data
+                Homey.get('logEnabled', function(err, logEnabled)
+                {
+                    if (err) return Homey.alert(err);
+                    logEnabledElement.checked = logEnabled;
+                });
+
+                // Make the log text area fill the page
+                diagLogElement.setAttribute('cols', diagLogElement.parentElement.clientWidth / 8);
+                diagLogElement.style.height = (window.innerHeight - diagLogElement.offsetTop - 30) + 'px';
+            }
+            else if (tabPage == 'send')
+            {
+                Homey.get('sendResponse', function(err, sendResponse)
+                {
+                    if (err) return Homey.alert(err);
+                    sendResponseElement.value = sendResponse ? JSON.stringify(sendResponse, null, 2) : "";
+                });
+                // Make the simulator text box fill the page
+                sendResponseElement.setAttribute('cols', sendResponseElement.parentElement.clientWidth / 7.9);
+                sendResponseElement.style.height = (window.innerHeight - sendResponseElement.offsetTop - 40) + 'px';
+            }
+        }
+
+        function waitCursor(On)
+        {
+            if (On)
+            {
+                busyi.show();
+            }
+            else
+            {
+                busyi.hide();
+            }
+        }
+    </script>
+
+</body>
+
+</html>
