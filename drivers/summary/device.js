@@ -61,7 +61,7 @@ class InverterDevice extends LanDevice
         this.log('StationDevice has been initialized');
     }
 
-    checkCapabilities(serial)
+    async checkCapabilities(serial)
     {
         const inverter = this.homey.app.getInverter(serial);
         if (inverter)
@@ -76,13 +76,13 @@ class InverterDevice extends LanDevice
                     {
                         if (!group.items.find((element) => element.name === 'Daily_Production'))
                         {
-                            this.removeCapability('meter_power.today_solar');
+                            await this.removeCapability('meter_power.today_solar');
                         }
                     }
                     else
                     if (group.items.find((element) => element.name === 'Daily_Production'))
                     {
-                        this.addCapability('meter_power.today_solar');
+                        await this.addCapability('meter_power.today_solar');
                     }
                 }
                 else if (group.group === 'inverter')
@@ -91,36 +91,36 @@ class InverterDevice extends LanDevice
                     {
                         if (!group.items.find((element) => element.name === 'Consumption'))
                         {
-                            this.removeCapability('measure_power.consumption');
+                            await this.removeCapability('measure_power.consumption');
                         }
                     }
                     else if (group.items.find((element) => element.name === 'Consumption'))
                     {
-                        this.addCapability('measure_power.consumption');
+                        await this.addCapability('measure_power.consumption');
                     }
 
                     if (this.hasCapability('meter_power.today_consumption'))
                     {
                         if (!group.items.find((element) => element.name === 'Consumed_Today'))
                         {
-                            this.removeCapability('meter_power.today_consumption');
+                            await this.removeCapability('meter_power.today_consumption');
                         }
                     }
                     else if (group.items.find((element) => element.name === 'Consumed_Today'))
                     {
-                        this.addCapability('meter_power.today_consumption');
+                        await this.addCapability('meter_power.today_consumption');
                     }
 
                     if (this.hasCapability('system_status.country'))
                     {
                         if (!group.items.find((element) => element.name === 'Country'))
                         {
-                            this.removeCapability('system_status.country');
+                            await this.removeCapability('system_status.country');
                         }
                     }
                     else if (group.items.find((element) => element.name === 'Country'))
                     {
-                        this.addCapability('system_status.country');
+                        await this.addCapability('system_status.country');
                     }
                 }
             }
@@ -142,7 +142,7 @@ class InverterDevice extends LanDevice
             {
                 if (!this.CapabilitiesChecked)
                 {
-                    this.checkCapabilities(dd.id);
+                    await this.checkCapabilities(dd.id);
                     this.CapabilitiesChecked = true;
                 }
 

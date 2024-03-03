@@ -18,7 +18,7 @@ class SolarPanelDevice extends LanDevice
         this.log('SolarPanelDevice has been initialized');
     }
 
-    checkCapabilities(serial)
+    async checkCapabilities(serial)
     {
         const inverter = this.homey.app.getInverter(serial);
         if (inverter)
@@ -38,36 +38,36 @@ class SolarPanelDevice extends LanDevice
                     {
                         if (!group.items.find((element) => element.name === 'Daily_Production'))
                         {
-                            this.removeCapability('meter_power.today');
+                            await this.removeCapability('meter_power.today');
                         }
                     }
                     else if (group.items.find((element) => element.name === 'Daily_Production'))
                     {
-                        this.addCapability('meter_power.today');
+                        await this.addCapability('meter_power.today');
                     }
 
                     if (this.hasCapability('measure_generation_time'))
                     {
                         if (!group.items.find((element) => element.name === 'Generation_Time_Today'))
                         {
-                            this.removeCapability('measure_generation_time');
+                            await this.removeCapability('measure_generation_time');
                         }
                     }
                     else if (group.items.find((element) => element.name === 'Generation_Time_Today'))
                     {
-                        this.addCapability('measure_generation_time');
+                        await this.addCapability('measure_generation_time');
                     }
 
                     if (this.hasCapability('measure_generation_time_total'))
                     {
                         if (!group.items.find((element) => element.name === 'Total_Generation'))
                         {
-                            this.removeCapability('measure_generation_time_total');
+                            await this.removeCapability('measure_generation_time_total');
                         }
                     }
                     else if (group.items.find((element) => element.name === 'Total_Generation'))
                     {
-                        this.addCapability('measure_generation_time_total');
+                        await this.addCapability('measure_generation_time_total');
                     }
                 }
 
@@ -77,14 +77,14 @@ class SolarPanelDevice extends LanDevice
                     {
                         if (!group.items.find((element) => element.name === 'Total_Generation'))
                         {
-                            this.removeCapability('meter_power');
+                            await this.removeCapability('meter_power');
                         }
                     }
                     else
                     if (group.items.find((element) => element.name === 'Total_Generation'))
-                        {
-                            this.addCapability('meter_power');
-                        }
+					{
+						await this.addCapability('meter_power');
+					}
                 }
             }
         }
@@ -100,7 +100,7 @@ class SolarPanelDevice extends LanDevice
             {
                 if (!this.CapabilitiesChecked)
                 {
-                    this.checkCapabilities(dd.id);
+                    await this.checkCapabilities(dd.id);
                     this.CapabilitiesChecked = true;
                 }
 

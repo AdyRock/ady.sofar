@@ -681,7 +681,7 @@
             "group": "Alert",
             "items": [
                 {
-                    "name": "System Fault",
+                    "name": "System_Fault",
                     "uom": "",
                     "scale": 1,
                     "rule": 6,
@@ -694,7 +694,7 @@
                     ]
                 },
                 {
-                    "name": "Battery Fault",
+                    "name": "Battery_Fault",
                     "uom": "",
                     "scale": 1,
                     "rule": 6,

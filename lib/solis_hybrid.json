@@ -21,16 +21,13 @@
         "group": "InverterStatus",
         "items": [
           {
-            "name": "Inverter Status",
-            "class": "",
-            "state_class": "",
+            "name": "Inverter_Status",
             "uom": "",
             "scale": 1,
             "rule": 1,
             "registers": [
               33095
             ],
-            "icon": "home-lightning-bolt",
             "lookup": [
               {
                 "key": 0,
@@ -227,62 +224,13 @@
             ]
           },
           {
-            "name": "Operating Status",
-            "class": "",
-            "state_class": "",
-            "uom": "",
-            "scale": 1,
-            "rule": 1,
-            "registers": [
-              33121
-            ],
-            "icon": "home-lightning-bolt",
-            "lookup": [
-              {
-                "key": 1793,
-                "value": "Normal Operation"
-              },
-              {
-                "key": 1794,
-                "value": "Initial Standby"
-              },
-              {
-                "key": 1796,
-                "value": "Control Shutdown"
-              },
-              {
-                "key": 1800,
-                "value": "Downtime"
-              },
-              {
-                "key": 1808,
-                "value": "Standby"
-              },
-              {
-                "key": 1824,
-                "value": "Derating Operation"
-              },
-              {
-                "key": 1856,
-                "value": "Limit Operation"
-              },
-              {
-                "key": 1920,
-                "value": "Bypass Overload"
-              }
-            ]
-          },
-          {
-            "name": "Grid Fault Status",
-            "class": "",
-            "state_class": "",
+            "name": "Grid_Fault_Status",
             "uom": "",
             "scale": 1,
             "rule": 1,
             "registers": [
               33116
             ],
-            "icon": "alert",
             "lookup": [
               {
                 "key": 0,
@@ -335,16 +283,13 @@
             ]
           },
           {
-            "name": "Backup Load Fault Status",
-            "class": "",
-            "state_class": "",
+            "name": "Backup_Fault_Status",
             "uom": "",
             "scale": 1,
             "rule": 1,
             "registers": [
               33117
             ],
-            "icon": "alert",
             "lookup": [
               {
                 "key": 0,
@@ -361,16 +306,13 @@
             ]
           },
           {
-            "name": "Battery Fault Status",
-            "class": "",
-            "state_class": "",
+            "name": "Battery_Fault",
             "uom": "",
             "scale": 1,
             "rule": 1,
             "registers": [
               33118
             ],
-            "icon": "alert",
             "lookup": [
               {
                 "key": 0,
@@ -391,16 +333,13 @@
             ]
           },
           {
-            "name": "Fault Status 04 (Device)",
-            "class": "",
-            "state_class": "",
+            "name": "Fault_4",
             "uom": "",
             "scale": 1,
             "rule": 1,
             "registers": [
               33119
             ],
-            "icon": "alert",
             "lookup": [
               {
                 "key": 0,
@@ -465,16 +404,13 @@
             ]
           },
           {
-            "name": "Fault Status 05 (Device)",
-            "class": "",
-            "state_class": "",
+            "name": "Fault_5",
             "uom": "",
             "scale": 1,
             "rule": 1,
             "registers": [
               33120
             ],
-            "icon": "alert",
             "lookup": [
               {
                 "key": 0,
@@ -547,28 +483,21 @@
             ]
           },
           {
-            "name": "Inverter Temperature",
-            "class": "temperature",
-            "state_class": "measurement",
+            "name": "Inverter_Temperature",
             "uom": "°C",
             "scale": 0.1,
             "rule": 2,
             "registers": [
               33093
-            ],
-            "icon": "thermometer"
+            ]
           },
           {
-            "name": "Storage Control Mode",
-            "class": "",
-            "state_class": "",
             "uom": "",
             "scale": 1,
             "rule": 1,
             "registers": [
               33132
             ],
-            "icon": "battery-clock",
             "lookup": [
               {
                 "key": 33,
@@ -591,215 +520,62 @@
         ]
       },
       {
-        "group": "InverterDC",
+        "group": "panel",
         "items": [
           {
-            "name": "PV1 Voltage",
-            "class": "voltage",
-            "state_class": "measurement",
+            "name": "PV1_Voltage",
             "uom": "V",
             "scale": 0.1,
             "rule": 1,
             "registers": [
               33049
-            ],
-            "icon": "solar-power"
+            ]
           },
           {
-            "name": "PV2 Voltage",
-            "class": "voltage",
-            "state_class": "measurement",
+            "name": "PV2_Voltage",
             "uom": "V",
             "scale": 0.1,
             "rule": 1,
             "registers": [
               33051
-            ],
-            "icon": "solar-power"
+            ]
           },
           {
-            "name": "PV1 Current",
-            "class": "current",
+            "name": "PV1_Current",
             "uom": "A",
             "scale": 0.1,
             "rule": 1,
             "registers": [
               33050
-            ],
-            "icon": "current-dc"
+            ]
           },
           {
-            "name": "PV2 Current",
-            "class": "current",
-            "state_class": "measurement",
+            "name": "PV2_Current",
             "uom": "A",
             "scale": 0.1,
             "rule": 1,
             "registers": [
               33052
-            ],
-            "icon": "current-dc"
+            ]
           },
           {
-            "name": "Inverter DC Power",
-            "class": "power",
-            "state_class": "measurement",
+            "name": "PV_Power",
             "uom": "W",
             "scale": 1,
             "rule": 3,
             "registers": [
               33058,
               33057
-            ],
-            "icon": "solar-power"
-          }
-        ]
-      },
-      {
-        "group": "InverterAC",
-        "items": [
-          {
-            "name": "Inverter AC Power",
-            "class": "power",
-            "state_class": "measurement",
-            "uom": "W",
-            "scale": 1,
-            "rule": 4,
-            "registers": [
-              33152,
-              33151
-            ],
-            "icon": "solar-power"
+            ]
           },
           {
-            "name": "Inverter Voltage",
-            "class": "voltage",
-            "state_class": "measurement",
-            "uom": "V",
-            "scale": 0.1,
-            "rule": 1,
-            "registers": [
-              33073
-            ],
-            "icon": "transmission-tower"
-          },
-          {
-            "name": "Inverter Current",
-            "class": "current",
-            "state_class": "measurement",
-            "uom": "A",
-            "scale": 0.1,
-            "rule": 1,
-            "registers": [
-              33076
-            ],
-            "icon": "current-ac"
-          },
-          {
-            "name": "Inverter Active Power",
-            "class": "power",
-            "state_class": "measurement",
-            "uom": "W",
-            "scale": 1,
-            "rule": 4,
-            "registers": [
-              33080,
-              33079
-            ],
-            "icon": "transmission-tower"
-          },
-          {
-            "name": "Inverter Reactive Power",
-            "class": "reactive_power",
-            "state_class": "measurement",
-            "uom": "var",
-            "scale": 1,
-            "rule": 4,
-            "registers": [
-              33082
-            ],
-            "icon": "transmission-tower"
-          },
-          {
-            "name": "Inverter Apparent Power",
-            "class": "apparent_power",
-            "state_class": "measurement",
-            "uom": "VA",
-            "scale": 1,
-            "rule": 4,
-            "registers": [
-              33084,
-              33083
-            ],
-            "icon": "transmission-tower"
-          },
-          {
-            "name": "Inverter Frequency",
-            "class": "frequency",
-            "state_class": "measurement",
-            "uom": "Hz",
-            "scale": 0.01,
-            "rule": 1,
-            "registers": [
-              33094
-            ],
-            "icon": "sine-wave"
-          }
-        ]
-      },
-      {
-        "group": "Generation",
-        "items": [
-          {
-            "name": "Daily Generation",
-            "class": "energy",
-            "state_class": "total_increasing",
+            "name": "Daily_Production",
             "uom": "kWh",
             "scale": 0.1,
             "rule": 1,
             "registers": [
               33035
-            ],
-            "icon": "solar-power"
-          },
-          {
-            "name": "Monthly Generation",
-            "class": "energy",
-            "state_class": "total_increasing",
-            "uom": "kWh",
-            "scale": 1,
-            "rule": 3,
-            "registers": [
-              33032,
-              33031
-            ],
-            "icon": "solar-power"
-          },
-          {
-            "name": "Yearly Generation",
-            "class": "energy",
-            "state_class": "total_increasing",
-            "uom": "kWh",
-            "scale": 1,
-            "rule": 3,
-            "registers": [
-              33038,
-              33037
-            ],
-            "icon": "solar-power"
-          },
-          {
-            "name": "Total Generation",
-            "class": "energy",
-            "state_class": "total_increasing",
-            "uom": "kWh",
-            "scale": 1,
-            "rule": 3,
-            "registers": [
-              33030,
-              33029
-            ],
-            "icon": "solar-power"
+            ]
           }
         ]
       },
@@ -807,195 +583,99 @@
         "group": "Grid",
         "items": [
           {
-            "name": "Meter Frequency",
-            "class": "frequency",
-            "state_class": "measurement",
+            "name": "Grid_Frequency",
             "uom": "Hz",
             "scale": 0.01,
             "rule": 1,
             "registers": [
               33282
-            ],
-            "icon": "sine-wave"
+            ]
           },
           {
-            "name": "Meter Power Factor",
-            "class": "power_factor",
-            "state_class": "measurement",
-            "uom": "%",
-            "scale": 0.01,
-            "rule": 2,
-            "registers": [
-              33281
-            ],
-            "icon": "transmission-tower"
-          },
-          {
-            "name": "Meter Voltage",
-            "class": "voltage",
-            "state_class": "measurement",
+            "name": "MeGrid_Voltage",
             "uom": "V",
             "scale": 0.1,
             "rule": 1,
             "registers": [
               33251
-            ],
-            "icon": "transmission-tower"
+            ]
           },
           {
-            "name": "Meter Current",
-            "class": "current",
-            "state_class": "measurement",
+            "name": "Grid_Current",
             "uom": "A",
             "scale": 0.01,
             "rule": 1,
             "registers": [
               33252
-            ],
-            "icon": "current-ac"
+            ]
           },
           {
-            "name": "Meter Active Power",
-            "class": "power",
-            "state_class": "measurement",
+            "name": "Grid_Power",
             "uom": "W",
             "scale": 1,
             "rule": 4,
             "registers": [
               33258,
               33257
-            ],
-            "icon": "transmission-tower"
+            ]
           },
           {
-            "name": "Meter Reactive Power",
-            "class": "reactive_power",
-            "state_class": "measurement",
+            "name": "Grid_Reactive_Power",
             "uom": "var",
             "scale": 1,
             "rule": 4,
             "registers": [
               33266,
               33265
-            ],
-            "icon": "transmission-tower"
+            ]
           },
           {
-            "name": "Meter Apparent Power",
-            "class": "apparent_power",
-            "state_class": "measurement",
+            "name": "Grid_Apparent_Power",
             "uom": "VA",
             "scale": 1,
             "rule": 4,
             "registers": [
               33274,
               33273
-            ],
-            "icon": "transmission-tower"
+            ]
           },
           {
-            "name": "Daily Energy Imported",
-            "class": "energy",
-            "state_class": "total_increasing",
+            "name": "Import_Today",
             "uom": "kWh",
             "scale": 0.1,
             "rule": 1,
             "registers": [
               33171
-            ],
-            "icon": "home-import-outline"
+            ]
           },
           {
-            "name": "Total Energy Imported",
-            "class": "energy",
-            "state_class": "total_increasing",
+            "name": "Total_Import",
             "uom": "kWh",
             "scale": 1,
             "rule": 3,
             "registers": [
               33170,
               33169
-            ],
-            "icon": "home-import-outline"
+            ]
           },
           {
-            "name": "Daily Energy Exported",
-            "class": "energy",
-            "state_class": "total_increasing",
+            "name": "Export_Today",
             "uom": "kWh",
             "scale": 0.1,
             "rule": 1,
             "registers": [
               33175
-            ],
-            "icon": "home-export-outline"
+            ]
           },
           {
-            "name": "Total Energy Exported",
-            "class": "energy",
-            "state_class": "total_increasing",
+            "name": "Total_Export",
             "uom": "kWh",
             "scale": 1,
             "rule": 3,
             "registers": [
               33174,
               33173
-            ],
-            "icon": "home-export-outline"
-          }
-        ]
-      },
-      {
-        "group": "Load",
-        "items": [
-          {
-            "name": "House Load Power",
-            "class": "power",
-            "state_class": "measurement",
-            "uom": "W",
-            "scale": 1,
-            "rule": 1,
-            "registers": [
-              33147
-            ],
-            "icon": "home-lightning-bolt"
-          },
-          {
-            "name": "Backup Load Power",
-            "class": "power",
-            "state_class": "measurement",
-            "uom": "W",
-            "scale": 1,
-            "rule": 1,
-            "registers": [
-              33148
-            ],
-            "icon": "home-battery"
-          },
-          {
-            "name": "Daily House+Backup Load Consumption",
-            "class": "energy",
-            "state_class": "total_increasing",
-            "uom": "kWh",
-            "scale": 0.1,
-            "rule": 1,
-            "registers": [
-              33179
-            ],
-            "icon": "lightning-bolt-outline"
-          },
-          {
-            "name": "Total House+Backup Load Consumption",
-            "class": "energy",
-            "state_class": "total_increasing",
-            "uom": "kWh",
-            "scale": 1,
-            "rule": 3,
-            "registers": [
-              33178,
-              33177
-            ],
-            "icon": "lightning-bolt-outline"
+            ]
           }
         ]
       },
@@ -1003,16 +683,13 @@
         "group": "Battery",
         "items": [
           {
-            "name": "Battery Status",
-            "class": "",
-            "state_class": "measurement",
+            "name": "Battery_Status",
             "uom": "",
             "scale": 1,
             "rule": 1,
             "registers": [
               33135
             ],
-            "isstr": true,
             "lookup": [
               {
                 "key": 0,
@@ -1022,143 +699,91 @@
                 "key": 1,
                 "value": "Discharge"
               }
-            ],
-            "icon": "battery"
+            ]
           },
           {
-            "name": "Battery Power",
-            "class": "power",
-            "state_class": "measurement",
+            "name": "Battery_Power",
             "uom": "W",
             "scale": 1,
             "rule": 4,
             "registers": [
               33150,
               33149
-            ],
-            "icon": "battery-charging"
+            ]
           },
           {
-            "name": "Battery SOC",
-            "class": "battery",
-            "state_class": "measurement",
+            "name": "Battery_Charge",
             "uom": "%",
             "scale": 1,
             "rule": 1,
             "registers": [
               33139
-            ],
-            "icon": "battery"
+            ]
           },
           {
-            "name": "Battery SOH",
-            "class": "battery",
-            "state_class": "measurement",
+            "name": "Battery_SOH",
             "uom": "%",
             "scale": 1,
             "rule": 1,
             "registers": [
               33140
-            ],
-            "icon": "battery"
+            ]
           },
           {
-            "name": "Battery Current",
-            "class": "current",
-            "state_class": "measurement",
+            "name": "Battery_Current",
             "uom": "A",
             "scale": 0.1,
             "rule": 2,
             "registers": [
               33134
-            ],
-            "icon": "current-dc"
+            ]
           },
           {
-            "name": "Battery Voltage",
-            "class": "voltage",
-            "state_class": "measurement",
+            "name": "Battery_Voltage",
             "uom": "V",
             "scale": 0.1,
             "rule": 1,
             "registers": [
               33133
-            ],
-            "icon": "battery"
+            ]
           },
           {
-            "name": "Today Battery Charge",
-            "class": "energy",
-            "state_class": "total_increasing",
+            "name": "Battery_Charge_Today",
             "uom": "kWh",
             "scale": 0.1,
             "rule": 1,
             "registers": [
               33163
-            ],
-            "icon": "battery-plus"
+            ]
           },
           {
-            "name": "Today Battery Discharge",
-            "class": "energy",
-            "state_class": "total_increasing",
+            "name": "Battery_Discharge_Today",
             "uom": "kWh",
             "scale": 0.1,
             "rule": 1,
             "registers": [
               33167
-            ],
-            "icon": "battery-minus"
+            ]
           },
           {
-            "name": "Total Battery Charge",
-            "class": "energy",
-            "state_class": "total_increasing",
+            "name": "Battery_Charge_Total",
             "uom": "kWh",
             "scale": 1,
             "rule": 3,
             "registers": [
               33162,
               33161
-            ],
-            "icon": "battery-plus"
+            ]
           },
           {
-            "name": "Total Battery Discharge",
-            "class": "energy",
-            "state_class": "total_increasing",
+            "name": "Battery_Discharge_Total",
             "uom": "kWh",
             "scale": 1,
             "rule": 3,
             "registers": [
               33166,
               33165
-            ],
-            "icon": "battery-minus"
-          },
-          {
-            "name": "Battery Charge Current Limit",
-            "class": "current",
-            "state_class": "measurement",
-            "uom": "A",
-            "scale": 0.1,
-            "rule": 1,
-            "registers": [
-              33206
-            ],
-            "icon": "battery-arrow-up"
-          },
-          {
-            "name": "Battery Discharge Current Limit",
-            "class": "current",
-            "state_class": "measurement",
-            "uom": "A",
-            "scale": 0.1,
-            "rule": 1,
-            "registers": [
-              33207
-            ],
-            "icon": "battery-arrow-down"
+            ]
           }
         ]
       }
