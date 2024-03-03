@@ -170,8 +170,8 @@ class MyApp extends Homey.App
         }
         if (sensor === null)
         {
-            this.updateLog('Returned null.\n\nChecking register 33094 for grid frequency:', 0);
-            sensor = await this.checkSensor(ip, serial, 33094, 'solis_hybrid');
+            this.updateLog('Returned null.\n\nChecking register 33282 for grid frequency:', 0);
+            sensor = await this.checkSensor(ip, serial, 33282, 'solis_hybrid');
         }
         if (sensor === null)
         {

@@ -592,7 +592,7 @@
             ]
           },
           {
-            "name": "MeGrid_Voltage",
+            "name": "Grid_Voltage",
             "uom": "V",
             "scale": 0.1,
             "rule": 1,
