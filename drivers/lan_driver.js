@@ -42,7 +42,7 @@ class LanDriver extends Driver
             return devices;
         }
 
-        throw (new Error('HTTPS Error: Nothing returned'));
+        throw (new Error('Nothing returned'));
     }
 
 }

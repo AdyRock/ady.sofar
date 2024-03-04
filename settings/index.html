@@ -44,7 +44,7 @@
     <!-- Tab links -->
     <div class="tab">
         <button class="tablinks" onclick="setPage(event, 'log')" id="defaultOpen"><span data-i18n="settings.diagnosticsLog"></span></button>
-        <button class="tablinks" onclick="setPage(event, 'send')">Send Command</button>
+        <button class="tablinks" onclick="setPage(event, 'send')"><span data-i18n="settings.registerLog"></span></button>
     </div>
 
     <!-- LOG PAGE -->
@@ -70,18 +70,21 @@
 
     <!--SEND COMMAND PAGE -->
     <div id="send" class="tabcontent">
-            <h1>For debug use only</h1>
-                <div class="field row">
-                    <label class="homey-form-label"  for="commandData"><span data-i18n="settings.readRegister"></span></label>
-                    <input class="homey-form-input" id="commandData" type="text" value="" />
-                    <P></P>
-                    <p><button class="homey-button-secondary-shadow" id="sendCmd"><span data-i18n="settings.sendCommand"></span></button> <button class="homey-button-secondary-shadow" id="clearSend"><span data-i18n="settings.clearResponse"></span></button></p>
-                </div>
-            <div class="field row">
-                <label class="homey-form-label"  for="sendResponse"><span data-i18n="settings.response"></span></label>
-                <textarea id="sendResponse" style="white-space: nowrap;"></textarea>
-            </div>
-    </div>
+		<h1>For debug use only</h1>
+		<div class="field row">
+			<label class="homey-form-label"  for="commandData"><span data-i18n="settings.readRegister"></span></label>
+			<input class="homey-form-input" id="commandData" type="text" value="" />
+
+			<label class="homey-form-label"  for="commandDataNum"><span data-i18n="settings.readRegisterNum"></span></label>
+			<input class="homey-form-input" id="commandDataNum" type="text" value="1" />
+			<P></P>
+			<p><button class="homey-button-secondary-shadow" id="getRegisters"><span data-i18n="settings.sendCommand"></span></button> <button class="homey-button-secondary-shadow" id="stop"><span data-i18n="settings.stop"></span></button> <button class="homey-button-secondary-shadow" id="clearRegisters"><span data-i18n="settings.clearResponse"></span></button></p>
+		</div>
+		<div class="field row">
+			<label class="homey-form-label"  for="sendResponse"><span data-i18n="settings.response"></span></label>
+			<textarea id="sendResponse" style="white-space: nowrap;"></textarea>
+		</div>
+	</div>
 
     <script type="text/javascript">
         // Create the busy indicator
@@ -96,14 +99,21 @@
 
         // Send data tab
         var commandDataElement = document.getElementById('commandData');
-        var sendCmdElement = document.getElementById('sendCmd');
-        var clearSendElement = document.getElementById('clearSend');
+		var commandDataNumElement = document.getElementById('commandDataNum');
+        var getRegistersElement = document.getElementById('getRegisters');
+        var clearRegistersElement = document.getElementById('clearRegisters');
         var sendResponseElement = document.getElementById('sendResponse');
+		var stopElement = document.getElementById('stop');
+
+		var itemDisplyType = "flex";
 
         // a method named 'onHomeyReady' must be present in your code
         function onHomeyReady(Homey)
         {
-            Homey.get('debugMode', function(err, debugMode)
+			itemDisplyType = stopElement.style.display;
+			stopElement.style.display = "none";
+
+			Homey.get('debugMode', function(err, debugMode)
             {
                 if (err) return Homey.alert(err);
                 if (debugMode)
@@ -114,9 +124,52 @@
 
             document.getElementById("defaultOpen").click();
 
-            Homey.on('logupdated', function(data)
+			// Check if register logging is in progress
+            Homey.api('GET', '/getRegisterLogging/', {}, function(err, result)
+            {
+                if (err)
+                {
+                    return Homey.alert(err);
+                }
+                else
+                {
+                    if (result === true)
+					{
+						stopElement.style.display = itemDisplyType;
+						getRegistersElement.style.display = "none";
+						clearRegistersElement.style.display = "none";					
+					}
+                }
+            });
+
+			// Read the log data from the file in the /userdata directory
+            Homey.api('GET', '/getRegisterLog/', {}, function(err, result)
+            {
+                if (err)
+                {
+                    return Homey.alert(err);
+                }
+                else
+                {
+                    sendResponseElement.value = result;
+                }
+            });
+
+			Homey.on('ady.sofar.logupdated', function(data)
             {
                 diagLogElement.value = data.log;
+            });
+
+            Homey.on('ady.sofar.regupdated', function(data)
+            {
+                sendResponseElement.value += `${data.result}`;
+				if (data.result == "Finished")
+				{
+					sendResponseElement.value += "\n";
+					stopElement.style.display = "none";
+					getRegistersElement.style.display = itemDisplyType;
+					clearRegistersElement.style.display = itemDisplyType;
+				}
             });
 
             Homey.get('logEnabled', function(err, logEnabled)
@@ -193,14 +246,40 @@
                 });
             });
 
-            sendCmdElement.addEventListener('click', function(e)
+            getRegistersElement.addEventListener('click', function(e)
             {
                 waitCursor(true);
 
-                Homey.api('POST', '/sendCmd/',
+                Homey.api('POST', '/getRegisters/',
                 {
-                    command: commandDataElement.value,
-                    notify: true
+                    start: commandDataElement.value,
+					count: commandDataNumElement.value,
+                }, function(err, result)
+                {
+                    waitCursor(false);
+                    if (err)
+                    {
+						stopElement.style.display = "none";
+						getRegistersElement.style.display = itemDisplyType;
+						clearRegistersElement.style.display = itemDisplyType;
+                        return Homey.alert(err);
+                    }
+                    else
+                    {
+						stopElement.style.display = itemDisplyType;
+						getRegistersElement.style.display = "none";
+						clearRegistersElement.style.display = "none";
+                        sendResponseElement.value += result;
+                    }
+                });
+            });
+
+            stopElement.addEventListener('click', function(e)
+            {
+                Homey.api('POST', '/getRegisters/',
+                {
+                    start: 'stop',
+					count: 'stop',
                 }, function(err, result)
                 {
                     waitCursor(false);
@@ -210,22 +289,27 @@
                     }
                     else
                     {
-                        sendResponseElement.value = JSON.stringify(result, null, 2);
+                        sendResponseElement.value += result;
                     }
                 });
             });
 
-            clearSendElement.addEventListener('click', function(e)
+            clearRegistersElement.addEventListener('click', function(e)
             {
-                Homey.set('sendResponse', "", function(err)
+                Homey.api('POST', '/getRegisters/',
                 {
+                    start: 'clear',
+					count: 'clear',
+                }, function(err, result)
+                {
+                    waitCursor(false);
                     if (err)
                     {
                         return Homey.alert(err);
                     }
                     else
                     {
-                        sendResponseElement.value = "";
+                        sendResponseElement.value = result;
                     }
                 });
             });
@@ -271,11 +355,6 @@
             }
             else if (tabPage == 'send')
             {
-                Homey.get('sendResponse', function(err, sendResponse)
-                {
-                    if (err) return Homey.alert(err);
-                    sendResponseElement.value = sendResponse ? JSON.stringify(sendResponse, null, 2) : "";
-                });
                 // Make the simulator text box fill the page
                 sendResponseElement.setAttribute('cols', sendResponseElement.parentElement.clientWidth / 7.9);
                 sendResponseElement.style.height = (window.innerHeight - sendResponseElement.offsetTop - 40) + 'px';

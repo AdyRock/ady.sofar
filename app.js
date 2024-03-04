@@ -10,6 +10,7 @@ if (process.env.DEBUG === '1')
 
 const Homey = require('homey');
 const nodemailer = require('nodemailer');
+const fs = require('node:fs');
 
 const Scanner = require('./lib/scanner');
 const Sensor = require('./lib/sensor');
@@ -227,7 +228,95 @@ class MyApp extends Homey.App
         return null;
     }
 
-    async GetRegisterValue(register)
+	StopReadingRegisters()
+	{
+		this.stopReadingRegisters = true;
+	}
+
+	async GetMultipleRegisterValues(register, count)
+	{
+		this.loggingRegisters = true;
+		this.stopReadingRegisters = false;
+		let fileData = '';
+
+		// eslint-disable-next-line radix
+		let registerNumber = parseInt(register);
+		for (let i = 0; i < count; i++)
+		{
+			try
+			{
+				const result = await this.GetRegisterValue(registerNumber);
+				const formattedResult = `${registerNumber} = ${result}\n`;
+				fileData += formattedResult;
+				this.homey.api.realtime('ady.sofar.regupdated', { result: formattedResult });
+			}
+			catch (err)
+			{
+				const formattedResult = `${registerNumber} = ${err.message}\n`;
+				fileData += formattedResult;
+				this.homey.api.realtime('ady.sofar.regupdated', { result: formattedResult });
+			}
+			if (this.stopReadingRegisters)
+			{
+				break;
+			}
+
+			if ((i % 10) === 0)
+			{
+				// write to the log every 10 registers to a file in the /userdata/ folder
+				try
+				{
+					fs.appendFileSync('/userdata/register.log', fileData);
+				}
+				catch (err)
+				{
+					this.updateLog(`Error writing to file: ${err.message}`, 0);
+				}
+				fileData = '';
+			}
+			registerNumber++;
+		}
+
+		if (fileData.length > 0)
+		{
+			try
+			{
+				fs.appendFileSync('/userdata/register.log', fileData);
+			}
+			catch (err)
+			{
+				this.updateLog(`Error writing to file: ${err.message}`, 0);
+			}
+		}
+
+		this.homey.api.realtime('ady.sofar.regupdated', { result: 'Finished' });
+		this.loggingRegisters = false;
+	}
+
+	getRegisterLogging()
+	{
+		return this.loggingRegisters;
+	}
+
+	getRegisterLog()
+	{
+		try
+		{
+			return fs.readFileSync('/userdata/register.log', 'utf8');
+		}
+		catch (err)
+		{
+			this.updateLog(`Error reading file: ${err.message}`, 0);
+		}
+		return '';
+	}
+
+	clearRegisterLog()
+	{
+		fs.unlinkSync('/userdata/register.log');
+	}
+
+	async GetRegisterValue(register)
     {
         if (this.lanSensors.length > 0)
         {
@@ -325,7 +414,7 @@ class MyApp extends Homey.App
 
                 if (this.homeyIP)
                 {
-                    this.homey.api.realtime('ady.solarman.logupdated', { log: this.diagLog });
+                    this.homey.api.realtime('ady.sofar.logupdated', { log: this.diagLog });
                 }
             }
             catch (err)

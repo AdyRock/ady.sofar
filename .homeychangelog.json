@@ -82,5 +82,8 @@
     },
     "1.1.13": {
         "en": "Renamed app and removed Solarman support due to undocumented API rate restrictions."
-    }
+    },
+	"1.1.14": {
+		"en": "Added map for Solis hybrid inverters. Fixed a potential race condition when adding or removing capabilities."
+	}
 }

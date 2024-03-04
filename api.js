@@ -18,9 +18,29 @@ module.exports = {
     {
         return homey.app.sendLog(body);
     },
-    async sendCmd({ homey, body })
+    async getRegisterLog({ homey })
     {
-        const result = await homey.app.GetRegisterValue(body.command);
-        return result;
+        return homey.app.getRegisterLog();
+    },
+    async getRegisterLogging({ homey })
+    {
+        return homey.app.getRegisterLogging();
+    },
+	async getRegisters({ homey, body })
+	{
+		if (body.start === 'stop')
+		{
+			homey.app.StopReadingRegisters();
+			return 'Stopping...\n';
+		}
+
+		if (body.start === 'clear')
+		{
+			homey.app.clearRegisterLog();
+			return 'The Log has been deleted\n';
+		}
+
+		homey.app.GetMultipleRegisterValues(body.start, body.count);
+        return 'Working on it...\n';
     },
 };

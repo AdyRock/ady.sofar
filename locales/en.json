@@ -2,19 +2,20 @@
     "settings": {
         "detected": "Detected",
         "diagnosticsLog": "Diagnostics Log",
-        "username": "Username",
         "clearLog": "Clear Log",
         "sendLog": "Send Log",
-        "detectedDescription": "** Do not share this information publicly **",
         "logEnabled": "Log Data",
         "confirmSend": "Send the log contents to the developer?\n** All identifiers will be removed **",
         "logSent": "The log has been sent.",
         "logSendFailed": "Failed to send after 5 attempts.\nThe error messages are at the end of the log.",
         "email": "Email Address or Forum id (Required if you want me to respond)",
-        "readRegister": "Register at Address",
-        "sendCommand": "Read Reg.",
-        "clearResponse": "Clear Resp.",
+        "readRegister": "First Register Address (use 0x before the number for hex input)",
+		"readRegisterNum": "Number of Registers",
+        "sendCommand": "Start",
+        "clearResponse": "Clear",
         "response": "Response",
-        "logData": "Log Data"
+        "logData": "Log Data",
+		"registerLog": "Register Log",
+		"stop": "Stop"
     }
 }
