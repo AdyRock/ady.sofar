@@ -38,36 +38,36 @@ class SolarPanelDevice extends LanDevice
                     {
                         if (!group.items.find((element) => element.name === 'Daily_Production'))
                         {
-                            await this.removeCapability('meter_power.today');
+                            await this.removeCapabilitySafe('meter_power.today');
                         }
                     }
                     else if (group.items.find((element) => element.name === 'Daily_Production'))
                     {
-                        await this.addCapability('meter_power.today');
+                        await this.addCapabilitySafe('meter_power.today');
                     }
 
                     if (this.hasCapability('measure_generation_time'))
                     {
                         if (!group.items.find((element) => element.name === 'Generation_Time_Today'))
                         {
-                            await this.removeCapability('measure_generation_time');
+                            await this.removeCapabilitySafe('measure_generation_time');
                         }
                     }
                     else if (group.items.find((element) => element.name === 'Generation_Time_Today'))
                     {
-                        await this.addCapability('measure_generation_time');
+                        await this.addCapabilitySafe('measure_generation_time');
                     }
 
                     if (this.hasCapability('measure_generation_time_total'))
                     {
                         if (!group.items.find((element) => element.name === 'Total_Generation'))
                         {
-                            await this.removeCapability('measure_generation_time_total');
+                            await this.removeCapabilitySafe('measure_generation_time_total');
                         }
                     }
                     else if (group.items.find((element) => element.name === 'Total_Generation'))
                     {
-                        await this.addCapability('measure_generation_time_total');
+                        await this.addCapabilitySafe('measure_generation_time_total');
                     }
                 }
 
@@ -77,13 +77,13 @@ class SolarPanelDevice extends LanDevice
                     {
                         if (!group.items.find((element) => element.name === 'Total_Generation'))
                         {
-                            await this.removeCapability('meter_power');
+                            await this.removeCapabilitySafe('meter_power');
                         }
                     }
                     else
                     if (group.items.find((element) => element.name === 'Total_Generation'))
 					{
-						await this.addCapability('meter_power');
+						await this.addCapabilitySafe('meter_power');
 					}
                 }
             }

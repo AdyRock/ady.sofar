@@ -85,5 +85,8 @@
     },
 	"1.1.14": {
 		"en": "Added map for Solis hybrid inverters. Fixed a potential race condition when adding or removing capabilities."
+	},
+	"1.1.15": {
+		"en": "Extended the diagnostic tool to log multiple regisers. Fixed missleading HTTPS:// error message."
 	}
 }

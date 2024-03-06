@@ -16,47 +16,47 @@ class InverterDevice extends LanDevice
 
         if (!this.hasCapability('measure_temperature.internal'))
         {
-            this.addCapability('measure_temperature.internal');
+            await this.addCapabilitySafe('measure_temperature.internal');
         }
 
         if (!this.hasCapability('measure_temperature.heatsink'))
         {
-            this.addCapability('measure_temperature.heatsink');
+            await this.addCapabilitySafe('measure_temperature.heatsink');
         }
 
         if (!this.hasCapability('system_status'))
         {
-            this.addCapability('system_status');
+            await this.addCapabilitySafe('system_status');
         }
 
         if (!this.hasCapability('system_status.country'))
         {
-            this.addCapability('system_status.country');
+            await this.addCapabilitySafe('system_status.country');
         }
 
         if (!this.hasCapability('system_status.fault_1'))
         {
-            this.addCapability('system_status.fault_1');
+            await this.addCapabilitySafe('system_status.fault_1');
         }
 
         if (!this.hasCapability('system_status.fault_2'))
         {
-            this.addCapability('system_status.fault_2');
+            await this.addCapabilitySafe('system_status.fault_2');
         }
 
         if (!this.hasCapability('system_status.fault_3'))
         {
-            this.addCapability('system_status.fault_3');
+            await this.addCapabilitySafe('system_status.fault_3');
         }
 
         if (!this.hasCapability('system_status.fault_4'))
         {
-            this.addCapability('system_status.fault_4');
+            await this.addCapabilitySafe('system_status.fault_4');
         }
 
         if (!this.hasCapability('system_status.fault_5'))
         {
-            this.addCapability('system_status.fault_5');
+            await this.addCapabilitySafe('system_status.fault_5');
         }
         this.log('StationDevice has been initialized');
     }
@@ -76,13 +76,13 @@ class InverterDevice extends LanDevice
                     {
                         if (!group.items.find((element) => element.name === 'Daily_Production'))
                         {
-                            await this.removeCapability('meter_power.today_solar');
+                            await this.removeCapabilitySafe('meter_power.today_solar');
                         }
                     }
                     else
                     if (group.items.find((element) => element.name === 'Daily_Production'))
                     {
-                        await this.addCapability('meter_power.today_solar');
+                        await this.addCapabilitySafe('meter_power.today_solar');
                     }
                 }
                 else if (group.group === 'inverter')
@@ -91,36 +91,36 @@ class InverterDevice extends LanDevice
                     {
                         if (!group.items.find((element) => element.name === 'Consumption'))
                         {
-                            await this.removeCapability('measure_power.consumption');
+                            await this.removeCapabilitySafe('measure_power.consumption');
                         }
                     }
                     else if (group.items.find((element) => element.name === 'Consumption'))
                     {
-                        await this.addCapability('measure_power.consumption');
+                        await this.addCapabilitySafe('measure_power.consumption');
                     }
 
                     if (this.hasCapability('meter_power.today_consumption'))
                     {
                         if (!group.items.find((element) => element.name === 'Consumed_Today'))
                         {
-                            await this.removeCapability('meter_power.today_consumption');
+                            await this.removeCapabilitySafe('meter_power.today_consumption');
                         }
                     }
                     else if (group.items.find((element) => element.name === 'Consumed_Today'))
                     {
-                        await this.addCapability('meter_power.today_consumption');
+                        await this.addCapabilitySafe('meter_power.today_consumption');
                     }
 
                     if (this.hasCapability('system_status.country'))
                     {
                         if (!group.items.find((element) => element.name === 'Country'))
                         {
-                            await this.removeCapability('system_status.country');
+                            await this.removeCapabilitySafe('system_status.country');
                         }
                     }
                     else if (group.items.find((element) => element.name === 'Country'))
                     {
-                        await this.addCapability('system_status.country');
+                        await this.addCapabilitySafe('system_status.country');
                     }
                 }
             }

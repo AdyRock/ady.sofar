@@ -44,6 +44,42 @@ class LanDevice extends Device
         // Called when settings changed
     }
 
+	async addCapabilitySafe(capability)
+	{
+		try
+		{
+			await this.addCapability(capability);
+		}
+		catch (error)
+		{
+			this.error(`addCapabilitySafe: ${error}`);
+		}
+	}
+
+	async removeCapabilitySafe(capability)
+	{
+		try
+		{
+			await this.removeCapability(capability);
+		}
+		catch (error)
+		{
+			this.error(`removeCapabilitySafe: ${error}`);
+		}
+	}
+
+	async setCapabilityOptionsSafeSafe(capability, value)
+	{
+		try
+		{
+			await this.setCapabilityOptionsSafe(capability, value);
+		}
+		catch (error)
+		{
+			this.error(`setCapabilityOptionsSafeSafe: ${error}`);
+		}
+	}
+
 }
 
 module.exports = LanDevice;
