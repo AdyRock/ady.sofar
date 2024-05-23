@@ -192,7 +192,12 @@ class MyApp extends Homey.App
         try
         {
             const frequency = await sensor.getRegisterValue(register);
-            if ((frequency < 4500) || (frequency > 6500))
+            if ((frequency < 4900) || (frequency > 6500))
+            {
+                this.updateLog(`Frequency ${frequency / 100} is not valid`, 0);
+                return null;
+            }
+            if ((frequency > 5100) && (frequency < 6300))
             {
                 this.updateLog(`Frequency ${frequency / 100} is not valid`, 0);
                 return null;

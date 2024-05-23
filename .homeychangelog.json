@@ -88,5 +88,8 @@
 	},
 	"1.1.15": {
 		"en": "Extended the diagnostic tool to log multiple regisers. Fixed missleading HTTPS:// error message."
+	},
+	"1.1.16": {
+		"en": "Tighten frequency check to prevent false detection."
 	}
 }
