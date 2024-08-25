@@ -91,5 +91,8 @@
 	},
 	"1.1.16": {
 		"en": "Tighten frequency check to prevent false detection."
+	},
+	"1.1.17": {
+		"en": "Log more to help diagnostics."
 	}
 }
