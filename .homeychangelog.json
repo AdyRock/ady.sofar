@@ -94,5 +94,8 @@
 	},
 	"1.1.17": {
 		"en": "Log more to help diagnostics."
+	},
+	"1.1.18": {
+		"en": "Fix sofar_g3hyd register list."
 	}
 }

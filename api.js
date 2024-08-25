@@ -1,31 +1,31 @@
 'use strict';
 
 module.exports = {
-    async getLog({ homey })
-    {
-        return homey.app.diagLog;
-    },
-    async getDetect({ homey })
-    {
-        return homey.app.detectedDevices;
-    },
-    async clearLog({ homey })
-    {
-        homey.app.diagLog = '';
-        return 'OK';
-    },
-    async sendLog({ homey, body })
-    {
-        return homey.app.sendLog(body);
-    },
-    async getRegisterLog({ homey })
-    {
-        return homey.app.getRegisterLog();
-    },
-    async getRegisterLogging({ homey })
-    {
-        return homey.app.getRegisterLogging();
-    },
+	async getLog({ homey })
+	{
+		return homey.app.diagLog;
+	},
+	async getDetect({ homey })
+	{
+		return homey.app.detectedDevices;
+	},
+	async clearLog({ homey })
+	{
+		homey.app.diagLog = '';
+		return 'OK';
+	},
+	async sendLog({ homey, body })
+	{
+		return homey.app.sendLog(body);
+	},
+	async getRegisterLog({ homey })
+	{
+		return homey.app.getRegisterLog();
+	},
+	async getRegisterLogging({ homey })
+	{
+		return homey.app.getRegisterLogging();
+	},
 	async getRegisters({ homey, body })
 	{
 		if (body.start === 'stop')
@@ -41,6 +41,6 @@ module.exports = {
 		}
 
 		homey.app.GetMultipleRegisterValues(body.start, body.count);
-        return 'Working on it...\n';
-    },
+		return 'Working on it...\n';
+	},
 };

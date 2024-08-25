@@ -1,69 +1,69 @@
 {
-    "name": {
-        "en": "Battery (SoFar)"
-    },
-    "class": "sensor",
-    "capabilities": [
-        "measure_power",
-        "measure_battery",
-        "meter_power.charge_today",
-        "meter_power.discharge_today",
-        "meter_power.charge_total",
-        "meter_power.discharge_total",
-        "measure_voltage.battery",
-        "measure_current.battery",
-        "measure_temperature.battery",
-        "measure_cycles.battery"
-    ],
-    "capabilitiesOptions": {
-        "meter_power.charge_today": {
-            "title": {
-                "en": "Charge Today"
-            }
-        },
-        "meter_power.discharge_today": {
-            "title": {
-                "en": "Discharge Today"
-            }
-        },
-        "meter_power.charge_total": {
-            "title": {
-                "en": "Charge Total"
-            }
-        },
-        "meter_power.discharge_total": {
-            "title": {
-                "en": "Discharge Total"
-            }
-        },
-        "measure_voltage.battery": {
-            "title": {
-                "en": "Voltage"
-            }
-        },
-        "measure_current.battery": {
-            "title": {
-                "en": "Current"
-            }
-        },
-        "measure_temperature.battery": {
-            "title": {
-                "en": "Temperature"
-            }
-        },
-        "measure_cycles.battery": {
-            "title": {
-                "en": "Cycles"
-            }
-        }
-    },
-    "energy": {
-        "batteries": [
-            "INTERNAL"
-        ],
-        "cumulative": true
-    },
-    "$extends": [
-        "lanDriver"
-    ]
+	"name": {
+		"en": "Battery (SoFar)"
+	},
+	"class": "sensor",
+	"capabilities": [
+		"measure_power",
+		"measure_battery",
+		"meter_power.charge_today",
+		"meter_power.discharge_today",
+		"meter_power.charge_total",
+		"meter_power.discharge_total",
+		"measure_voltage.battery",
+		"measure_current.battery",
+		"measure_temperature.battery",
+		"measure_cycles.battery"
+	],
+	"capabilitiesOptions": {
+		"meter_power.charge_today": {
+			"title": {
+				"en": "Charge Today"
+			}
+		},
+		"meter_power.discharge_today": {
+			"title": {
+				"en": "Discharge Today"
+			}
+		},
+		"meter_power.charge_total": {
+			"title": {
+				"en": "Charge Total"
+			}
+		},
+		"meter_power.discharge_total": {
+			"title": {
+				"en": "Discharge Total"
+			}
+		},
+		"measure_voltage.battery": {
+			"title": {
+				"en": "Voltage"
+			}
+		},
+		"measure_current.battery": {
+			"title": {
+				"en": "Current"
+			}
+		},
+		"measure_temperature.battery": {
+			"title": {
+				"en": "Temperature"
+			}
+		},
+		"measure_cycles.battery": {
+			"title": {
+				"en": "Cycles"
+			}
+		}
+	},
+	"energy": {
+		"batteries": [
+			"INTERNAL"
+		],
+		"cumulative": true
+	},
+	"$extends": [
+		"lanDriver"
+	]
 }
