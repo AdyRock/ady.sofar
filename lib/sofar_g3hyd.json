@@ -68,7 +68,7 @@
 				{
 					"name": "PV_Power",
 					"uom": "W",
-					"scale": 10,
+					"scale": 100,
 					"rule": 1,
 					"registers": [
 						1476
