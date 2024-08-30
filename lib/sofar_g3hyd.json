@@ -2,17 +2,52 @@
 	"requests": [
 		{
 			"start": 1028,
-			"end": 1070,
+			"end": 1028,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 1048,
+			"end": 1048,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 1050,
+			"end": 1050,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 1056,
+			"end": 1056,
 			"mb_functioncode": 3
 		},
 		{
 			"start": 1156,
+			"end": 1173,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 1176,
+			"end": 1184,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 1187,
+			"end": 1195,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 1199,
 			"end": 1199,
 			"mb_functioncode": 3
 		},
 		{
 			"start": 1412,
 			"end": 1417,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 1476,
+			"end": 1476,
 			"mb_functioncode": 3
 		},
 		{
@@ -36,7 +71,7 @@
 					"scale": 10,
 					"rule": 1,
 					"registers": [
-						1198
+						1476
 					]
 				},
 				{

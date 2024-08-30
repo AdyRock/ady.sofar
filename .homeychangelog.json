@@ -97,5 +97,8 @@
 	},
 	"1.1.18": {
 		"en": "Fix sofar_g3hyd register list."
+	},
+	"1.1.19": {
+		"en": "Update sofar_g3hyd register list so it is more granular. Remapped Total PV Power register in sofar_g3hyd to 1476."
 	}
 }
