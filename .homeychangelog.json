@@ -106,5 +106,8 @@
 	},
 	"1.1.21": {
 		"en": "Changed Grid Power register for sofar_g3hyd to 1162."
+	},
+	"1.1.22": {
+		"en": "Changed Grid Power register for sofar_g3hyd to 1199."
 	}
 }

@@ -36,6 +36,11 @@
 			"mb_functioncode": 3
 		},
 		{
+			"start": 1199,
+			"end": 1199,
+			"mb_functioncode": 3
+		},
+		{
 			"start": 1412,
 			"end": 1417,
 			"mb_functioncode": 3
@@ -249,10 +254,10 @@
 				{
 					"name": "Grid_Power",
 					"uom": "W",
-					"scale": 10,
+					"scale": 100,
 					"rule": 2,
 					"registers": [
-						1162
+					1199
 					]
 				},
 				{
