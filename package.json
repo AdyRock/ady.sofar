@@ -1,6 +1,6 @@
 {
     "name": "ady.sofar",
-    "version": "1.1.20",
+    "version": "1.1.21",
     "description": "Adds support to Homey for Sofar devices",
     "main": "app.js",
     "dependencies": {

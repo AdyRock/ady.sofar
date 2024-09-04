@@ -103,5 +103,8 @@
 	},
 	"1.1.20": {
 		"en": "Changed scale factor for remapped Total PV power."
+	},
+	"1.1.21": {
+		"en": "Changed Grid Power register for sofar_g3hyd to 1162."
 	}
 }
