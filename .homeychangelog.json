@@ -109,5 +109,8 @@
 	},
 	"1.1.22": {
 		"en": "Changed Grid Power register for sofar_g3hyd to 1199."
+	},
+	"1.1.23": {
+		"en": "Reduce Total Grid Power scaler by a factor of 10."
 	}
 }

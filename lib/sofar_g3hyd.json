@@ -254,7 +254,7 @@
 				{
 					"name": "Grid_Power",
 					"uom": "W",
-					"scale": 100,
+					"scale": 10,
 					"rule": 2,
 					"registers": [
 					1199
