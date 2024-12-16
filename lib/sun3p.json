@@ -1,0 +1,476 @@
+{
+	"requests": [
+		{
+			"start": 224,
+			"end": 224,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 269,
+			"end": 274,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 278,
+			"end": 281,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 500,
+			"end": 500,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 514,
+			"end": 521,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 523,
+			"end": 529,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 537,
+			"end": 538,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 586,
+			"end": 591,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 608,
+			"end": 609,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 619,
+			"end": 619,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 672,
+			"end": 673,
+			"mb_functioncode": 3
+		}
+	],
+	"parameters": [
+		{
+			"group": "panel",
+			"items": [
+				{
+					"name": "Daily_Production",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						529
+					]
+				},
+				{
+					"name": "PV1_Voltage",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						278
+					]
+				},
+				{
+					"name": "PV1_Current",
+					"uom": "A",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						279
+					]
+				},
+				{
+					"name": "PV1_Power",
+					"uom": "W",
+					"scale": 10,
+					"rule": 1,
+					"registers": [
+						672
+					]
+				},
+				{
+					"name": "PV2_Voltage",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						280
+					]
+				},
+				{
+					"name": "PV2_Current",
+					"uom": "A",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						281
+					]
+				},
+				{
+					"name": "PV2_Power",
+					"uom": "W",
+					"scale": 10,
+					"rule": 1,
+					"registers": [
+						673
+					]
+				}
+			]
+		},
+		{
+			"group": "battery",
+			"items": [
+				{
+					"name": "Battery_Power",
+					"uom": "W",
+					"scale": 10,
+					"rule": 2,
+					"registers": [
+						590
+					]
+				},
+				{
+					"name": "Battery_Charge",
+					"uom": "%",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						588
+					]
+				},
+				{
+					"name": "Battery_Charge_Today",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						514
+					]
+				},
+				{
+					"name": "Battery_Discharge_Today",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						515
+					]
+				},
+				{
+					"name": "Battery_Charge_Total",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						516,
+						517
+					]
+				},
+				{
+					"name": "Battery_Discharge_Total",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						518,
+						519
+					]
+				},
+				{
+					"name": "Battery_SOH",
+					"uom": "%",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						224
+					]
+				},
+				{
+					"name": "Battery Voltage",
+					"uom": "V",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						587
+					]
+				},
+				{
+					"name": "Battery_Current",
+					"uom": "A",
+					"scale": 0.01,
+					"rule": 2,
+					"registers": [
+						591
+					]
+				},
+				{
+					"name": "Battery_Temperature",
+					"uom": "°C",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						586
+					]
+				}
+			]
+		},
+		{
+			"group": "grid",
+			"items": [
+				{
+					"name": "Grid_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						619
+					]
+				},
+				{
+					"name": "Grid_Voltage1",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						272
+					]
+				},
+				{
+					"name": "Grid_Voltage2",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						273
+					]
+				},
+				{
+					"name": "Grid_Voltage3",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						274
+					]
+				},
+				{
+					"name": "Grid_Current1",
+					"uom": "A",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						269
+					]
+				},
+				{
+					"name": "Grid_Current2",
+					"uom": "A",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						270
+					]
+				},
+				{
+					"name": "Grid_Current3",
+					"uom": "A",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						271
+					]
+				},
+				{
+					"name": "Grid_Frequency",
+					"uom": "Hz",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						609
+					]
+				},
+				{
+					"name": "Import_Today",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						520
+					]
+				},
+				{
+					"name": "Export_Today",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						521
+					]
+				},
+				{
+					"name": "Total_Import",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						523,
+						524
+					]
+				},
+				{
+					"name": "Total_Export",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						525,
+						526
+					]
+				}
+			]
+		},
+		{
+			"group": "inverter",
+			"items": [
+				{
+					"name": "Consumption",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						608
+					]
+				},
+				{
+					"name": "Consumed_Today",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						526
+					]
+				},
+				{
+					"name": "Total_Consumption",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						527,
+						528
+					]
+				},
+				{
+					"name": "Total_Generation",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						537,
+						538
+					]
+				},
+				{
+					"name": "Inverter_status",
+					"uom": "",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						500
+					],
+					"lookup": [
+						{
+							"key": 0,
+							"value": "waiting"
+						},
+						{
+							"key": 1,
+							"value": "self test"
+						},
+						{
+							"key": 2,
+							"value": "normal"
+						},
+						{
+							"key": 3,
+							"value": "alarm"
+						},
+						{
+							"key": 4,
+							"value": "fault"
+						}
+					]
+				},
+				{
+					"name": "Internal_Temperature",
+					"uom": "°C",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						540
+					]
+				},
+				{
+					"name": "Heatsink_Temperature",
+					"uom": "°C",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						541
+					]
+				}
+			]
+		},
+		{
+			"group": "generation",
+			"items": [
+				{
+					"name": "Daily_Battery_Charge",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						514
+					]
+				},
+				{
+					"name": "Total_Battery_Charge",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						516,
+						517
+					]
+				},
+				{
+					"name": "Daily_Battery_Discharge",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						515
+					]
+				},
+				{
+					"name": "Total_Battery_Discharge",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						519,
+						519
+					]
+				}
+			]
+		}
+	]
+}

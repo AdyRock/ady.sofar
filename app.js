@@ -150,6 +150,11 @@ class MyApp extends Homey.App {
 			this.updateLog('Returned null.\n\nChecking register 33282 for grid frequency:', 0);
 			sensor = await this.checkSensor(ip, serial, 33282, 'solis_hybrid');
 		}
+		if (sensor === null)
+		{
+			this.updateLog('Returned null.\n\nChecking register 33282 for grid frequency:', 0);
+			sensor = await this.checkSensor(ip, serial, 609, 'sun3p');
+		}
 		if (sensor === null) {
 			this.updateLog('Returned null.\n\nNo suitable inverters found', 0);
 		}
