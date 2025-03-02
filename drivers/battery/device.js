@@ -27,7 +27,7 @@ class BatteryDevice extends LanDevice
 			{
 				this.setAvailable();
 
-				this.setCapabilityValue('measure_power', -data.Battery_Power).catch(this.error);
+				this.setCapabilityValue('measure_power', data.Battery_Power).catch(this.error);
 				this.setCapabilityValue('measure_battery', data.Battery_Charge).catch(this.error);
 
 				this.setCapabilityValue('meter_power.charge_today', data.Battery_Charge_Today).catch(this.error);

@@ -2,7 +2,7 @@
 	"name": {
 		"en": "Battery (SoFar)"
 	},
-	"class": "sensor",
+	"class": "battery",
 	"capabilities": [
 		"measure_power",
 		"measure_battery",
@@ -58,10 +58,12 @@
 		}
 	},
 	"energy": {
+		"homeBattery": true,
 		"batteries": [
 			"INTERNAL"
 		],
-		"cumulative": true
+		"cumulativeImportedCapability": "meter_power.charge_total",
+		"cumulativeExportedCapability": "meter_power.discharge_total"
 	},
 	"$extends": [
 		"lanDriver"

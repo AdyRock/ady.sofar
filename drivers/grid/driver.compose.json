@@ -56,7 +56,9 @@
 		}
 	},
 	"energy": {
-		"cumulative": true
+		"cumulative": true,
+		"cumulativeImportedCapability": "meter_power.total_import",
+		"cumulativeExportedCapability": "meter_power.total_export"
 	},
 	"settings": [
 		{
