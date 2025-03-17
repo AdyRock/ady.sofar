@@ -28,7 +28,10 @@ class BatteryDevice extends LanDevice
 				this.setAvailable();
 
 				this.setCapabilityValue('measure_power', data.Battery_Power).catch(this.error);
+				this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: data.Battery_Power });
+
 				this.setCapabilityValue('measure_battery', data.Battery_Charge).catch(this.error);
+				this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_battery', value: data.Battery_Charge });
 
 				this.setCapabilityValue('meter_power.charge_today', data.Battery_Charge_Today).catch(this.error);
 				this.setCapabilityValue('meter_power.discharge_today', data.Battery_Discharge_Today).catch(this.error);

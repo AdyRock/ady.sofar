@@ -1,0 +1,129 @@
+<html>
+
+<head>
+	<link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="homey-widget">
+	<canvas id="canvas1"></canvas>
+	<canvas id="canvas2"></canvas>
+	<canvas id="canvas3"></canvas>
+	<canvas id="canvas4"></canvas>
+	<canvas id="canvas5"></canvas>
+
+	<script type="text/javascript">
+		function onHomeyReady(Homey)
+		{
+			Homey.ready();
+
+			const settings = Homey.getSettings();
+			const height = settings.height || 200;
+			Homey.setHeight(height);
+
+			Homey.api('GET', `/?solarDeviceId=${settings.solarDevices.id}&batteryDeviceId=${settings.batteryDevices.id}&gridDeviceId=${settings.gridDevices.id}&homeDeviceId=${settings.homeDevices.id}`, {})
+				.then((result) =>
+				{
+					updateWidget(result);
+				})
+				.catch(console.error);
+
+			Homey.on('updateWidget', function ({ deviceId, capabilityID, value })
+			{
+				const settings = Homey.getSettings();
+				if (settings.solarDevices.id === deviceId)
+				{
+					if (capabilityID === 'measure_power')
+					{
+						setPanelSideValue(PANEL.SOLAR, value, 'W');
+					}
+				}
+				else if (settings.batteryDevices.id === deviceId)
+				{
+					if (capabilityID === 'measure_power')
+					{
+						setPanelSideValue(PANEL.BATTERY, value, 'W');
+					}
+					else if (capabilityID === 'measure_battery')
+					{
+						setPanelEndValue(PANEL.BATTERY, value, '%');
+					}
+				}
+				else if (settings.gridDevices.id === deviceId)
+				{
+					if (capabilityID === 'measure_power')
+					{
+						setPanelSideValue(PANEL.POWER_GRID, value, 'W');
+					}
+				}
+				else if (settings.homeDevices.id === deviceId)
+				{
+					if (capabilityID === 'measure_power')
+					{
+						setPanelSideValue(PANEL.HOME, value, 'W');
+					}
+				}
+			});
+		}
+	</script>
+
+	<script src="script.js"></script>
+
+	<script type="text/javascript">
+		function updateWidget(result)
+		{
+			if (!result)
+			{
+				return;
+			}
+
+			setPanelSideValue(PANEL.SOLAR, result.solar, 'W');
+			setPanelSideValue(PANEL.POWER_GRID, result.grid, 'W');
+			setPanelSideValue(PANEL.BATTERY, result.battery, 'W');
+			setPanelEndValue(PANEL.BATTERY, result.batteryLevel, '%');
+			setPanelSideValue(PANEL.HOME, result.home, 'W');
+		}
+
+		function setPanelSideValue(panel, value, unit)
+		{
+			if (panel === PANEL.SOLAR)
+			{
+				flowFieldSolar.setSideValue(value, unit);
+			}
+			else if (panel === PANEL.POWER_GRID)
+			{
+				flowFieldGrid.setSideValue(value, unit);
+			}
+			else if (panel === PANEL.BATTERY)
+			{
+				flowFieldBattery.setSideValue(value, unit);
+			}
+			else if (panel === PANEL.HOME)
+			{
+				flowFieldHome.setSideValue(value, unit);
+			}
+		}
+
+		function setPanelEndValue(panel, value, unit)
+		{
+			if (panel === PANEL.SOLAR)
+			{
+				flowFieldSolar.setEndValue(value, unit);
+			}
+			else if (panel === PANEL.POWER_GRID)
+			{
+				flowFieldPowerGrid.setEndValue(value, unit);
+			}
+			else if (panel === PANEL.BATTERY)
+			{
+				flowFieldBattery.setEndValue(value, unit);
+			}
+			else if (panel === PANEL.HOME)
+			{
+				flowFieldHome.setEndValue(value, unit);
+			}
+		}
+	</script>
+
+</body>
+
+</html>

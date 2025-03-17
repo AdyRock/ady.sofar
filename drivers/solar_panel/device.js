@@ -109,10 +109,12 @@ class SolarPanelDevice extends LanDevice
 				if (this.sumPV1_PV2)
 				{
 					this.setCapabilityValue('measure_power', data.PV1_Power + data.PV2_Power).catch(this.error);
+					this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: data.PV1_Power + data.PV2_Power });
 				}
 				else
 				{
 					this.setCapabilityValue('measure_power', data.PV_Power).catch(this.error);
+					this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: data.PV_Power });
 				}
 
 				if (this.hasCapability('meter_power.today'))

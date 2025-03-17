@@ -4,7 +4,7 @@
 
 if (process.env.DEBUG === '1') {
 	// eslint-disable-next-line node/no-unsupported-features/node-builtins, global-require
-	require('inspector').open(9229, '0.0.0.0', true);
+	// require('inspector').open(9229, '0.0.0.0', true);
 }
 
 const Hook = require('console-hook');
@@ -71,6 +71,31 @@ class MyApp extends Homey.App {
 			this.scanner = null;
 		}
 
+		const widget = this.homey.dashboards.getWidget('energy');
+		widget.registerSettingAutocompleteListener('solarDevices', async (query, settings) =>
+		{
+			const devices = await this.getSolarDevices({});
+			return devices;
+		});
+
+		widget.registerSettingAutocompleteListener('batteryDevices', async (query, settings) =>
+		{
+			const devices = await this.getBatteryDevices({});
+			return devices;
+		});
+
+		widget.registerSettingAutocompleteListener('gridDevices', async (query, settings) =>
+		{
+			const devices = await this.getGridDevices({});
+			return devices;
+		});
+
+		widget.registerSettingAutocompleteListener('homeDevices', async (query, settings) =>
+		{
+			const devices = await this.getHomeDevices({});
+			return devices;
+		});
+
 		this.homey.app.updateLog('************** App has initialised. ***************');
 	}
 
@@ -99,7 +124,7 @@ class MyApp extends Homey.App {
 			for (const sensor of this.lanSensors) {
 				const result = await sensor.getStatistics();
 
-				if (result !== null) {
+				if ((result !== null) && (result.Grid_Frequency !== 0)) {
 					const serial = sensor.getSerial();
 
 					this.updateLog(`Inverter data: : ${serial}, ${this.varToString(result)}`);
@@ -416,6 +441,127 @@ class MyApp extends Homey.App {
 
 	async Delay(period) {
 		await new Promise((resolve) => this.homey.setTimeout(resolve, period));
+	}
+
+	async getSolarDevices()
+	{
+		// find Solar devices
+		const solarDevices = [];
+		const drivers = this.homey.drivers.getDrivers();
+		Object.keys(drivers).forEach((driver) => {
+			const devices = this.homey.drivers.getDriver(driver).getDevices();
+			const numDevices = devices.length;
+			for (let i = 0; i < numDevices; i++)
+			{
+				const device = devices[i];
+				// Check if the device is a solar device
+				if (device.getData().type === 'panel')
+				{
+					solarDevices.push(device);
+				}
+			}
+		});
+		return solarDevices;
+	}
+
+	async getBatteryDevices()
+	{
+		// find Battery devices
+		const batteryDevices = [];
+		const drivers = this.homey.drivers.getDrivers();
+		Object.keys(drivers).forEach((driver) => {
+			const devices = this.homey.drivers.getDriver(driver).getDevices();
+			const numDevices = devices.length;
+			for (let i = 0; i < numDevices; i++)
+			{
+				const device = devices[i];
+				// Check if the device is a battery device
+				if (device.getData().type === 'battery')
+				{
+					batteryDevices.push(device);
+				}
+			}
+		});
+		return batteryDevices;
+	}
+
+	async getGridDevices()
+	{
+		// find Grid devices
+		const gridDevices = [];
+		const drivers = this.homey.drivers.getDrivers();
+		Object.keys(drivers).forEach((driver) => {
+			const devices = this.homey.drivers.getDriver(driver).getDevices();
+			const numDevices = devices.length;
+			for (let i = 0; i < numDevices; i++)
+			{
+				const device = devices[i];
+				// Check if the device is a grid device
+				if (device.getData().type === 'grid')
+				{
+					gridDevices.push(device);
+				}
+			}
+		});
+		return gridDevices;
+	}
+
+	async getHomeDevices()
+	{
+		// find Home devices
+		const homeDevices = [];
+		const drivers = this.homey.drivers.getDrivers();
+		Object.keys(drivers).forEach((driver) => {
+			const devices = this.homey.drivers.getDriver(driver).getDevices();
+			const numDevices = devices.length;
+			for (let i = 0; i < numDevices; i++)
+			{
+				const device = devices[i];
+				// Check if the device is a home device
+				if (device.getData().type === 'inverter')
+				{
+					homeDevices.push(device);
+				}
+			}
+		});
+		return homeDevices;
+	}
+
+	getDeviceById(driver, deviceId)
+	{
+		return this.homey.drivers.getDriver(driver).getDevices().find((device) => device.__id === deviceId);
+	}
+
+	getWidgetEnergyValues(solarDeviceId, batteryDeviceId, gridDeviceId, homeDeviceId)
+	{
+		const solarDevice = solarDeviceId ? this.getDeviceById('solar_panel', solarDeviceId) : null;
+		const batteryDevice = batteryDeviceId ? this.getDeviceById('battery', batteryDeviceId) : null;
+		const gridDevice = gridDeviceId ? this.getDeviceById('grid', gridDeviceId) : null;
+		const homeDevice = homeDeviceId ? this.getDeviceById('summary', homeDeviceId) : null;
+
+		const retRetval = {};
+		if (solarDevice)
+		{
+			retRetval.solar = solarDevice.getCapabilityValue('measure_power');
+		}
+
+		if (batteryDevice)
+		{
+			retRetval.battery = batteryDevice.getCapabilityValue('measure_power');
+			retRetval.batteryLevel = batteryDevice.getCapabilityValue('measure_battery');
+		}
+
+		if (gridDevice)
+		{
+			retRetval.grid = gridDevice.getCapabilityValue('measure_power');
+		}
+
+		if (homeDevice)
+		{
+			retRetval.home = homeDevice.getCapabilityValue('measure_power.consumption');
+		}
+
+		return retRetval;
 	}
 
 }

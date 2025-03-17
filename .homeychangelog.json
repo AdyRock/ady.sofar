@@ -115,5 +115,8 @@
 	},
 	"1.1.24": {
 		"en": "Added support for Sun inverter."
+	},
+	"1.1.25": {
+		"en": "Add Power Flow widget."
 	}
 }

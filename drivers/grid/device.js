@@ -229,6 +229,8 @@ class GridDevice extends LanDevice
 				this.setAvailable();
 
 				this.setCapabilityValue('measure_power', -data.Grid_Power).catch(this.error);
+				this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: -data.Grid_Power });
+
 				if (data.Grid_Voltage)
 				{
 					this.setCapabilityValue('measure_voltage', data.Grid_Voltage).catch(this.error);
