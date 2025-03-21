@@ -1,0 +1,199 @@
+
+export const PANEL = Object.freeze({
+	SOLAR: 1,
+	POWER_GRID: 2,
+	BATTERY: 3,
+	HOME: 4,
+	HOMEY: 5,
+});
+
+class Animation
+{
+
+	#ctx;
+	#width;
+	#height;
+	#img;
+	#imageX;
+	#imageY;
+	#lineStartX;
+	#lineStartY;
+	#lineEndX;
+	#lineEndY;
+	#dotX;
+	#dotY;
+	#deltaX;
+	#deltaY;
+	#flowDirection;
+	#flowPolarity;
+	#flowFieldAnimation;
+	#powerValue;
+
+	constructor(ctx, width, height, Sector, imageFile, foreColor)
+	{
+		this.#ctx = ctx;
+		this.#width = width;
+		this.#height = height;
+
+		if (Sector === PANEL.SOLAR)
+		{
+			// Solar is the top left quadrant, so place the image at the top left corner, start the line below the image and end the line at the bottom right corner
+			this.#imageX = 5;
+			this.#imageY = 5;
+			this.#lineStartX = this.#imageX + 35;
+			this.#lineStartY = this.#imageY + 70;
+			this.#lineEndX = width;
+			this.#lineEndY = height - 5;
+			this.#dotX = this.#lineStartX;
+			this.#dotY = this.#lineStartY;
+			this.#deltaX = (this.#lineEndX - this.#lineStartX) / 200;
+			this.#deltaY = (this.#lineEndY - this.#lineStartY) / 200;
+			this.#flowDirection = 1;
+			this.#flowPolarity = 1;
+			this.powerValue = 0;
+		}
+		else if (Sector === PANEL.POWER_GRID)
+		{
+			// Power Grid is the top right quadrant, so place the image at the top right corner, start the line below the image and end the line at the bottom left corner
+			this.#imageX = width - 55;
+			this.#imageY = 5;
+			this.#lineStartX = this.#imageX + 10;
+			this.#lineStartY = this.#imageY + 70;
+			this.#lineEndX = 0;
+			this.#lineEndY = height - 5;
+			this.#dotX = this.#lineStartX;
+			this.#dotY = this.#lineStartY;
+			this.#deltaX = (this.#lineEndX - this.#lineStartX) / 200;
+			this.#deltaY = (this.#lineEndY - this.#lineStartY) / 200;
+			this.#flowDirection = 1;
+			this.#flowPolarity = 1;
+		}
+		else if (Sector === PANEL.BATTERY)
+		{
+			// Battery is the bottom left quadrant, so place the image at the bottom left corner, start the line above the image and end the line at the top right corner
+			this.#imageX = 5;
+			this.#imageY = height - 55;
+			this.#lineStartX = this.#imageX + 35;
+			this.#lineStartY = this.#imageY - 25;
+			this.#lineEndX = width;
+			this.#lineEndY = 5;
+			this.#dotX = this.#lineStartX;
+			this.#dotY = this.#lineStartY;
+			this.#deltaX = (this.#lineEndX - this.#lineStartX) / 200;
+			this.#deltaY = (this.#lineEndY - this.#lineStartY) / 200;
+			this.#flowDirection = 1;
+			this.#flowPolarity = -1;
+		}
+		else if (Sector === PANEL.HOME)
+		{
+			// Home is the bottom right quadrant, so place the image at the bottom right corner, start the line at the top left corner and end the line above the image
+			this.#imageX = width - 55;
+			this.#imageY = height - 55;
+			this.#lineStartX = 0;
+			this.#lineStartY = 5;
+			this.#lineEndX = this.#imageX + 10;
+			this.#lineEndY = this.#imageY - 25;
+			this.#dotX = this.#lineStartX;
+			this.#dotY = this.#lineStartY;
+			this.#deltaX = (this.#lineEndX - this.#lineStartX) / 200;
+			this.#deltaY = (this.#lineEndY - this.#lineStartY) / 200;
+			this.#flowDirection = -1;
+			this.#flowPolarity = -1;
+		}
+		else if (Sector === PANEL.HOMEY)
+		{
+			// Homey is the static at the center of the screen, so place the image at the center of the screen
+			this.#imageX = width / 2 - 25;
+			this.#imageY = height / 2 - 25;
+		}
+
+		this.#img = new Image();
+		this.#img.onload = function()
+		{
+			this.#draw(this.#imageX, this.#imageY, 50, 50);
+		}.bind(this);
+		this.#img.src = imageFile;
+	}
+
+	#draw(x, y)
+	{
+		// Draw the image at the origin
+		this.#ctx.drawImage(this.#img, this.#imageX, this.#imageY, 50, 50);
+
+		// Draw a line from the origin to the width and height
+		this.#ctx.beginPath();
+		this.#ctx.moveTo(this.#lineStartX, this.#lineStartY);
+		this.#ctx.lineTo(this.#lineEndX, this.#lineEndY);
+		this.#ctx.strokeStyle = '#2020FF';
+		this.#ctx.lineWidth = 3;
+		this.#ctx.stroke();
+
+		if (this.powerValue !== 0)
+		{
+			// Draw a circle along the path
+			this.#ctx.beginPath();
+			this.#ctx.arc(x, y, 3, 0, 2 * Math.PI, false);
+			this.#ctx.fillStyle = '#20FF20';
+			this.#ctx.fill();
+			this.#ctx.beginPath();
+			this.#ctx.arc(x - this.#deltaX * 7, y - this.#deltaY * 7, 3, 0, 2 * Math.PI, false);
+			this.#ctx.fillStyle = '#20FFFF';
+			this.#ctx.fill();
+		}
+	}
+
+	drawImage()
+	{
+		this.#ctx.drawImage(this.#img, this.#imageX, this.#imageY, 50, 50);
+	}
+
+	animate()
+	{
+		this.#ctx.clearRect(0, 0, this.#width, this.#height);
+		this.#draw(this.#dotX, this.#dotY);
+		this.#dotX += this.#deltaX;
+		this.#dotY += this.#deltaY;
+		// If the dot has got to the end of the line then reset it to the start
+		if ((this.#deltaX > 0 && this.#dotX >= this.#lineEndX) || (this.#deltaX < 0 && this.#dotX <= this.#lineEndX) || (this.#deltaY > 0 && this.#dotY >= this.#lineEndY) || (this.#deltaY < 0 && this.#dotY <= this.#lineEndY))
+		{
+			this.#dotX = this.#lineStartX;
+			this.#dotY = this.#lineStartY;
+		}
+
+		this.#flowFieldAnimation = requestAnimationFrame(this.animate.bind(this));
+	}
+
+	cancelAnimation()
+	{
+		cancelAnimationFrame(this.#flowFieldAnimation);
+	}
+
+	reverse()
+	{
+		this.#flowDirection *= -1;
+		this.#deltaX *= -1;
+		this.#deltaY *= -1;
+
+		// Swap the start and end points
+		let temp = this.#lineStartX;
+		this.#lineStartX = this.#lineEndX;
+		this.#lineEndX = temp;
+
+		temp = this.#lineStartY;
+		this.#lineStartY = this.#lineEndY;
+		this.#lineEndY = temp;
+	}
+
+	setPowerValue(value, unit)
+	{
+		if ((((value * this.#flowPolarity) < 0) && (this.#flowDirection > 0)) || (((value * this.#flowPolarity) > 0) && (this.#flowDirection < 0)))
+		{
+			this.reverse();
+		}
+
+		this.powerValue = value;
+	}
+
+}
+
+export { Animation };

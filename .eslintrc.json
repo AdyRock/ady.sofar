@@ -10,5 +10,18 @@
         "no-tabs": ["error", { "allowIndentationTabs": true }],
         "object-curly-newline": ["error", { "consistent": true }],
         "max-len": ["error", { "code": 300 }]
-    }
+    },
+    "overrides": [
+        {
+            "files": ["widgets/energy/public/**/*.js"], // Target only files in this folder
+            "parserOptions": {
+                "sourceType": "module" // Mark these files as ES6 modules
+            },
+			"env":
+			{
+				"es6": true,
+				"browser": true
+			}
+        }
+    ]
 }

@@ -248,6 +248,7 @@ class GridDevice extends LanDevice
 				if (this.hasCapability('meter_power.today_import') && (data.Import_Today > 0))
 				{
 					this.setCapabilityValue('meter_power.today_import', data.Import_Today).catch(this.error);
+					this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'meter_power.today_import', value: data.Import_Today });
 
 					if (this.getSetting('dual_rate'))
 					{

@@ -10,6 +10,10 @@
 	<canvas id="canvas3"></canvas>
 	<canvas id="canvas4"></canvas>
 	<canvas id="canvas5"></canvas>
+	<canvas id="canvas6"></canvas>
+	<canvas id="canvas7"></canvas>
+	<canvas id="canvas8"></canvas>
+	<canvas id="canvas9"></canvas>
 
 	<script type="text/javascript">
 		function onHomeyReady(Homey)
@@ -34,39 +38,70 @@
 				{
 					if (capabilityID === 'measure_power')
 					{
-						setPanelSideValue(PANEL.SOLAR, value, 'W');
+						setPanelPowerValue(PANEL.SOLAR, value, 'W');
+						flowFieldSolarText.draw();
+					}
+					else if (capabilityID === 'meter_power.today')
+					{
+						setPanelToDeviceValue(PANEL.SOLAR, value, 'kW/h');
+						flowFieldSolarText.draw();
 					}
 				}
 				else if (settings.batteryDevices.id === deviceId)
 				{
 					if (capabilityID === 'measure_power')
 					{
-						setPanelSideValue(PANEL.BATTERY, value, 'W');
+						setPanelPowerValue(PANEL.BATTERY, value, 'W');
+						flowFieldBatteryText.draw();
 					}
 					else if (capabilityID === 'measure_battery')
 					{
-						setPanelEndValue(PANEL.BATTERY, value, '%');
+						setChargeValue(PANEL.BATTERY, value, '%');
+						flowFieldBatteryText.draw();
+					}
+					else if (capabilityID === 'meter_power.charge_today')
+					{
+						setPanelToDeviceValue(PANEL.BATTERY, value, 'kW/h');
+						flowFieldBatteryText.draw();
 					}
 				}
 				else if (settings.gridDevices.id === deviceId)
 				{
 					if (capabilityID === 'measure_power')
 					{
-						setPanelSideValue(PANEL.POWER_GRID, value, 'W');
+						setPanelPowerValue(PANEL.POWER_GRID, value, 'W');
+						flowFieldGridText.draw();
+					}
+					else if (capabilityID === 'meter_power.today_import')
+					{
+						setPanelToDeviceValue(PANEL.POWER_GRID, value, 'kW/h');
+						flowFieldGridText.draw();
 					}
 				}
 				else if (settings.homeDevices.id === deviceId)
 				{
 					if (capabilityID === 'measure_power')
 					{
-						setPanelSideValue(PANEL.HOME, value, 'W');
+						setPanelPowerValue(PANEL.HOME, value, 'W');
+						flowFieldHomeText.draw();
+					}
+					else if (capabilityID === 'meter_power.today_consumption')
+					{
+						setPanelToDeviceValue(PANEL.HOME, value, 'kW/h');
+						flowFieldHomeText.draw();
 					}
 				}
 			});
 		}
 	</script>
 
-	<script src="script.js"></script>
+	<script type="module" src="script.js"></script>
+	<script type="module">
+		import { PANEL } from './animation.js';
+
+		// Make PANEL available globally
+		window.PANEL = PANEL;
+	</script>
 
 	<script type="text/javascript">
 		function updateWidget(result)
@@ -76,50 +111,107 @@
 				return;
 			}
 
-			setPanelSideValue(PANEL.SOLAR, result.solar, 'W');
-			setPanelSideValue(PANEL.POWER_GRID, result.grid, 'W');
-			setPanelSideValue(PANEL.BATTERY, result.battery, 'W');
-			setPanelEndValue(PANEL.BATTERY, result.batteryLevel, '%');
-			setPanelSideValue(PANEL.HOME, result.home, 'W');
+			setPanelPowerValue(PANEL.SOLAR, result.solar.power, 'W');
+			setPanelFromeDeviceValue(PANEL.SOLAR, result.solar.export, 'kW/h');
+			flowFieldSolarText.draw();
+
+			setPanelPowerValue(PANEL.BATTERY, result.battery.power, 'W');
+			setPanelFromeDeviceValue(PANEL.BATTERY, result.battery.export, 'kW/h'); // Updated to use setPanelExportedValue
+			setPanelToDeviceValue(PANEL.BATTERY, result.battery.import, 'kW/h');
+			setChargeValue(PANEL.BATTERY, result.battery.level, '%');
+			flowFieldBatteryText.draw();
+
+			setPanelPowerValue(PANEL.POWER_GRID, result.grid.power, 'W');
+			setPanelToDeviceValue(PANEL.POWER_GRID, result.grid.export, 'kW/h');
+			setPanelFromeDeviceValue(PANEL.POWER_GRID, result.grid.import, 'kW/h'); // Added to handle exported value for POWER_GRID
+			flowFieldGridText.draw(); // Added to redraw the home panel
+
+			setPanelPowerValue(PANEL.HOME, result.home.power, 'W');
+			setPanelToDeviceValue(PANEL.HOME, result.home.import, 'kW/h');
+			flowFieldHomeText.draw(); // Added to redraw the home panel after updating values
 		}
 
-		function setPanelSideValue(panel, value, unit)
+		function setPanelPowerValue(panel, value, unit)
 		{
-			if (panel === PANEL.SOLAR)
+			if ((panel === PANEL.SOLAR) && flowFieldSolarText)
 			{
-				flowFieldSolar.setSideValue(value, unit);
+				flowFieldSolarText.setPowerValue(value, unit);
+				flowFieldSolar.setPowerValue(value, unit);
 			}
-			else if (panel === PANEL.POWER_GRID)
+			else if ((panel === PANEL.POWER_GRID) && flowFieldGridText)
 			{
-				flowFieldGrid.setSideValue(value, unit);
+				flowFieldGridText.setPowerValue(value, unit); // Updated to use setPowerValue
+				flowFieldGrid.setPowerValue(value, unit);
 			}
-			else if (panel === PANEL.BATTERY)
+			else if ((panel === PANEL.BATTERY) && flowFieldBatteryText)
 			{
-				flowFieldBattery.setSideValue(value, unit);
+				flowFieldBatteryText.setPowerValue(value, unit); // Updated to use setPowerValue
+				flowFieldBattery.setPowerValue(value, unit); // Updated to use setPowerValue
 			}
-			else if (panel === PANEL.HOME)
+			else if ((panel === PANEL.HOME) && flowFieldHomeText)
 			{
-				flowFieldHome.setSideValue(value, unit);
+				flowFieldHomeText.setPowerValue(value, unit); // Updated to use setPowerValue
+				flowFieldHome.setPowerValue(value, unit); // Updated to use setPowerValue
 			}
 		}
 
-		function setPanelEndValue(panel, value, unit)
+		function setPanelToDeviceValue(panel, value, unit)
 		{
-			if (panel === PANEL.SOLAR)
+			if ((panel === PANEL.SOLAR) && flowFieldSolarText)
 			{
-				flowFieldSolar.setEndValue(value, unit);
+				flowFieldSolarText.setToDeviceValue(value, unit);
 			}
-			else if (panel === PANEL.POWER_GRID)
+			else if ((panel === PANEL.POWER_GRID) && flowFieldGridText)
 			{
-				flowFieldPowerGrid.setEndValue(value, unit);
+				flowFieldGridText.setToDeviceValue(value, unit);
 			}
-			else if (panel === PANEL.BATTERY)
+			else if ((panel === PANEL.BATTERY) && flowFieldBatteryText)
 			{
-				flowFieldBattery.setEndValue(value, unit);
+				flowFieldBatteryText.setToDeviceValue(value, unit);
 			}
-			else if (panel === PANEL.HOME)
+			else if ((panel === PANEL.HOME) && flowFieldHomeText)
 			{
-				flowFieldHome.setEndValue(value, unit);
+				flowFieldHomeText.setToDeviceValue(value, unit);
+			}
+		}
+
+		function setPanelFromeDeviceValue(panel, value, unit)
+		{
+			if ((panel === PANEL.SOLAR) && flowFieldSolarText)
+			{
+				flowFieldSolarText.setFromDeviceValue(value, unit);
+			}
+			else if ((panel === PANEL.POWER_GRID) && flowFieldGridText)
+			{
+				flowFieldGridText.setFromDeviceValue(value, unit);
+			}
+			else if ((panel === PANEL.BATTERY) && flowFieldBatteryText)
+			{
+				flowFieldBatteryText.setFromDeviceValue(value, unit);
+			}
+			else if ((panel === PANEL.HOME) && flowFieldHomeText)
+			{
+				flowFieldHomeText.setFromDeviceValue(value, unit);
+			}
+		}
+
+		function setChargeValue(panel, value, unit)
+		{
+			if ((panel === PANEL.SOLAR) && flowFieldSolarText)
+			{
+				flowFieldSolarText.setChargeValue(value, unit);
+			}
+			else if ((panel === PANEL.POWER_GRID) && flowFieldPowerGridText)
+			{
+				flowFieldPowerGridText.setChargeValue(value, unit);
+			}
+			else if ((panel === PANEL.BATTERY) && flowFieldBatteryText)
+			{
+				flowFieldBatteryText.setChargeValue(value, unit);
+			}
+			else if ((panel === PANEL.HOME) && flowFieldHomeText)
+			{
+				flowFieldHomeText.setChargeValue(value, unit);
 			}
 		}
 	</script>

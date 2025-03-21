@@ -2,7 +2,8 @@
 
 'use strict';
 
-if (process.env.DEBUG === '1') {
+if (process.env.DEBUG === '1')
+{
 	// eslint-disable-next-line node/no-unsupported-features/node-builtins, global-require
 	// require('inspector').open(9229, '0.0.0.0', true);
 }
@@ -16,19 +17,23 @@ const fs = require('node:fs');
 const Scanner = require('./lib/scanner');
 const Sensor = require('./lib/sensor');
 
-class MyApp extends Homey.App {
+class MyApp extends Homey.App
+{
 
 	/**
 	 * onInit is called when the app is initialized.
 	 */
-	async onInit() {
+	async onInit()
+	{
 		// Hook into the console.log so we can log to the Homey log
-		this.myHook = Hook().attach((method, args) => {
+		this.myHook = Hook().attach((method, args) =>
+		{
 			// method is the console[method] string
 			// args is the arguments object passed to console[method]
 			let logMessage = '';
 			const argsArray = Array.from(args);
-			argsArray.forEach((element) => {
+			argsArray.forEach((element) =>
+			{
 				logMessage += this.varToString(element);
 				logMessage += ' ';
 			});
@@ -39,10 +44,12 @@ class MyApp extends Homey.App {
 		this.useLocalDevice = false;
 		this.diagLog = '';
 
-		if (process.env.DEBUG === '1') {
+		if (process.env.DEBUG === '1')
+		{
 			this.homey.settings.set('debugMode', true);
 		}
-		else {
+		else
+		{
 			this.homey.settings.set('debugMode', false);
 		}
 
@@ -55,9 +62,11 @@ class MyApp extends Homey.App {
 		this.lanSensors = [];
 		this.lanSensorTimer = null;
 
-		try {
+		try
+		{
 			this.homeyIP = await this.homey.cloud.getLocalAddress();
-			if (this.homeyIP) {
+			if (this.homeyIP)
+			{
 				// Remove the port number
 				const ip = this.homeyIP.split(':');
 
@@ -65,7 +74,8 @@ class MyApp extends Homey.App {
 				this.scanner.startScanning(this.scannerFoundADevice);
 			}
 		}
-		catch (err) {
+		catch (err)
+		{
 			// Homey cloud or Bridge so no LAN access
 			this.homeyIP = null;
 			this.scanner = null;
@@ -99,61 +109,81 @@ class MyApp extends Homey.App {
 		this.homey.app.updateLog('************** App has initialised. ***************');
 	}
 
-	async startLocalFetch() {
-		if (!this.useLocalDevice) {
+	async startLocalFetch()
+	{
+		if (!this.useLocalDevice)
+		{
 			this.useLocalDevice = true;
 			this.getInverterData();
 		}
 	}
 
-	async scannerFoundADevice(ip, serial) {
+	async scannerFoundADevice(ip, serial)
+	{
 		this.updateLog(`Found Inverter: IP: ${ip}, S.No: ${serial}`, 0);
 		await this.registerSensor(ip, serial);
 
-		if (this.lanSensorTimer === null) {
-			this.lanSensorTimer = this.homey.setTimeout(async () => {
+		if (this.lanSensorTimer === null)
+		{
+			this.lanSensorTimer = this.homey.setTimeout(async () =>
+			{
 				this.getInverterData();
 			}, 1000);
 		}
 	}
 
-	async getInverterData() {
-		if (this.useLocalDevice) {
+	async getInverterData()
+	{
+		if (this.useLocalDevice)
+		{
 			this.updateLog('Get Data');
 
-			for (const sensor of this.lanSensors) {
+			for (const sensor of this.lanSensors)
+			{
 				const result = await sensor.getStatistics();
 
-				if ((result !== null) && (result.Grid_Frequency !== 0)) {
-					const serial = sensor.getSerial();
+				if ((result !== null) && (result.Grid_Frequency !== 0))
+				{
+					if ((result.Daily_Production) && (result.Consumption) && (result.Grid_Voltage) && (result.Total_Import))
+					{
+						const serial = sensor.getSerial();
 
-					this.updateLog(`Inverter data: : ${serial}, ${this.varToString(result)}`);
+						this.updateLog(`Inverter data: : ${serial}, ${this.varToString(result)}`);
 
-					const drivers = this.homey.drivers.getDrivers();
-					for (const driver of Object.values(drivers)) {
-						const devices = driver.getDevices();
-						for (const device of Object.values(devices)) {
-							if (device.updateLanDeviceValues) {
-								device.updateLanDeviceValues(serial, result);
+						const drivers = this.homey.drivers.getDrivers();
+						for (const driver of Object.values(drivers))
+						{
+							const devices = driver.getDevices();
+							for (const device of Object.values(devices))
+							{
+								if (device.updateLanDeviceValues)
+								{
+									device.updateLanDeviceValues(serial, result);
+								}
 							}
 						}
 					}
 				}
-				else {
+				else
+				{
 					this.updateLog('No Data');
 				}
 			}
 
-			this.lanSensorTimer = this.homey.setTimeout(async () => {
+			this.lanSensorTimer = this.homey.setTimeout(async () =>
+			{
 				this.getInverterData();
 			}, 10000);
 		}
 	}
 
-	async registerSensor(ip, serial) {
-		for (const sensor of this.lanSensors) {
+	async registerSensor(ip, serial)
+	{
+		for (const sensor of this.lanSensors)
+		{
 			// Check if this one already registered
-			if (sensor.getSerial() === serial) {
+			if (sensor.getSerial() === serial)
+			{
 				// Yep, found it so update the IP just incase it changed
 				sensor.setHost(ip);
 				return;
@@ -163,15 +193,18 @@ class MyApp extends Homey.App {
 		// Try to read the grid frequency address
 		this.updateLog('Checking register 14 for grid frequency:', 0);
 		let sensor = await this.checkSensor(ip, serial, 14, 'sofar_lsw3');
-		if (sensor === null) {
+		if (sensor === null)
+		{
 			this.updateLog('Returned null.\n\nChecking register 1156 for grid frequency:', 0);
 			sensor = await this.checkSensor(ip, serial, 1156, 'sofar_g3hyd');
 		}
-		if (sensor === null) {
+		if (sensor === null)
+		{
 			this.updateLog('Returned null.\n\nChecking register 524 for grid frequency:', 0);
 			sensor = await this.checkSensor(ip, serial, 524, 'sofar_hy_es');
 		}
-		if (sensor === null) {
+		if (sensor === null)
+		{
 			this.updateLog('Returned null.\n\nChecking register 33282 for grid frequency:', 0);
 			sensor = await this.checkSensor(ip, serial, 33282, 'solis_hybrid');
 		}
@@ -180,45 +213,57 @@ class MyApp extends Homey.App {
 			this.updateLog('Returned null.\n\nChecking register 33282 for grid frequency:', 0);
 			sensor = await this.checkSensor(ip, serial, 609, 'sun3p');
 		}
-		if (sensor === null) {
+		if (sensor === null)
+		{
 			this.updateLog('Returned null.\n\nNo suitable inverters found', 0);
 		}
 
-		if (sensor) {
+		if (sensor)
+		{
 			this.updateLog('Found inverter', 0);
 			this.lanSensors.push(sensor);
 		}
 	}
 
-	async checkSensor(ip, serial, register, lookupFile) {
+	async checkSensor(ip, serial, register, lookupFile)
+	{
 		const sensor = new Sensor(serial, ip, 8899, 1, lookupFile);
-		try {
+		try
+		{
 			const frequency = await sensor.getRegisterValue(register);
-			if ((frequency < 4900) || (frequency > 6500)) {
+			if ((frequency < 4900) || (frequency > 6500))
+			{
 				this.updateLog(`Frequency ${frequency / 100} is not valid`, 0);
 				return null;
 			}
-			if ((frequency > 5100) && (frequency < 6300)) {
+			if ((frequency > 5100) && (frequency < 6300))
+			{
 				this.updateLog(`Frequency ${frequency / 100} is not valid`, 0);
 				return null;
 			}
 			this.updateLog(`Frequency ${frequency / 100} is good`, 0);
 		}
-		catch (err) {
+		catch (err)
+		{
 			return null;
 		}
 
 		return sensor;
 	}
 
-	getDiscoveredInverters() {
+	getDiscoveredInverters()
+	{
 		return this.lanSensors;
 	}
 
-	getInverter(serial) {
-		if (this.lanSensors.length > 0) {
-			for (const inverter of this.lanSensors) {
-				if (inverter.inverter_sn === serial) {
+	getInverter(serial)
+	{
+		if (this.lanSensors.length > 0)
+		{
+			for (const inverter of this.lanSensors)
+			{
+				if (inverter.inverter_sn === serial)
+				{
 					return inverter;
 				}
 			}
@@ -227,39 +272,48 @@ class MyApp extends Homey.App {
 		return null;
 	}
 
-	StopReadingRegisters() {
+	StopReadingRegisters()
+	{
 		this.stopReadingRegisters = true;
 	}
 
-	async GetMultipleRegisterValues(register, count) {
+	async GetMultipleRegisterValues(register, count)
+	{
 		this.loggingRegisters = true;
 		this.stopReadingRegisters = false;
 		let fileData = '';
 
 		// eslint-disable-next-line radix
 		let registerNumber = parseInt(register);
-		for (let i = 0; i < count; i++) {
-			try {
+		for (let i = 0; i < count; i++)
+		{
+			try
+			{
 				const result = await this.GetRegisterValue(registerNumber);
 				const formattedResult = `${registerNumber} = ${result}\n`;
 				fileData += formattedResult;
 				this.homey.api.realtime('ady.sofar.regupdated', { result: formattedResult });
 			}
-			catch (err) {
+			catch (err)
+			{
 				const formattedResult = `${registerNumber} = ${err.message}\n`;
 				fileData += formattedResult;
 				this.homey.api.realtime('ady.sofar.regupdated', { result: formattedResult });
 			}
-			if (this.stopReadingRegisters) {
+			if (this.stopReadingRegisters)
+			{
 				break;
 			}
 
-			if ((i % 10) === 0) {
+			if ((i % 10) === 0)
+			{
 				// write to the log every 10 registers to a file in the /userdata/ folder
-				try {
+				try
+				{
 					fs.appendFileSync('/userdata/register.log', fileData);
 				}
-				catch (err) {
+				catch (err)
+				{
 					this.updateLog(`Error writing to file: ${err.message}`, 0);
 				}
 				fileData = '';
@@ -267,11 +321,14 @@ class MyApp extends Homey.App {
 			registerNumber++;
 		}
 
-		if (fileData.length > 0) {
-			try {
+		if (fileData.length > 0)
+		{
+			try
+			{
 				fs.appendFileSync('/userdata/register.log', fileData);
 			}
-			catch (err) {
+			catch (err)
+			{
 				this.updateLog(`Error writing to file: ${err.message}`, 0);
 			}
 		}
@@ -280,26 +337,33 @@ class MyApp extends Homey.App {
 		this.loggingRegisters = false;
 	}
 
-	getRegisterLogging() {
+	getRegisterLogging()
+	{
 		return this.loggingRegisters;
 	}
 
-	getRegisterLog() {
-		try {
+	getRegisterLog()
+	{
+		try
+		{
 			return fs.readFileSync('/userdata/register.log', 'utf8');
 		}
-		catch (err) {
+		catch (err)
+		{
 			// this.updateLog(`Error reading file: ${err.message}`, 0);
 		}
 		return '';
 	}
 
-	clearRegisterLog() {
+	clearRegisterLog()
+	{
 		fs.unlinkSync('/userdata/register.log');
 	}
 
-	async GetRegisterValue(register) {
-		if (this.lanSensors.length > 0) {
+	async GetRegisterValue(register)
+	{
+		if (this.lanSensors.length > 0)
+		{
 			const registerNumber = parseInt(register, 10);
 			return this.lanSensors[0].getRegisterValue(registerNumber, registerNumber, 3);
 		}
@@ -309,30 +373,41 @@ class MyApp extends Homey.App {
 
 	//    async onUninit() {}
 
-	hashCode(s) {
+	hashCode(s)
+	{
 		let h = 0;
 		for (let i = 0; i < s.length; i++) h = Math.imul(31, h) + s.charCodeAt(i) | 0;
 		return h;
 	}
 
-	varToString(source) {
-		try {
-			if (source === null) {
+	varToString(source)
+	{
+		try
+		{
+			if (source === null)
+			{
 				return 'null';
 			}
-			if (source === undefined) {
+			if (source === undefined)
+			{
 				return 'undefined';
 			}
-			if (source instanceof Error) {
+			if (source instanceof Error)
+			{
 				const stack = source.stack.replace('/\\n/g', '\n');
 				return `${source.message}\n${stack}`;
 			}
-			if (typeof (source) === 'object') {
-				const getCircularReplacer = () => {
+			if (typeof (source) === 'object')
+			{
+				const getCircularReplacer = () =>
+				{
 					const seen = new WeakSet();
-					return (key, value) => {
-						if (typeof value === 'object' && value !== null) {
-							if (seen.has(value)) {
+					return (key, value) =>
+					{
+						if (typeof value === 'object' && value !== null)
+						{
+							if (seen.has(value))
+							{
 								return '';
 							}
 							seen.add(value);
@@ -343,24 +418,30 @@ class MyApp extends Homey.App {
 
 				return JSON.stringify(source, getCircularReplacer(), 2);
 			}
-			if (typeof (source) === 'string') {
+			if (typeof (source) === 'string')
+			{
 				return source;
 			}
 		}
-		catch (err) {
+		catch (err)
+		{
 			this.homey.app.updateLog(`VarToString Error: ${err}`, 0);
 		}
 
 		return source.toString();
 	}
 
-	updateLog(newMessage, errorLevel = 1, fromConsole = false) {
-		if (!fromConsole && errorLevel === 0) {
+	updateLog(newMessage, errorLevel = 1, fromConsole = false)
+	{
+		if (!fromConsole && errorLevel === 0)
+		{
 			this.error(newMessage);
 		}
 
-		if ((errorLevel === 0) || (((errorLevel & 1) === 1) && this.homey.settings.get('logEnabled')) || (((errorLevel & 2) === 2) && this.homey.settings.get('logNetEnabled'))) {
-			try {
+		if ((errorLevel === 0) || (((errorLevel & 1) === 1) && this.homey.settings.get('logEnabled')) || (((errorLevel & 2) === 2) && this.homey.settings.get('logNetEnabled')))
+		{
+			try
+			{
 				const nowTime = new Date(Date.now());
 
 				this.diagLog += '\r\n* ';
@@ -369,31 +450,38 @@ class MyApp extends Homey.App {
 
 				this.diagLog += newMessage;
 				this.diagLog += '\r\n';
-				if (this.diagLog.length > 60000) {
+				if (this.diagLog.length > 60000)
+				{
 					this.diagLog = this.diagLog.substr(this.diagLog.length - 60000);
 				}
 
-				if (this.homeyIP) {
+				if (this.homeyIP)
+				{
 					this.homey.api.realtime('ady.sofar.logupdated', { log: this.diagLog });
 				}
 			}
-			catch (err) {
+			catch (err)
+			{
 				this.log(err);
 			}
 		}
 	}
 
 	// Send the log to the developer (not applicable to Homey cloud)
-	async sendLog(body) {
+	async sendLog(body)
+	{
 		let tries = 5;
 
 		let logData;
-		if (body.logType === 'diag') {
+		if (body.logType === 'diag')
+		{
 			logData = this.diagLog;
 		}
 
-		while (tries-- > 0) {
-			try {
+		while (tries-- > 0)
+		{
+			try
+			{
 				// create reusable transporter object using the default SMTP transport
 				const transporter = nodemailer.createTransport(
 					{
@@ -431,7 +519,8 @@ class MyApp extends Homey.App {
 				this.log('Preview URL: ', nodemailer.getTestMessageUrl(info));
 				return this.homey.__('settings.logSent');
 			}
-			catch (err) {
+			catch (err)
+			{
 				this.updateLog(`Send log error: ${err.message}`, 0);
 			}
 		}
@@ -439,7 +528,8 @@ class MyApp extends Homey.App {
 		return (this.homey.__('settings.logSendFailed'));
 	}
 
-	async Delay(period) {
+	async Delay(period)
+	{
 		await new Promise((resolve) => this.homey.setTimeout(resolve, period));
 	}
 
@@ -448,7 +538,8 @@ class MyApp extends Homey.App {
 		// find Solar devices
 		const solarDevices = [];
 		const drivers = this.homey.drivers.getDrivers();
-		Object.keys(drivers).forEach((driver) => {
+		Object.keys(drivers).forEach((driver) =>
+		{
 			const devices = this.homey.drivers.getDriver(driver).getDevices();
 			const numDevices = devices.length;
 			for (let i = 0; i < numDevices; i++)
@@ -469,7 +560,8 @@ class MyApp extends Homey.App {
 		// find Battery devices
 		const batteryDevices = [];
 		const drivers = this.homey.drivers.getDrivers();
-		Object.keys(drivers).forEach((driver) => {
+		Object.keys(drivers).forEach((driver) =>
+		{
 			const devices = this.homey.drivers.getDriver(driver).getDevices();
 			const numDevices = devices.length;
 			for (let i = 0; i < numDevices; i++)
@@ -490,7 +582,8 @@ class MyApp extends Homey.App {
 		// find Grid devices
 		const gridDevices = [];
 		const drivers = this.homey.drivers.getDrivers();
-		Object.keys(drivers).forEach((driver) => {
+		Object.keys(drivers).forEach((driver) =>
+		{
 			const devices = this.homey.drivers.getDriver(driver).getDevices();
 			const numDevices = devices.length;
 			for (let i = 0; i < numDevices; i++)
@@ -511,7 +604,8 @@ class MyApp extends Homey.App {
 		// find Home devices
 		const homeDevices = [];
 		const drivers = this.homey.drivers.getDrivers();
-		Object.keys(drivers).forEach((driver) => {
+		Object.keys(drivers).forEach((driver) =>
+		{
 			const devices = this.homey.drivers.getDriver(driver).getDevices();
 			const numDevices = devices.length;
 			for (let i = 0; i < numDevices; i++)
@@ -542,23 +636,33 @@ class MyApp extends Homey.App {
 		const retRetval = {};
 		if (solarDevice)
 		{
-			retRetval.solar = solarDevice.getCapabilityValue('measure_power');
+			retRetval.solar = {};
+			retRetval.solar.power = solarDevice.getCapabilityValue('measure_power');
+			retRetval.solar.export = solarDevice.getCapabilityValue('meter_power.today');
 		}
 
 		if (batteryDevice)
 		{
-			retRetval.battery = batteryDevice.getCapabilityValue('measure_power');
-			retRetval.batteryLevel = batteryDevice.getCapabilityValue('measure_battery');
+			retRetval.battery = {};
+			retRetval.battery.power = batteryDevice.getCapabilityValue('measure_power');
+			retRetval.battery.import = batteryDevice.getCapabilityValue('meter_power.charge_today');
+			retRetval.battery.export = batteryDevice.getCapabilityValue('meter_power.discharge_today');
+			retRetval.battery.level = batteryDevice.getCapabilityValue('measure_battery');
 		}
 
 		if (gridDevice)
 		{
-			retRetval.grid = gridDevice.getCapabilityValue('measure_power');
+			retRetval.grid = {};
+			retRetval.grid.power = gridDevice.getCapabilityValue('measure_power');
+			retRetval.grid.import = gridDevice.getCapabilityValue('meter_power.today_import');
+			retRetval.grid.export = gridDevice.getCapabilityValue('meter_power.today_export');
 		}
 
 		if (homeDevice)
 		{
-			retRetval.home = homeDevice.getCapabilityValue('measure_power.consumption');
+			retRetval.home = {};
+			retRetval.home.power = homeDevice.getCapabilityValue('measure_power.consumption');
+			retRetval.home.import = homeDevice.getCapabilityValue('meter_power.today_consumption');
 		}
 
 		return retRetval;

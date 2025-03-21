@@ -6,7 +6,6 @@
 
 canvas {
 	position: absolute;
-	background: var(--homey-background-color);
 	top: 0;
 	left: 0;
 }
