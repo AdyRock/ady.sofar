@@ -43,7 +43,7 @@
 					}
 					else if (capabilityID === 'meter_power.today')
 					{
-						setPanelToDeviceValue(PANEL.SOLAR, value, 'kW/h');
+						setPanelFromDeviceValue(PANEL.SOLAR, value, 'kW/h');
 						flowFieldSolarText.draw();
 					}
 				}
@@ -64,6 +64,11 @@
 						setPanelToDeviceValue(PANEL.BATTERY, value, 'kW/h');
 						flowFieldBatteryText.draw();
 					}
+					else if (capabilityID === 'meter_power.discharge_today')
+					{
+						setPanelFromDeviceValue(PANEL.BATTERY, value, 'kW/h');
+						flowFieldBatteryText.draw();
+					}
 				}
 				else if (settings.gridDevices.id === deviceId)
 				{
@@ -73,6 +78,11 @@
 						flowFieldGridText.draw();
 					}
 					else if (capabilityID === 'meter_power.today_import')
+					{
+						setPanelFromDeviceValue(PANEL.POWER_GRID, value, 'kW/h');
+						flowFieldGridText.draw();
+					}
+					else if (capabilityID === 'meter_power.today_export')
 					{
 						setPanelToDeviceValue(PANEL.POWER_GRID, value, 'kW/h');
 						flowFieldGridText.draw();
@@ -112,18 +122,18 @@
 			}
 
 			setPanelPowerValue(PANEL.SOLAR, result.solar.power, 'W');
-			setPanelFromeDeviceValue(PANEL.SOLAR, result.solar.export, 'kW/h');
+			setPanelFromDeviceValue(PANEL.SOLAR, result.solar.export, 'kW/h');
 			flowFieldSolarText.draw();
 
 			setPanelPowerValue(PANEL.BATTERY, result.battery.power, 'W');
-			setPanelFromeDeviceValue(PANEL.BATTERY, result.battery.export, 'kW/h'); // Updated to use setPanelExportedValue
+			setPanelFromDeviceValue(PANEL.BATTERY, result.battery.export, 'kW/h'); // Updated to use setPanelExportedValue
 			setPanelToDeviceValue(PANEL.BATTERY, result.battery.import, 'kW/h');
 			setChargeValue(PANEL.BATTERY, result.battery.level, '%');
 			flowFieldBatteryText.draw();
 
 			setPanelPowerValue(PANEL.POWER_GRID, result.grid.power, 'W');
 			setPanelToDeviceValue(PANEL.POWER_GRID, result.grid.export, 'kW/h');
-			setPanelFromeDeviceValue(PANEL.POWER_GRID, result.grid.import, 'kW/h'); // Added to handle exported value for POWER_GRID
+			setPanelFromDeviceValue(PANEL.POWER_GRID, result.grid.import, 'kW/h'); // Added to handle exported value for POWER_GRID
 			flowFieldGridText.draw(); // Added to redraw the home panel
 
 			setPanelPowerValue(PANEL.HOME, result.home.power, 'W');
@@ -175,7 +185,7 @@
 			}
 		}
 
-		function setPanelFromeDeviceValue(panel, value, unit)
+		function setPanelFromDeviceValue(panel, value, unit)
 		{
 			if ((panel === PANEL.SOLAR) && flowFieldSolarText)
 			{

@@ -5,7 +5,7 @@
 if (process.env.DEBUG === '1')
 {
 	// eslint-disable-next-line node/no-unsupported-features/node-builtins, global-require
-	// require('inspector').open(9229, '0.0.0.0', true);
+//	require('inspector').open(9229, '0.0.0.0', true);
 }
 
 const Hook = require('console-hook');
@@ -144,7 +144,7 @@ class MyApp extends Homey.App
 
 				if ((result !== null) && (result.Grid_Frequency !== 0))
 				{
-					if ((result.Daily_Production) && (result.Consumption) && (result.Grid_Voltage) && (result.Total_Import))
+					if ((result.Consumption) && (result.Grid_Voltage) && (result.Total_Import))
 					{
 						const serial = sensor.getSerial();
 

@@ -122,7 +122,9 @@ function setupCanvases()
 	canvasHomey.width = 50;
 	canvasHomey.height = 50;
 	flowFieldHomey = new Animation(ctxHomey, canvasHomey.width, canvasHomey.height, PANEL.HOMEY, 'homey-logo.png', forecolor);
-	flowFieldHomey.drawImage();
+	flowFieldHomey.animate();
+	// Make flowFieldHomey globally accessible
+	window.flowFieldHomey = flowFieldHomey;
 
 	// Create text overlay for solar panel
 	canvasSolarText = document.getElementById('canvas6');
@@ -136,7 +138,7 @@ function setupCanvases()
 	canvasSolarText.height = height;
 	if (!flowFieldSolarText)
 	{
-		flowFieldSolarText = new TextFields(ctxSolarText, 55, 0, true, forecolor);
+		flowFieldSolarText = new TextFields(ctxSolarText, 55, 0, true, forecolor, -1);
 		// Make flowFieldSolarText globally accessible
 		window.flowFieldSolarText = flowFieldSolarText;
 	}
@@ -158,7 +160,7 @@ function setupCanvases()
 
 	if (!flowFieldBatteryText)
 	{
-		flowFieldBatteryText = new TextFields(ctxBatteryText, 55, height - 80, true, forecolor);
+		flowFieldBatteryText = new TextFields(ctxBatteryText, 55, height - 80, true, forecolor, 1);
 		// Make flowFieldBatteryText globally accessible
 		window.flowFieldBatteryText = flowFieldBatteryText;
 	}
@@ -180,7 +182,7 @@ function setupCanvases()
 
 	if (!flowFieldGridText)
 	{
-		flowFieldGridText = new TextFields(ctxGridText, width - 80, 0, false, forecolor);
+		flowFieldGridText = new TextFields(ctxGridText, width - 80, 0, false, forecolor, -1);
 		// Make flowFieldGridText globally accessible
 		window.flowFieldGridText = flowFieldGridText;
 	}
@@ -202,7 +204,7 @@ function setupCanvases()
 
 	if (!flowFieldHomeText)
 	{
-		flowFieldHomeText = new TextFields(ctxHomeText, width - 80, height - 80, false, forecolor);
+		flowFieldHomeText = new TextFields(ctxHomeText, width - 80, height - 80, false, forecolor, 1);
 		// Make flowFieldHomeText globally accessible
 		window.flowFieldHomeText = flowFieldHomeText;
 	}
@@ -224,5 +226,6 @@ window.addEventListener('resize', function ()
 	flowFieldGrid.cancelAnimation();
 	flowFieldBattery.cancelAnimation();
 	flowFieldHome.cancelAnimation();
+	flowFieldHomey.cancelAnimation();
 	setupCanvases();
 });
