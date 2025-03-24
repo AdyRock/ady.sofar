@@ -176,7 +176,7 @@ class Animation
 		{
 			this.#ctx.moveTo(this.#lineEndX, this.#lineEndY);
 			this.#ctx.lineTo(this.#lineStartX, this.#lineStartY);
-			if (((this.#flowPolarity > 0) && (x > (this.#lineStartX + (this.#deltaX * 20)))) || ((this.#flowPolarity < 0) && (x < (this.#lineStartX + (this.#deltaX * 20)))))
+			if (((this.#flowPolarity > 0) && (x < (this.#lineStartX + (this.#deltaX * 20)))) || ((this.#flowPolarity < 0) && (x < (this.#lineStartX + (this.#deltaX * 20)))))
 			{
 				fillJoinLine = true;
 				sx = this.#lineStartX;
@@ -203,12 +203,38 @@ class Animation
 		if (this.powerValue !== 0)
 		{
 			// Draw a circle along the path
+			this.#ctx.fillStyle = (this.powerValue * this.#flowPolarity) > 0 ? this.#flowFromColour : this.#flowToColour;
 			this.#ctx.beginPath();
 			this.#ctx.arc(x, y, 5, 0, 2 * Math.PI, false);
-			this.#ctx.fillStyle = (this.powerValue * this.#flowPolarity) > 0 ? this.#flowFromColour : this.#flowToColour;
 			this.#ctx.fill();
+			if (!fillJoinLine)
+			{
+				this.#ctx.beginPath();
+				this.#ctx.arc(x - this.#deltaX * 10, y - this.#deltaY * 10, 3, 0, 2 * Math.PI, false);
+				this.#ctx.fill();
+			}
+		}
+
+		if (this.chargeValue)
+		{
+			// Draw a rectangle in the battery image that is filled with the charge value
+			if (this.chargeValue < 30)
+			{
+				// Fill red if charge is less than 30%
+				this.#ctx.fillStyle = '#FF0000';
+			}
+			else if (this.chargeValue < 50)
+			{
+				// Fill orange if charge is less than 50%
+				this.#ctx.fillStyle = '#FFA500';
+			}
+			else
+			{
+				// Fill green if charge is 50% or more
+				this.#ctx.fillStyle = '#20FF20';
+			}
 			this.#ctx.beginPath();
-			this.#ctx.arc(x - this.#deltaX * 7, y - this.#deltaY * 7, 3, 0, 2 * Math.PI, false);
+			this.#ctx.roundRect(this.#imageX + 15, this.#imageY + 43, 20, (-this.chargeValue / 100) * 30, 2);
 			this.#ctx.fill();
 		}
 	}
@@ -227,6 +253,15 @@ class Animation
 			if (this.#rotation >= 360)
 			{
 				this.#rotation = 0;
+			}
+
+			if ((this.powerValue > 2000) && (this.chargeValue > 90))
+			{
+				// Draw a green circle in the center of the image
+				this.#ctx.beginPath();
+				this.#ctx.arc(this.#imageX + 25, this.#imageY + 25, 10, 0, 2 * Math.PI, false);
+				this.#ctx.fillStyle = '#20FF20';
+				this.#ctx.fill();
 			}
 		}
 		else
@@ -279,7 +314,7 @@ class Animation
 		this.#lineEndY = temp;
 	}
 
-	setPowerValue(value, unit)
+	setPowerValue(value)
 	{
 		if ((((value * this.#flowPolarity) < 0) && (this.#flowDirection > 0)) || (((value * this.#flowPolarity) > 0) && (this.#flowDirection < 0)))
 		{
@@ -287,6 +322,11 @@ class Animation
 		}
 
 		this.powerValue = value;
+	}
+
+	setChargeValue(value)
+	{
+		this.chargeValue = value;
 	}
 
 }

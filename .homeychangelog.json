@@ -118,5 +118,8 @@
 	},
 	"1.1.25": {
 		"en": "Add Power Flow widget."
+	},
+	"1.1.26": {
+		"en": "Update Power Flow Widget to show energy values."
 	}
 }

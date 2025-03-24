@@ -146,22 +146,23 @@
 			if ((panel === PANEL.SOLAR) && flowFieldSolarText)
 			{
 				flowFieldSolarText.setPowerValue(value, unit);
-				flowFieldSolar.setPowerValue(value, unit);
+				flowFieldSolar.setPowerValue(value);
+				flowFieldHomey.setPowerValue(value);
 			}
 			else if ((panel === PANEL.POWER_GRID) && flowFieldGridText)
 			{
 				flowFieldGridText.setPowerValue(value, unit); // Updated to use setPowerValue
-				flowFieldGrid.setPowerValue(value, unit);
+				flowFieldGrid.setPowerValue(value);
 			}
 			else if ((panel === PANEL.BATTERY) && flowFieldBatteryText)
 			{
 				flowFieldBatteryText.setPowerValue(value, unit); // Updated to use setPowerValue
-				flowFieldBattery.setPowerValue(value, unit); // Updated to use setPowerValue
+				flowFieldBattery.setPowerValue(value); // Updated to use setPowerValue
 			}
 			else if ((panel === PANEL.HOME) && flowFieldHomeText)
 			{
 				flowFieldHomeText.setPowerValue(value, unit); // Updated to use setPowerValue
-				flowFieldHome.setPowerValue(value, unit); // Updated to use setPowerValue
+				flowFieldHome.setPowerValue(value); // Updated to use setPowerValue
 			}
 		}
 
@@ -207,21 +208,12 @@
 
 		function setChargeValue(panel, value, unit)
 		{
-			if ((panel === PANEL.SOLAR) && flowFieldSolarText)
-			{
-				flowFieldSolarText.setChargeValue(value, unit);
-			}
-			else if ((panel === PANEL.POWER_GRID) && flowFieldPowerGridText)
-			{
-				flowFieldPowerGridText.setChargeValue(value, unit);
-			}
-			else if ((panel === PANEL.BATTERY) && flowFieldBatteryText)
+			// Only applies to the battery panel
+			if ((panel === PANEL.BATTERY) && flowFieldBatteryText)
 			{
 				flowFieldBatteryText.setChargeValue(value, unit);
-			}
-			else if ((panel === PANEL.HOME) && flowFieldHomeText)
-			{
-				flowFieldHomeText.setChargeValue(value, unit);
+				flowFieldBattery.setChargeValue(value);
+				flowFieldHomey.setChargeValue(value);
 			}
 		}
 	</script>
