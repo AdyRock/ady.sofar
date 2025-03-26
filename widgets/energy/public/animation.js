@@ -1,4 +1,3 @@
-
 export const PANEL = Object.freeze({
 	SOLAR: 1,
 	POWER_GRID: 2,
@@ -139,7 +138,7 @@ class Animation
 		}
 
 		this.#img = new Image();
-		this.#img.onload = function()
+		this.#img.onload = function ()
 		{
 			this.#draw(this.#imageX, this.#imageY, 50, 50);
 		}.bind(this);
@@ -176,7 +175,16 @@ class Animation
 		{
 			this.#ctx.moveTo(this.#lineEndX, this.#lineEndY);
 			this.#ctx.lineTo(this.#lineStartX, this.#lineStartY);
-			if (((this.#flowPolarity > 0) && (x < (this.#lineStartX + (this.#deltaX * 20)))) || ((this.#flowPolarity < 0) && (x < (this.#lineStartX + (this.#deltaX * 20)))))
+			if (this.#lineStartX < 50)
+			{
+				if (((this.#flowPolarity > 0) && (x < (this.#lineStartX + (this.#deltaX * 20)))) || ((this.#flowPolarity < 0) && (x < (this.#lineStartX + (this.#deltaX * 20)))))
+				{
+					fillJoinLine = true;
+					sx = this.#lineStartX;
+					sy = this.#lineStartY;
+				}
+			}
+			else if (((this.#flowPolarity > 0) && (x > (this.#lineStartX + (this.#deltaX * 20)))) || ((this.#flowPolarity < 0) && (x < (this.#lineStartX + (this.#deltaX * 20)))))
 			{
 				fillJoinLine = true;
 				sx = this.#lineStartX;
