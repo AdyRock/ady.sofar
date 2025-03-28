@@ -135,20 +135,15 @@ class TextFields
 		// Check if the charge value is a number and draw it
 		if (typeof this.#chargeValue === 'number')
 		{
-			this.#ctx.font = '15px Arial';
+			this.#ctx.font = '13px Arial';
 
-			const textWidth = this.#ctx.measureText(`${this.#chargeValue}${this.#chargeUnit}`).width;
-			const textHeight = this.#ctx.measureText(`${this.#chargeValue}${this.#chargeUnit}`).actualBoundingBoxAscent + this.#ctx.measureText(`${this.#chargeValue}${this.#chargeUnit}`).actualBoundingBoxDescent;
-			// Draw a box for the text background
-			const backColour = window.getComputedStyle(document.body).getPropertyValue('--homey-background-color').trim();
-			const alpha = 0.05;
-			const rgbaColour = backColour.replace(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/, `rgba($1, $2, $3, ${alpha})`);
-			this.#ctx.fillStyle = rgbaColour;
-			this.#ctx.fillRect(this.#textX - 25 - (textWidth / 2), this.#textY + (textHeight / 2), textWidth, textHeight + 5);
+			const textWidth = this.#ctx.measureText(`${this.#chargeValue}`).width;
+			const textHeight = this.#ctx.measureText(`${this.#chargeValue}`).actualBoundingBoxAscent + this.#ctx.measureText(`${this.#chargeValue}`).actualBoundingBoxDescent;
 			this.#ctx.fillStyle = this.#foreColor;
 
 			// Draw the value centered about the image width above the image so work out the width of the text and subtract it from the x position
-			this.#ctx.fillText(`${this.#chargeValue}${this.#chargeUnit}`, (this.#textX - 25) - (textWidth / 2), this.#textY + 20);
+			this.#ctx.fillText(`${this.#chargeValue}`, (this.#textX - 25) - (textWidth / 2), this.#textY + 51);
+			this.#ctx.fillText(`${this.#chargeUnit}`, (this.#textX - 23) - (textWidth / 2), this.#textY + 54 + textHeight);
 		}
 	}
 

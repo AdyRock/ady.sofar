@@ -242,7 +242,7 @@ class Animation
 				this.#ctx.fillStyle = '#20FF20';
 			}
 			this.#ctx.beginPath();
-			this.#ctx.roundRect(this.#imageX + 15, this.#imageY + 43, 20, (-this.chargeValue / 100) * 30, 2);
+			this.#ctx.roundRect(this.#imageX + 12, this.#imageY + 47, 26, (-this.chargeValue / 100) * 39, 5);
 			this.#ctx.fill();
 		}
 	}
