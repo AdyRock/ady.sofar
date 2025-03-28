@@ -5,7 +5,7 @@
 if (process.env.DEBUG === '1')
 {
 	// eslint-disable-next-line node/no-unsupported-features/node-builtins, global-require
-//	require('inspector').open(9229, '0.0.0.0', true);
+	// require('inspector').open(9229, '0.0.0.0', true);
 }
 
 const Hook = require('console-hook');
@@ -162,6 +162,10 @@ class MyApp extends Homey.App
 								}
 							}
 						}
+					}
+					else
+					{
+						this.updateLog(`Missing one or more of Frequency = ${result.Grid_Frequency}, Consumption = ${result.Consumption}, Grid_Voltage = ${result.Grid_Voltage}, Total_Import = ${result.Total_Import}`, 0);
 					}
 				}
 				else

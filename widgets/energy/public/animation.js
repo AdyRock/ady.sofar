@@ -151,7 +151,7 @@ class Animation
 		this.#ctx.drawImage(this.#img, this.#imageX, this.#imageY, 50, 50);
 
 		this.#ctx.strokeStyle = '#4588f5';
-		this.#ctx.lineWidth = 5;
+		this.#ctx.lineWidth = 2;
 		this.#ctx.jointStyle = 'round';
 
 		let fillJoinLine = false;
