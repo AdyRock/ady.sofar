@@ -137,7 +137,7 @@
 					{
 						stopElement.style.display = itemDisplyType;
 						getRegistersElement.style.display = "none";
-						clearRegistersElement.style.display = "none";					
+						clearRegistersElement.style.display = "none";
 					}
 				}
 			});
@@ -162,6 +162,8 @@
 
 			Homey.on('ady.sofar.regupdated', function(data)
 			{
+				waitCursor(false);
+
 				sendResponseElement.value += `${data.result}`;
 				if (data.result == "Finished")
 				{
@@ -249,6 +251,9 @@
 			getRegistersElement.addEventListener('click', function(e)
 			{
 				waitCursor(true);
+				stopElement.style.display = itemDisplyType;
+				getRegistersElement.style.display = "none";
+				clearRegistersElement.style.display = "none";
 
 				Homey.api('POST', '/getRegisters/',
 				{
@@ -256,19 +261,16 @@
 					count: commandDataNumElement.value,
 				}, function(err, result)
 				{
-					waitCursor(false);
 					if (err)
 					{
 						stopElement.style.display = "none";
 						getRegistersElement.style.display = itemDisplyType;
 						clearRegistersElement.style.display = itemDisplyType;
+						waitCursor(false);
 						return Homey.alert(err);
 					}
 					else
 					{
-						stopElement.style.display = itemDisplyType;
-						getRegistersElement.style.display = "none";
-						clearRegistersElement.style.display = "none";
 						sendResponseElement.value += result;
 					}
 				});
