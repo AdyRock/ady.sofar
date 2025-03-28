@@ -271,6 +271,14 @@ class Animation
 				this.#ctx.fillStyle = '#20FF20';
 				this.#ctx.fill();
 			}
+			else
+			{
+				// Draw a white circle in the center of the image
+				this.#ctx.beginPath();
+				this.#ctx.arc(this.#imageX + 25, this.#imageY + 25, 15, 0, 2 * Math.PI, false);
+				this.#ctx.fillStyle = '#FFFFFF';
+				this.#ctx.fill();
+			}
 		}
 		else
 		{

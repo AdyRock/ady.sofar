@@ -9,3 +9,19 @@ canvas {
 	top: 0;
 	left: 0;
 }
+
+body {
+	margin: 0;
+	/* Remove default margin */
+	height: 100vh;
+	/* Ensure the body takes the full viewport height */
+	background: linear-gradient(180deg, rgb(0, 130, 250) 0%, rgba(192, 244, 247, 1) 52%, rgba(236, 242, 244, 1) 60%, rgba(236, 242, 244, 1) 100%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Dark Mode */
+.homey-dark-mode body{
+	background: linear-gradient(180deg, rgb(25, 25, 112) 0%, rgb(59, 61, 74) 50%, rgb(31, 40, 41) 100%);
+}

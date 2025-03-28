@@ -117,7 +117,7 @@ function setupCanvases()
 	canvasHomey.style.left = `${window.innerWidth / 2 - 25}px`;
 	canvasHomey.style.right = `${window.innerWidth / 2 + 25}px`;
 	canvasHomey.style.bottom = `${window.innerHeight / 2 + 25}px`;
-	canvasHomey.style.background = window.getComputedStyle(document.body).getPropertyValue('--homey-background-color');
+	// canvasHomey.style.background = window.getComputedStyle(document.body).getPropertyValue('--homey-background-color');
 	ctxHomey = canvasHomey.getContext('2d');
 	canvasHomey.width = 50;
 	canvasHomey.height = 50;
