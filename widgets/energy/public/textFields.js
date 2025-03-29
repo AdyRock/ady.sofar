@@ -139,11 +139,11 @@ class TextFields
 
 			const textWidth = this.#ctx.measureText(`${this.#chargeValue}`).width;
 			const textHeight = this.#ctx.measureText(`${this.#chargeValue}`).actualBoundingBoxAscent + this.#ctx.measureText(`${this.#chargeValue}`).actualBoundingBoxDescent;
-			this.#ctx.fillStyle = this.#foreColor;
+			this.#ctx.fillStyle = '#000000';
 
 			// Draw the value centered about the image width above the image so work out the width of the text and subtract it from the x position
 			this.#ctx.fillText(`${this.#chargeValue}`, (this.#textX - 25) - (textWidth / 2), this.#textY + 51);
-			this.#ctx.fillText(`${this.#chargeUnit}`, (this.#textX - 23) - (textWidth / 2), this.#textY + 54 + textHeight);
+			this.#ctx.fillText(`${this.#chargeUnit}`, (this.#textX - 19) - (textWidth / 2), this.#textY + 54 + textHeight);
 		}
 	}
 

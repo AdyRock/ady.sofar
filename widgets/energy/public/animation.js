@@ -215,16 +215,22 @@ class Animation
 			this.#ctx.beginPath();
 			this.#ctx.arc(x, y, 5, 0, 2 * Math.PI, false);
 			this.#ctx.fill();
-			if (!fillJoinLine)
-			{
-				this.#ctx.beginPath();
-				this.#ctx.arc(x - this.#deltaX * 10, y - this.#deltaY * 10, 3, 0, 2 * Math.PI, false);
-				this.#ctx.fill();
-			}
+			// if (!fillJoinLine)
+			// {
+			// 	this.#ctx.beginPath();
+			// 	this.#ctx.arc(x - this.#deltaX * 10, y - this.#deltaY * 10, 3, 0, 2 * Math.PI, false);
+			// 	this.#ctx.fill();
+			// }
 		}
 
 		if (this.chargeValue)
 		{
+			// File empty space with white
+			this.#ctx.fillStyle = '#EFEFEF';
+			this.#ctx.beginPath();
+			this.#ctx.roundRect(this.#imageX + 12, this.#imageY + 47, 26, -39, 5);
+			this.#ctx.fill();
+
 			// Draw a rectangle in the battery image that is filled with the charge value
 			if (this.chargeValue < 30)
 			{
@@ -267,7 +273,7 @@ class Animation
 			{
 				// Draw a green circle in the center of the image
 				this.#ctx.beginPath();
-				this.#ctx.arc(this.#imageX + 25, this.#imageY + 25, 10, 0, 2 * Math.PI, false);
+				this.#ctx.arc(this.#imageX + 25, this.#imageY + 25, 15, 0, 2 * Math.PI, false);
 				this.#ctx.fillStyle = '#20FF20';
 				this.#ctx.fill();
 			}
