@@ -127,5 +127,8 @@
 	},
 	"1.1.28": {
 		"en": "Changed Grid Power register for sofar_g3hyd to 1199."
+	},
+	"1.1.29": {
+		"en": "Fix for detecting 60Hz grid frequency."
 	}
 }

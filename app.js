@@ -240,7 +240,7 @@ class MyApp extends Homey.App
 				this.updateLog(`Frequency ${frequency / 100} is not valid`, 0);
 				return null;
 			}
-			if ((frequency > 5100) && (frequency < 6300))
+			if ((frequency > 5100) && (frequency < 5700))
 			{
 				this.updateLog(`Frequency ${frequency / 100} is not valid`, 0);
 				return null;

@@ -1,5 +1,5 @@
-
-
+/* eslint-disable node/no-unsupported-features/es-syntax */
+/* eslint-disable no-nested-ternary */
 class TextFields
 {
 
@@ -173,4 +173,5 @@ class TextFields
 
 }
 
+// eslint-disable-next-line import/prefer-default-export
 export { TextFields };
