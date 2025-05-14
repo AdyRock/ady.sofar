@@ -130,5 +130,8 @@
 	},
 	"1.1.29": {
 		"en": "Fix for detecting 60Hz grid frequency."
+	},
+	"1.1.30": {
+		"en": "Fix check for Total_Import on maps that don't have it."
 	}
 }

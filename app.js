@@ -71,6 +71,8 @@ class MyApp extends Homey.App
 				const ip = this.homeyIP.split(':');
 
 				this.scanner = new Scanner(this.homey, ip[0]);
+				this.homey.app.updateLog('Searching for inverters on the LAN', 0);
+
 				this.scanner.startScanning(this.scannerFoundADevice);
 			}
 		}
@@ -138,13 +140,21 @@ class MyApp extends Homey.App
 		{
 			this.updateLog('Get Data');
 
+			// make sure we have a valid inverter
+			if (this.lanSensors.length === 0)
+			{
+				this.updateLog('No inverters found', 0);
+				return;
+			}
+
+			// Loop through all the inverters and get the data
 			for (const sensor of this.lanSensors)
 			{
 				const result = await sensor.getStatistics();
 
 				if ((result !== null) && (result.Grid_Frequency !== 0))
 				{
-					if ((result.Consumption) && (result.Grid_Voltage) && (result.Total_Import))
+					if ((result.Consumption) && (result.Grid_Voltage))
 					{
 						const serial = sensor.getSerial();
 
@@ -165,7 +175,7 @@ class MyApp extends Homey.App
 					}
 					else
 					{
-						this.updateLog(`Missing one or more of Frequency = ${result.Grid_Frequency}, Consumption = ${result.Consumption}, Grid_Voltage = ${result.Grid_Voltage}, Total_Import = ${result.Total_Import}`, 0);
+						this.updateLog(`Missing one or more of Frequency = ${result.Grid_Frequency}, Consumption = ${result.Consumption}, Grid_Voltage = ${result.Grid_Voltage}`, 0);
 					}
 				}
 				else
