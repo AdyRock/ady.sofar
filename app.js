@@ -154,7 +154,7 @@ class MyApp extends Homey.App
 
 				if ((result !== null) && (result.Grid_Frequency !== 0))
 				{
-					if ((result.Consumption) && (result.Grid_Voltage))
+					if (result.Grid_Voltage)
 					{
 						const serial = sensor.getSerial();
 
@@ -175,7 +175,7 @@ class MyApp extends Homey.App
 					}
 					else
 					{
-						this.updateLog(`Missing one or more of Frequency = ${result.Grid_Frequency}, Consumption = ${result.Consumption}, Grid_Voltage = ${result.Grid_Voltage}`, 0);
+						this.updateLog(`Missing one or more of Frequency = ${result.Grid_Frequency}, Grid_Voltage = ${result.Grid_Voltage}`, 0);
 					}
 				}
 				else

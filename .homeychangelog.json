@@ -133,5 +133,8 @@
 	},
 	"1.1.30": {
 		"en": "Fix check for Total_Import on maps that don't have it."
+	},
+	"1.1.31": {
+		"en": "Fix check for Consumption on maps that don't have it."
 	}
 }
