@@ -13,7 +13,8 @@
 		"measure_voltage.battery",
 		"measure_current.battery",
 		"measure_temperature.battery",
-		"measure_cycles.battery"
+		"measure_cycles.battery",
+		"measure_SOH"
 	],
 	"capabilitiesOptions": {
 		"meter_power.charge_today": {

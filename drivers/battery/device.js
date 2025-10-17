@@ -44,6 +44,14 @@ class BatteryDevice extends LanDevice
 				this.setCapabilityValue('measure_current.battery', data.Battery_Current).catch(this.error);
 				this.setCapabilityValue('measure_temperature.battery', data.Battery_Temperature).catch(this.error);
 				this.setCapabilityValue('measure_cycles.battery', data.Battery_Cycles).catch(this.error);
+				if (data.Battery_SOH !== undefined)
+				{
+					if (!this.hasCapability('measure_SOH'))
+					{
+						await this.addCapability('measure_SOH');
+					}
+					this.setCapabilityValue('measure_SOH', data.Battery_SOH).catch(this.error);
+				}
 			}
 		}
 		catch (err)
