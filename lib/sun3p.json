@@ -194,7 +194,7 @@
 					]
 				},
 				{
-					"name": "Battery Voltage",
+					"name": "Battery_Voltage",
 					"uom": "V",
 					"scale": 0.01,
 					"rule": 1,
@@ -393,7 +393,7 @@
 						},
 						{
 							"key": 1,
-							"value": "self test"
+							"value": "self_test"
 						},
 						{
 							"key": 2,

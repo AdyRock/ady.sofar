@@ -211,7 +211,7 @@
 					]
 				},
 				{
-					"name": "Battery Voltage",
+					"name": "Battery_Voltage",
 					"uom": "V",
 					"scale": 0.1,
 					"rule": 1,

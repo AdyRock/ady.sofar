@@ -237,6 +237,15 @@
 					"registers": [
 						556
 					]
+				},
+				{
+					"name": "Battery_SOH",
+					"uom": "%",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						567
+					]
 				}
 			]
 		},
