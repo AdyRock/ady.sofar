@@ -350,7 +350,7 @@ class GridDevice extends LanDevice
 					}
 				}
 
-				if (this.hasCapability('meter_power.today_export') && data.Export_Today >= 0)
+				if (this.hasCapability('meter_power.today_export') && data.Export_Today > 0)
 				{
 					this.setCapabilityValue('meter_power.today_export', data.Export_Today).catch(this.error);
 

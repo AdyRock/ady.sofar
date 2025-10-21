@@ -25,6 +25,12 @@ class BatteryDevice extends LanDevice
 
 			if (serial === dd.id)
 			{
+				if (data.Battery_Charge > 100 || data.Battery_Charge < 5)
+				{
+					this.setUnavailable('Battery charge out of range').catch(this.error);
+					return;
+				}
+
 				this.setAvailable();
 
 				this.setCapabilityValue('measure_power', data.Battery_Power).catch(this.error);
