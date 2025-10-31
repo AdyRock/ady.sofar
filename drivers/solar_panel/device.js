@@ -34,57 +34,14 @@ class SolarPanelDevice extends LanDevice
 						this.sumPV1_PV2 = true;
 					}
 
-					if (this.hasCapability('meter_power.today'))
-					{
-						if (!group.items.find((element) => element.name === 'Daily_Production'))
-						{
-							await this.removeCapabilitySafe('meter_power.today');
-						}
-					}
-					else if (group.items.find((element) => element.name === 'Daily_Production'))
-					{
-						await this.addCapabilitySafe('meter_power.today');
-					}
-
-					if (this.hasCapability('measure_generation_time'))
-					{
-						if (!group.items.find((element) => element.name === 'Generation_Time_Today'))
-						{
-							await this.removeCapabilitySafe('measure_generation_time');
-						}
-					}
-					else if (group.items.find((element) => element.name === 'Generation_Time_Today'))
-					{
-						await this.addCapabilitySafe('measure_generation_time');
-					}
-
-					if (this.hasCapability('measure_generation_time_total'))
-					{
-						if (!group.items.find((element) => element.name === 'Total_Generation'))
-						{
-							await this.removeCapabilitySafe('measure_generation_time_total');
-						}
-					}
-					else if (group.items.find((element) => element.name === 'Total_Generation'))
-					{
-						await this.addCapabilitySafe('measure_generation_time_total');
-					}
+					await this.addRemoveCapability(['meter_power.today'], group.items, 'Daily_Production');
+					await this.addRemoveCapability(['measure_generation_time'], group.items, 'Generation_Time_Today');
+					await this.addRemoveCapability(['measure_generation_time_total'], group.items, 'Generation_Time_Total');
 				}
 
 				if (group.group === 'inverter')
 				{
-					if (this.hasCapability('meter_power'))
-					{
-						if (!group.items.find((element) => element.name === 'Total_Generation'))
-						{
-							await this.removeCapabilitySafe('meter_power');
-						}
-					}
-					else
-					if (group.items.find((element) => element.name === 'Total_Generation'))
-					{
-						await this.addCapabilitySafe('meter_power');
-					}
+					await this.addRemoveCapability(['meter_power'], group.items, 'Total_Generation');
 				}
 			}
 		}

@@ -72,56 +72,13 @@ class InverterDevice extends LanDevice
 			{
 				if (group.group === 'panel')
 				{
-					if (this.hasCapability('meter_power.today_solar'))
-					{
-						if (!group.items.find((element) => element.name === 'Daily_Production'))
-						{
-							await this.removeCapabilitySafe('meter_power.today_solar');
-						}
-					}
-					else
-					if (group.items.find((element) => element.name === 'Daily_Production'))
-					{
-						await this.addCapabilitySafe('meter_power.today_solar');
-					}
+					await this.addRemoveCapability(['meter_power.today_solar'], group.items, 'Daily_Production');
 				}
 				else if (group.group === 'inverter')
 				{
-					if (this.hasCapability('measure_power.consumption'))
-					{
-						if (!group.items.find((element) => element.name === 'Consumption'))
-						{
-							await this.removeCapabilitySafe('measure_power.consumption');
-						}
-					}
-					else if (group.items.find((element) => element.name === 'Consumption'))
-					{
-						await this.addCapabilitySafe('measure_power.consumption');
-					}
-
-					if (this.hasCapability('meter_power.today_consumption'))
-					{
-						if (!group.items.find((element) => element.name === 'Consumed_Today'))
-						{
-							await this.removeCapabilitySafe('meter_power.today_consumption');
-						}
-					}
-					else if (group.items.find((element) => element.name === 'Consumed_Today'))
-					{
-						await this.addCapabilitySafe('meter_power.today_consumption');
-					}
-
-					if (this.hasCapability('system_status.country'))
-					{
-						if (!group.items.find((element) => element.name === 'Country'))
-						{
-							await this.removeCapabilitySafe('system_status.country');
-						}
-					}
-					else if (group.items.find((element) => element.name === 'Country'))
-					{
-						await this.addCapabilitySafe('system_status.country');
-					}
+					await this.addRemoveCapability(['measure_power.consumption'], group.items, 'Consumption');
+					await this.addRemoveCapability(['meter_power.today_consumption'], group.items, 'Consumed_Today');
+					await this.addRemoveCapability(['system_status.country'], group.items, 'Country');
 				}
 			}
 		}
@@ -148,12 +105,22 @@ class InverterDevice extends LanDevice
 
 				this.setAvailable();
 
-				this.setCapabilityValue('measure_power.consumption', data.Consumption).catch(this.error);
-				this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: data.Consumption });
+				if (this.hasCapability('measure_power.consumption'))
+				{
+					this.setCapabilityValue('measure_power.consumption', data.Consumption).catch(this.error);
+					this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: data.Consumption });
+				}
 
-				this.setCapabilityValue('meter_power.today_solar', data.Daily_Production).catch(this.error);
-				this.setCapabilityValue('meter_power.today_consumption', data.Consumed_Today).catch(this.error);
-				this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'meter_power.today_consumption', value: data.Consumed_Today });
+				if (this.hasCapability('meter_power.today_solar'))
+				{
+					this.setCapabilityValue('meter_power.today_solar', data.Daily_Production).catch(this.error);
+				}
+
+				if (this.hasCapability('meter_power.today_consumption'))
+				{
+					this.setCapabilityValue('meter_power.today_consumption', data.Consumed_Today).catch(this.error);
+					this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'meter_power.today_consumption', value: data.Consumed_Today });
+				}
 
 				this.setCapabilityValue('system_status', data.Inverter_Status).catch(this.error);
 

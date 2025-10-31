@@ -158,51 +158,36 @@ class GridDevice extends LanDevice
 		const inverter = this.homey.app.getInverter(serial);
 		if (inverter)
 		{
-			for (const group of inverter.inverter.parameter_definition.parameters)
+			// get the 'grid' group from the parameter definitions in the inverter
+			const group = inverter.inverter.parameter_definition.parameters.find((group) => group.group === 'grid');
+			if (group)
 			{
-				if (group.group === 'grid')
+				// Set this to avoid checking again until next device initialization, but it will be cleared if a parameter is missing and we have to check again
+				this.CapabilitiesChecked = true;
+
+				// Check for each capability if the parameter exists
+				if (this.getSetting('dual_rate'))
 				{
-					if (this.hasCapability('meter_power.today_import'))
-					{
-						if (!group.items.find((element) => element.name === 'Import_Today'))
-						{
-							await this.removeCapabilitySafe('meter_power.today_import');
-							await this.removeCapabilitySafe('meter_power.hi_rate_import');
-							await this.removeCapabilitySafe('meter_cost.hi_rate_import');
-							await this.removeCapabilitySafe('meter_power.low_rate_import');
-							await this.removeCapabilitySafe('meter_cost.low_rate_import');
-							await this.removeCapabilitySafe('meter_cost');
-						}
-					}
-
-					if (this.hasCapability('meter_power.today_export'))
-					{
-						if (!group.items.find((element) => element.name === 'Export_Today'))
-						{
-							await this.removeCapabilitySafe('meter_power.today_export');
-							await this.removeCapabilitySafe('meter_cost.today_export');
-							await this.removeCapabilitySafe('meter_cost.today_total');
-						}
-					}
-
-					if (this.hasCapability('meter_power.total_import'))
-					{
-						if (!group.items.find((element) => element.name === 'Total_Import'))
-						{
-							await this.removeCapabilitySafe('meter_power.total_import');
-						}
-					}
-
-					if (this.hasCapability('meter_power.total_export'))
-					{
-						if (!group.items.find((element) => element.name === 'Total_Export'))
-						{
-							await this.removeCapabilitySafe('meter_power.total_export');
-						}
-					}
-
-					this.CapabilitiesChecked = true;
+					await this.addRemoveCapability(['meter_power.today_import', 'meter_power.hi_rate_import', 'meter_power.low_rate_import', 'meter_cost.today_import', 'meter_cost.hi_rate_import', 'meter_cost.low_rate_import'], group.items, 'Import_Today');
 				}
+				else
+				{
+					await this.addRemoveCapability(['meter_power.today_import', 'meter_cost.today_import'], group.items, 'Import_Today');
+
+					// Make sure the dual rate capabilities are removed
+					await this.removeCapabilitySafe('meter_power.hi_rate_import');
+					await this.removeCapabilitySafe('meter_power.low_rate_import');
+					await this.removeCapabilitySafe('meter_cost.hi_rate_import');
+					await this.removeCapabilitySafe('meter_cost.low_rate_import');
+				}
+
+				// Check for export capabilities
+				await this.addRemoveCapability(['meter_power.today_export', 'meter_cost.today_export', 'meter_cost.today_total'], group.items, 'Export_Today');
+
+				// Total import/export capabilities
+				await this.addRemoveCapability(['meter_power.total_import'], group.items, 'Total_Import');
+
+				await this.addRemoveCapability(['meter_power.total_export'], group.items, 'Total_Export');
 			}
 		}
 	}
@@ -223,7 +208,6 @@ class GridDevice extends LanDevice
 				if (!this.CapabilitiesChecked)
 				{
 					await this.checkCapabilities(dd.id);
-					this.CapabilitiesChecked = true;
 				}
 
 				this.setAvailable();
