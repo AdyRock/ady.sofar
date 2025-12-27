@@ -173,8 +173,8 @@
         "batteries": [
           "INTERNAL"
         ],
-        "cumulativeImportedCapability": "meter_power.charge_total",
-        "cumulativeExportedCapability": "meter_power.discharge_total"
+        "meterPowerImportedCapability": "meter_power.charge_total",
+        "meterPowerExportedCapability": "meter_power.discharge_total"
       },
       "id": "battery"
     },

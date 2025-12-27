@@ -138,56 +138,66 @@ class MyApp extends Homey.App
 	{
 		if (this.useLocalDevice)
 		{
-			this.updateLog('Get Data');
-
-			// make sure we have a valid inverter
-			if (this.lanSensors.length === 0)
+			try
 			{
-				this.updateLog('No inverters found', 0);
-				return;
-			}
+				this.updateLog('Get Data');
 
-			// Loop through all the inverters and get the data
-			for (const sensor of this.lanSensors)
-			{
-				const result = await sensor.getStatistics();
-
-				if ((result !== null) && (result.Grid_Frequency !== 0))
+				// make sure we have a valid inverter
+				if (this.lanSensors.length === 0)
 				{
-					if (result.Grid_Voltage)
+					this.updateLog('No inverters found', 0);
+					return;
+				}
+
+				// Loop through all the inverters and get the data
+				for (const sensor of this.lanSensors)
+				{
+					const result = await sensor.getStatistics();
+
+					if ((result !== null) && (result.Grid_Frequency !== 0))
 					{
-						const serial = sensor.getSerial();
-
-						this.updateLog(`Inverter data: : ${serial}, ${this.varToString(result)}`);
-
-						const drivers = this.homey.drivers.getDrivers();
-						for (const driver of Object.values(drivers))
+						if (result.Grid_Voltage)
 						{
-							const devices = driver.getDevices();
-							for (const device of Object.values(devices))
+							const serial = sensor.getSerial();
+
+							this.updateLog(`Inverter data: : ${serial}, ${this.varToString(result)}`);
+
+							const drivers = this.homey.drivers.getDrivers();
+							for (const driver of Object.values(drivers))
 							{
-								if (device.updateLanDeviceValues)
+								const devices = driver.getDevices();
+								for (const device of Object.values(devices))
 								{
-									device.updateLanDeviceValues(serial, result);
+									if (device.updateLanDeviceValues)
+									{
+										device.updateLanDeviceValues(serial, result);
+									}
 								}
 							}
+						}
+						else
+						{
+							this.updateLog(`Missing one or more of Frequency = ${result.Grid_Frequency}, Grid_Voltage = ${result.Grid_Voltage}`, 0);
 						}
 					}
 					else
 					{
-						this.updateLog(`Missing one or more of Frequency = ${result.Grid_Frequency}, Grid_Voltage = ${result.Grid_Voltage}`, 0);
+						this.updateLog('No Data');
 					}
 				}
-				else
-				{
-					this.updateLog('No Data');
-				}
 			}
-
-			this.lanSensorTimer = this.homey.setTimeout(async () =>
+			catch (err)
 			{
-				this.getInverterData();
-			}, 10000);
+				this.updateLog(`Error getting inverter data: ${err.message}`);
+			}
+			finally
+			{
+				// Always reschedule the timer
+				this.lanSensorTimer = this.homey.setTimeout(async () =>
+				{
+					this.getInverterData();
+				}, 10000);
+			}
 		}
 	}
 
