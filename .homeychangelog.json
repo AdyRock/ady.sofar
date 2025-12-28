@@ -148,5 +148,8 @@
 	},
 	"1.1.35": {
 		"en": "Fix adding/removing capabilities based on available data."
+	},
+	"1.1.36": {
+		"en": "Improved error handling."
 	}
 }
