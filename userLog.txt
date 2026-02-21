@@ -1,0 +1,4119 @@
+Sofar & Solarman diag log (1.1.36)
+Homey User
+me
+09:14 (1 hours ago)
+": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:09:02.061Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:09:02.063Z
+Connection closed 
+
+* 2026-02-21T09:09:02.155Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:09:02.157Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:09:02.158Z
+Connection closed 
+
+* 2026-02-21T09:09:12.186Z
+Get Data
+
+* 2026-02-21T09:09:12.187Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:09:12.281Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:09:12.284Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:09:12.286Z
+Connection closed 
+
+* 2026-02-21T09:09:12.373Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:09:12.375Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:09:12.378Z
+Connection closed 
+
+* 2026-02-21T09:09:12.494Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:09:12.496Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:09:12.500Z
+Connection closed 
+
+* 2026-02-21T09:09:12.588Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:09:12.590Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:09:12.592Z
+Connection closed 
+
+* 2026-02-21T09:09:22.599Z
+Get Data
+
+* 2026-02-21T09:09:22.600Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:09:22.691Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:09:22.693Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:09:22.695Z
+Connection closed 
+
+* 2026-02-21T09:09:22.794Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:09:22.798Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:09:22.803Z
+Connection closed 
+
+* 2026-02-21T09:09:22.904Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:09:22.906Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:09:22.909Z
+Connection closed 
+
+* 2026-02-21T09:09:22.999Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:09:23.001Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:09:23.003Z
+Connection closed 
+
+* 2026-02-21T09:09:33.029Z
+Get Data
+
+* 2026-02-21T09:09:33.031Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:09:35.200Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:09:35.203Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:09:35.205Z
+Connection closed 
+
+* 2026-02-21T09:09:35.342Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:09:35.346Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:09:35.351Z
+Connection closed 
+
+* 2026-02-21T09:09:35.453Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:09:35.457Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:09:35.461Z
+Connection closed 
+
+* 2026-02-21T09:09:35.547Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:09:35.550Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:09:35.554Z
+Connection closed 
+
+* 2026-02-21T09:09:45.573Z
+Get Data
+
+* 2026-02-21T09:09:45.574Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:09:45.708Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:09:45.709Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:09:45.712Z
+Connection closed 
+
+* 2026-02-21T09:09:45.810Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:09:45.812Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:09:45.815Z
+Connection closed 
+
+* 2026-02-21T09:09:45.962Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:09:45.964Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:09:45.967Z
+Connection closed 
+
+* 2026-02-21T09:09:46.056Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:09:46.058Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:09:46.059Z
+Connection closed 
+
+* 2026-02-21T09:09:56.081Z
+Get Data
+
+* 2026-02-21T09:09:56.083Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:09:56.186Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:09:56.189Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:09:56.191Z
+Connection closed 
+
+* 2026-02-21T09:09:56.288Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:09:56.290Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:09:56.293Z
+Connection closed 
+
+* 2026-02-21T09:09:56.410Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:09:56.412Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:09:56.415Z
+Connection closed 
+
+* 2026-02-21T09:09:56.502Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:09:56.504Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:09:56.506Z
+Connection closed 
+
+* 2026-02-21T09:10:06.519Z
+Get Data
+
+* 2026-02-21T09:10:06.521Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:10:09.256Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:10:09.263Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:10:09.268Z
+Connection closed 
+
+* 2026-02-21T09:10:09.370Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:10:09.373Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:10:09.377Z
+Connection closed 
+
+* 2026-02-21T09:10:09.493Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:10:09.495Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:10:09.498Z
+Connection closed 
+
+* 2026-02-21T09:10:09.584Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:10:09.587Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:10:09.589Z
+Connection closed 
+
+* 2026-02-21T09:10:19.628Z
+Get Data
+
+* 2026-02-21T09:10:19.630Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:10:19.730Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:10:19.733Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:10:19.735Z
+Connection closed 
+
+* 2026-02-21T09:10:19.831Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:10:19.834Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:10:19.837Z
+Connection closed 
+
+* 2026-02-21T09:10:19.953Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:10:19.955Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:10:19.958Z
+Connection closed 
+
+* 2026-02-21T09:10:20.054Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:10:20.056Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:10:20.058Z
+Connection closed 
+
+* 2026-02-21T09:10:30.063Z
+Get Data
+
+* 2026-02-21T09:10:30.064Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:10:30.157Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:10:30.159Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:10:30.162Z
+Connection closed 
+
+* 2026-02-21T09:10:30.248Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:10:30.250Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:10:30.252Z
+Connection closed 
+
+* 2026-02-21T09:10:30.369Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:10:30.371Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:10:30.373Z
+Connection closed 
+
+* 2026-02-21T09:10:30.459Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:10:30.461Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:10:30.463Z
+Connection closed 
+
+* 2026-02-21T09:10:40.489Z
+Get Data
+
+* 2026-02-21T09:10:40.490Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:10:40.833Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:10:40.835Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:10:40.837Z
+Connection closed 
+
+* 2026-02-21T09:10:41.002Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:10:41.004Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:10:41.006Z
+Connection closed 
+
+* 2026-02-21T09:10:41.313Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:10:41.315Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:10:41.317Z
+Connection closed 
+
+* 2026-02-21T09:10:41.404Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:10:41.406Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:10:41.408Z
+Connection closed 
+
+* 2026-02-21T09:10:51.437Z
+Get Data
+
+* 2026-02-21T09:10:51.439Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:10:51.822Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:10:51.824Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:10:51.826Z
+Connection closed 
+
+* 2026-02-21T09:10:52.912Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:10:52.913Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:10:52.916Z
+Connection closed 
+
+* 2026-02-21T09:10:54.012Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:10:54.019Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:10:54.024Z
+Connection closed 
+
+* 2026-02-21T09:10:55.083Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:10:55.084Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:10:55.086Z
+Connection closed 
+
+* 2026-02-21T09:11:05.128Z
+Get Data
+
+* 2026-02-21T09:11:05.130Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:11:05.252Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:11:05.256Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:11:05.260Z
+Connection closed 
+
+* 2026-02-21T09:11:06.342Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:11:06.345Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:11:06.350Z
+Connection closed 
+
+* 2026-02-21T09:11:07.442Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:11:07.450Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:11:07.460Z
+Connection closed 
+
+* 2026-02-21T09:11:08.522Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:11:08.525Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:11:08.530Z
+Connection closed 
+
+* 2026-02-21T09:11:18.547Z
+Get Data
+
+* 2026-02-21T09:11:18.548Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:11:18.715Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:11:18.717Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:11:18.720Z
+Connection closed 
+
+* 2026-02-21T09:11:19.815Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:11:19.818Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:11:19.822Z
+Connection closed 
+
+* 2026-02-21T09:11:19.991Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:11:19.994Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:11:19.998Z
+Connection closed 
+
+* 2026-02-21T09:11:20.121Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:11:20.125Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:11:20.127Z
+Connection closed 
+
+* 2026-02-21T09:11:30.134Z
+Get Data
+
+* 2026-02-21T09:11:30.135Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:11:30.224Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:11:30.227Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:11:30.230Z
+Connection closed 
+
+* 2026-02-21T09:11:30.325Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:11:30.330Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:11:30.334Z
+Connection closed 
+
+* 2026-02-21T09:11:30.436Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:11:30.441Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:11:30.445Z
+Connection closed 
+
+* 2026-02-21T09:11:30.528Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:11:30.533Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:11:30.536Z
+Connection closed 
+
+* 2026-02-21T09:11:40.551Z
+Get Data
+
+* 2026-02-21T09:11:40.552Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:11:40.658Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:11:40.660Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:11:40.662Z
+Connection closed 
+
+* 2026-02-21T09:11:40.760Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:11:40.762Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:11:40.765Z
+Connection closed 
+
+* 2026-02-21T09:11:40.885Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:11:40.887Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:11:40.890Z
+Connection closed 
+
+* 2026-02-21T09:11:40.994Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:11:40.996Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:11:40.997Z
+Connection closed 
+
+* 2026-02-21T09:11:51.005Z
+Get Data
+
+* 2026-02-21T09:11:51.006Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:11:51.365Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:11:51.368Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:11:51.370Z
+Connection closed 
+
+* 2026-02-21T09:11:51.465Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:11:51.467Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:11:51.470Z
+Connection closed 
+
+* 2026-02-21T09:11:51.576Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:11:51.578Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:11:51.581Z
+Connection closed 
+
+* 2026-02-21T09:11:51.657Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:11:51.659Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:11:51.662Z
+Connection closed 
+
+* 2026-02-21T09:12:01.684Z
+Get Data
+
+* 2026-02-21T09:12:01.685Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:12:01.798Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:12:01.803Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:12:01.806Z
+Connection closed 
+
+* 2026-02-21T09:12:01.960Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:12:01.962Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:12:01.965Z
+Connection closed 
+
+* 2026-02-21T09:12:02.113Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:12:02.116Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:12:02.124Z
+Connection closed 
+
+* 2026-02-21T09:12:02.218Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:12:02.220Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:12:02.223Z
+Connection closed 
+
+* 2026-02-21T09:12:12.232Z
+Get Data
+
+* 2026-02-21T09:12:12.234Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:12:12.331Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:12:12.334Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:12:12.337Z
+Connection closed 
+
+* 2026-02-21T09:12:12.433Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:12:12.435Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:12:12.438Z
+Connection closed 
+
+* 2026-02-21T09:12:12.554Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:12:12.556Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:12:12.559Z
+Connection closed 
+
+* 2026-02-21T09:12:12.646Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:12:12.648Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:12:12.650Z
+Connection closed 
+
+* 2026-02-21T09:12:22.652Z
+Get Data
+
+* 2026-02-21T09:12:22.654Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:12:23.307Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:12:23.308Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:12:23.311Z
+Connection closed 
+
+* 2026-02-21T09:12:23.408Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:12:23.409Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:12:23.412Z
+Connection closed 
+
+* 2026-02-21T09:12:23.519Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:12:23.521Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:12:23.523Z
+Connection closed 
+
+* 2026-02-21T09:12:23.651Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:12:23.653Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:12:23.655Z
+Connection closed 
+
+* 2026-02-21T09:12:33.660Z
+Get Data
+
+* 2026-02-21T09:12:33.661Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:12:33.756Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:12:33.760Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:12:33.765Z
+Connection closed 
+
+* 2026-02-21T09:12:33.865Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:12:33.870Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:12:33.873Z
+Connection closed 
+
+* 2026-02-21T09:12:34.022Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:12:34.027Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:12:34.031Z
+Connection closed 
+
+* 2026-02-21T09:12:34.110Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:12:34.112Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:12:34.114Z
+Connection closed 
+
+* 2026-02-21T09:12:44.118Z
+Get Data
+
+* 2026-02-21T09:12:44.120Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:12:44.235Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:12:44.237Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:12:44.239Z
+Connection closed 
+
+* 2026-02-21T09:12:44.338Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:12:44.340Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:12:44.342Z
+Connection closed 
+
+* 2026-02-21T09:12:44.449Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:12:44.451Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:12:44.454Z
+Connection closed 
+
+* 2026-02-21T09:12:44.541Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:12:44.543Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:12:44.545Z
+Connection closed 
+
+* 2026-02-21T09:12:54.553Z
+Get Data
+
+* 2026-02-21T09:12:54.555Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:12:54.657Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:12:54.662Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:12:54.666Z
+Connection closed 
+
+* 2026-02-21T09:12:54.760Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:12:54.766Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:12:54.771Z
+Connection closed 
+
+* 2026-02-21T09:12:55.083Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:12:55.085Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:12:55.088Z
+Connection closed 
+
+* 2026-02-21T09:12:55.207Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:12:55.210Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:12:55.212Z
+Connection closed 
+
+* 2026-02-21T09:13:05.240Z
+Get Data
+
+* 2026-02-21T09:13:05.243Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:13:05.345Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:13:05.348Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:13:05.352Z
+Connection closed 
+
+* 2026-02-21T09:13:05.447Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:13:05.450Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:13:05.454Z
+Connection closed 
+
+* 2026-02-21T09:13:05.560Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:13:05.563Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:13:05.567Z
+Connection closed 
+
+* 2026-02-21T09:13:05.641Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:13:05.644Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:13:05.646Z
+Connection closed 
+
+* 2026-02-21T09:13:15.671Z
+Get Data
+
+* 2026-02-21T09:13:15.673Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:13:15.779Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:13:15.782Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:13:15.784Z
+Connection closed 
+
+* 2026-02-21T09:13:15.881Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:13:15.883Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:13:15.886Z
+Connection closed 
+
+* 2026-02-21T09:13:15.992Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:13:15.994Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:13:15.997Z
+Connection closed 
+
+* 2026-02-21T09:13:16.075Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:13:16.077Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:13:16.079Z
+Connection closed 
+
+* 2026-02-21T09:13:26.085Z
+Get Data
+
+* 2026-02-21T09:13:26.086Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:13:26.188Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:13:26.190Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:13:26.192Z
+Connection closed 
+
+* 2026-02-21T09:13:26.289Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:13:26.291Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:13:26.294Z
+Connection closed 
+
+* 2026-02-21T09:13:26.403Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:13:26.404Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:13:26.407Z
+Connection closed 
+
+* 2026-02-21T09:13:26.483Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:13:26.485Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:13:26.486Z
+Connection closed 
+
+* 2026-02-21T09:13:36.514Z
+Get Data
+
+* 2026-02-21T09:13:36.515Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:13:36.617Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:13:36.620Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:13:36.622Z
+Connection closed 
+
+* 2026-02-21T09:13:36.721Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:13:36.723Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:13:36.726Z
+Connection closed 
+
+* 2026-02-21T09:13:36.862Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:13:36.865Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:13:36.867Z
+Connection closed 
+
+* 2026-02-21T09:13:36.949Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:13:36.952Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:13:36.954Z
+Connection closed 
+
+* 2026-02-21T09:13:46.961Z
+Get Data
+
+* 2026-02-21T09:13:46.963Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:13:47.052Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:13:47.054Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:13:47.057Z
+Connection closed 
+
+* 2026-02-21T09:13:47.143Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:13:47.145Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:13:47.149Z
+Connection closed 
+
+* 2026-02-21T09:13:47.264Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:13:47.266Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:13:47.270Z
+Connection closed 
+
+* 2026-02-21T09:13:47.366Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:13:47.368Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:13:47.371Z
+Connection closed 
+
+* 2026-02-21T09:13:57.371Z
+Get Data
+
+* 2026-02-21T09:13:57.373Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:13:57.467Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:13:57.469Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:13:57.472Z
+Connection closed 
+
+* 2026-02-21T09:13:57.569Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:13:57.570Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:13:57.573Z
+Connection closed 
+
+* 2026-02-21T09:13:57.680Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:13:57.681Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:13:57.684Z
+Connection closed 
+
+* 2026-02-21T09:13:57.760Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:13:57.762Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:13:57.763Z
+Connection closed 
+
+* 2026-02-21T09:14:07.785Z
+Get Data
+
+* 2026-02-21T09:14:07.786Z
+send_request: start = 0, end = 5, fc = 3 
+
+* 2026-02-21T09:14:07.914Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    5,
+    0,
+    1,
+    1,
+    4,
+    50,
+    50,
+    49,
+    50,
+    48,
+    50
+  ]
+} 
+
+* 2026-02-21T09:14:07.915Z
+send_request: start = 6, end = 12, fc = 3 
+
+* 2026-02-21T09:14:07.918Z
+Connection closed 
+
+* 2026-02-21T09:14:08.040Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    52,
+    52,
+    48,
+    50,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    24,
+    7,
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:14:08.042Z
+send_request: start = 14, end = 28, fc = 3 
+
+* 2026-02-21T09:14:08.044Z
+Connection closed 
+
+* 2026-02-21T09:14:08.157Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    32,
+    5,
+    17,
+    114,
+    0,
+    0,
+    16,
+    1,
+    192,
+    80,
+    0,
+    0,
+    212,
+    192,
+    0,
+    1,
+    255,
+    255,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    255,
+    255
+  ]
+} 
+
+* 2026-02-21T09:14:08.159Z
+send_request: start = 39, end = 39, fc = 3 
+
+* 2026-02-21T09:14:08.161Z
+Connection closed 
+
+* 2026-02-21T09:14:08.274Z
+Data received:  {
+  "type": "Buffer",
+  "data": [
+    0,
+    0
+  ]
+} 
+
+* 2026-02-21T09:14:08.276Z
+Inverter data: : 2727731439, {
+  "Inverter_Status": "LOOKUP",
+  "Fault_1": "ID01 Grid Over Voltage Protection",
+  "Fault_2": "LOOKUP",
+  "Fault_3": "LOOKUP",
+  "Fault_4": "LOOKUP",
+  "Fault_5": "LOOKUP",
+  "PV1_Power": 0,
+  "PV2_Power": 61510,
+  "PV1_Voltage": 1336.4,
+  "PV2_Voltage": 0,
+  "PV1_Current": 123.38000000000001,
+  "PV2_Current": 0,
+  "Grid_Power": 0,
+  "Daily_Production": 0,
+  "Generation_Time_Total": 5,
+  "Generation_Time_Today": 0,
+  "Grid_Frequency": 81.97,
+  "Grid_Voltage": 446.6,
+  "Grid_Current": 0,
+  "L2_Voltage": 409.70000000000005,
+  "L2_Current": 492.32,
+  "L3_Voltage": 0,
+  "L3_Current": 544.64,
+  "Total_Generation": 131071,
+  "Heatsink_Temperature": 0,
+  "Internal_Temperature": 65535,
+  "Country": "Germany"
+}
+
+* 2026-02-21T09:14:08.277Z
+Connection closed 

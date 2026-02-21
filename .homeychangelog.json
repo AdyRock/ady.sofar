@@ -151,5 +151,8 @@
 	},
 	"1.1.36": {
 		"en": "Improved error handling."
+	},
+	"1.1.37": {
+		"en": "Enhanced scanner robustness with automatic error recovery, retry with exponential backoff, 5-minute no-data watchdog, and coordinated restart cooldowns. Added extra diagnostics to show which profile is selected. Fixed issue where the sun3p profile was not registered in the inverter object. Added extra Voltage and Current entries for 3 phase inverters."
 	}
 }

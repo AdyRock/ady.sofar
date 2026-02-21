@@ -215,14 +215,69 @@ class GridDevice extends LanDevice
 				this.setCapabilityValue('measure_power', -data.Grid_Power).catch(this.error);
 				this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: -data.Grid_Power });
 
+				// Check for voltage on the grid first as some inverters have multiple voltage parameters but not all of them are populated so we want to use the one that is populated
 				if (data.Grid_Voltage)
 				{
 					this.setCapabilityValue('measure_voltage', data.Grid_Voltage).catch(this.error);
 				}
+				else if (data.Grid_Voltage_L1)
+				{
+					this.setCapabilityValue('measure_voltage', data.Grid_Voltage_L1).catch(this.error);
+					if (data.Grid_Voltage_L2)
+					{
+						if (!this.hasCapability('measure_voltage.L2'))
+						{
+							await this.addCapabilitySafe('measure_voltage.L2');
+						}
+						this.setCapabilityValue('measure_voltage.L2', data.Grid_Voltage_L2).catch(this.error);
+					}
+				}
+				else if (data.Grid_Voltage1)
+				{
+					this.setCapabilityValue('measure_voltage', data.Grid_Voltage1).catch(this.error);
+					if (data.Grid_Voltage2)
+					{
+						if (!this.hasCapability('measure_voltage.L2'))
+						{
+							await this.addCapabilitySafe('measure_voltage.L2');
+						}
+						this.setCapabilityValue('measure_voltage.L2', data.Grid_Voltage2).catch(this.error);
+					}
+					if (data.Grid_Voltage3)
+					{
+						if (!this.hasCapability('measure_voltage.L3'))
+						{
+							await this.addCapabilitySafe('measure_voltage.L3');
+						}
+						this.setCapabilityValue('measure_voltage.L3', data.Grid_Voltage3).catch(this.error);
+					}
+				}
+
 				if (data.Grid_Current)
 				{
 					this.setCapabilityValue('measure_current', data.Grid_Current).catch(this.error);
 				}
+				else if (data.Grid_Current1)
+				{
+					this.setCapabilityValue('measure_current', data.Grid_Current1).catch(this.error);
+					if (data.Grid_Current2)
+					{
+						if (!this.hasCapability('measure_current.L2'))
+						{
+							await this.addCapabilitySafe('measure_current.L2');
+						}
+						this.setCapabilityValue('measure_current.L2', data.Grid_Current2).catch(this.error);
+					}
+					if (data.Grid_Current3)
+					{
+						if (!this.hasCapability('measure_current.L3'))
+						{
+							await this.addCapabilitySafe('measure_current.L3');
+						}
+						this.setCapabilityValue('measure_current.L3', data.Grid_Current3).catch(this.error);
+					}
+				}
+
 				if (data.Grid_Frequency)
 				{
 					this.setCapabilityValue('measure_frequency', data.Grid_Frequency).catch(this.error);

@@ -41,7 +41,7 @@ class MyApp extends Homey.App
 		});
 
 		this.log('Solarman has been initialized');
-		this.useLocalDevice = false;
+		this.localPollingEnabled = false;
 		this.diagLog = '';
 
 		if (process.env.DEBUG === '1')
@@ -55,6 +55,14 @@ class MyApp extends Homey.App
 
 		this.scannerFoundADevice = this.scannerFoundADevice.bind(this);
 		this.getInverterData = this.getInverterData.bind(this);
+		this.restartScannerIfNoData = this.restartScannerIfNoData.bind(this);
+		this.tryRestartScanner = this.tryRestartScanner.bind(this);
+
+		this.lastValidInverterDataAt = Date.now();
+		this.lastScannerRestartAt = 0;
+		this.noDataRestartMs = 5 * 60 * 1000;
+		this.scannerRestartCooldownMs = 60 * 1000;
+		this.noInverterScanCooldownMs = 60 * 1000;
 
 		// Callback for app settings changed
 		// this.homey.settings.on('set', async function settingChanged(setting) {});
@@ -113,9 +121,9 @@ class MyApp extends Homey.App
 
 	async startLocalFetch()
 	{
-		if (!this.useLocalDevice)
+		if (!this.localPollingEnabled)
 		{
-			this.useLocalDevice = true;
+			this.localPollingEnabled = true;
 			this.getInverterData();
 		}
 	}
@@ -125,7 +133,7 @@ class MyApp extends Homey.App
 		this.updateLog(`Found Inverter: IP: ${ip}, S.No: ${serial}`, 0);
 		await this.registerSensor(ip, serial);
 
-		if (this.lanSensorTimer === null)
+		if (this.localPollingEnabled && (this.lanSensorTimer === null))
 		{
 			this.lanSensorTimer = this.homey.setTimeout(async () =>
 			{
@@ -136,7 +144,7 @@ class MyApp extends Homey.App
 
 	async getInverterData()
 	{
-		if (this.useLocalDevice)
+		if (this.localPollingEnabled)
 		{
 			try
 			{
@@ -146,6 +154,12 @@ class MyApp extends Homey.App
 				if (this.lanSensors.length === 0)
 				{
 					this.updateLog('No inverters found', 0);
+
+					if (this.scanner)
+					{
+						this.tryRestartScanner('Restarting inverter scan because no inverters are currently registered', this.noInverterScanCooldownMs);
+					}
+
 					return;
 				}
 
@@ -153,6 +167,11 @@ class MyApp extends Homey.App
 				for (const sensor of this.lanSensors)
 				{
 					const result = await sensor.getStatistics();
+
+					if (result !== null)
+					{
+						this.lastValidInverterDataAt = Date.now();
+					}
 
 					if ((result !== null) && (result.Grid_Frequency !== 0))
 					{
@@ -192,6 +211,8 @@ class MyApp extends Homey.App
 			}
 			finally
 			{
+				this.restartScannerIfNoData();
+
 				// Always reschedule the timer
 				this.lanSensorTimer = this.homey.setTimeout(async () =>
 				{
@@ -199,6 +220,53 @@ class MyApp extends Homey.App
 				}, 10000);
 			}
 		}
+	}
+
+	tryRestartScanner(reason, cooldownMs = this.scannerRestartCooldownMs)
+	{
+		if (!this.scanner)
+		{
+			return false;
+		}
+
+		const now = Date.now();
+		const effectiveCooldownMs = Math.max(this.scannerRestartCooldownMs, cooldownMs);
+		if ((now - this.lastScannerRestartAt) < effectiveCooldownMs)
+		{
+			const remainingMs = effectiveCooldownMs - (now - this.lastScannerRestartAt);
+			this.updateLog(`Scanner restart skipped due to cooldown (${remainingMs}ms remaining). Requested reason: ${reason}`);
+			return false;
+		}
+
+		this.lastScannerRestartAt = now;
+		this.updateLog(reason, 0);
+
+		try
+		{
+			this.scanner.startScanning(this.scannerFoundADevice);
+			return true;
+		}
+		catch (err)
+		{
+			this.updateLog(`Error restarting scanner: ${err.message}`, 0);
+			return false;
+		}
+	}
+
+	restartScannerIfNoData()
+	{
+		if (!this.scanner)
+		{
+			return;
+		}
+
+		const now = Date.now();
+		if ((now - this.lastValidInverterDataAt) < this.noDataRestartMs)
+		{
+			return;
+		}
+
+		this.tryRestartScanner('No inverter data received for 5 minutes, restarting scanner', this.scannerRestartCooldownMs);
 	}
 
 	async registerSensor(ip, serial)
@@ -217,34 +285,59 @@ class MyApp extends Homey.App
 		// Try to read the grid frequency address
 		this.updateLog('Checking register 14 for grid frequency:', 0);
 		let sensor = await this.checkSensor(ip, serial, 14, 'sofar_lsw3');
+		let profileName = null;
+
+		// If sofar_lsw3 matched, also check if this could be a sun3p inverter
+		// sun3p inverters may have a value at register 14 that looks like a valid frequency,
+		// but their actual grid frequency is at register 609
+		if (sensor !== null)
+		{
+			profileName = 'sofar_lsw3';
+			this.updateLog('Register 14 matched sofar_lsw3. Checking register 609 to verify it is not a sun3p inverter:', 0);
+			const sun3pSensor = await this.checkSensor(ip, serial, 609, 'sun3p');
+			if (sun3pSensor !== null)
+			{
+				this.updateLog('Register 609 also matched sun3p. Using sun3p profile (more specific match).', 0);
+				sensor = sun3pSensor;
+				profileName = 'sun3p';
+			}
+			else
+			{
+				this.updateLog('Register 609 did not match sun3p. Confirming sofar_lsw3 profile.', 0);
+			}
+		}
+
 		if (sensor === null)
 		{
 			this.updateLog('Returned null.\n\nChecking register 1156 for grid frequency:', 0);
 			sensor = await this.checkSensor(ip, serial, 1156, 'sofar_g3hyd');
+			if (sensor !== null) profileName = 'sofar_g3hyd';
 		}
 		if (sensor === null)
 		{
 			this.updateLog('Returned null.\n\nChecking register 524 for grid frequency:', 0);
 			sensor = await this.checkSensor(ip, serial, 524, 'sofar_hy_es');
+			if (sensor !== null) profileName = 'sofar_hy_es';
 		}
 		if (sensor === null)
 		{
 			this.updateLog('Returned null.\n\nChecking register 33282 for grid frequency:', 0);
 			sensor = await this.checkSensor(ip, serial, 33282, 'solis_hybrid');
+			if (sensor !== null) profileName = 'solis_hybrid';
 		}
 		if (sensor === null)
 		{
-			this.updateLog('Returned null.\n\nChecking register 33282 for grid frequency:', 0);
+			this.updateLog('Returned null.\n\nChecking register 609 for grid frequency:', 0);
 			sensor = await this.checkSensor(ip, serial, 609, 'sun3p');
+			if (sensor !== null) profileName = 'sun3p';
 		}
 		if (sensor === null)
 		{
 			this.updateLog('Returned null.\n\nNo suitable inverters found', 0);
 		}
-
-		if (sensor)
+		else
 		{
-			this.updateLog('Found inverter', 0);
+			this.updateLog(`Successfully registered inverter with profile: ${profileName}`, 0);
 			this.lanSensors.push(sensor);
 		}
 	}
@@ -255,20 +348,23 @@ class MyApp extends Homey.App
 		try
 		{
 			const frequency = await sensor.getRegisterValue(register);
+			this.updateLog(`Register ${register} (${lookupFile}): Raw value = ${frequency}, Hz = ${frequency / 100}`, 0);
+
 			if ((frequency < 4900) || (frequency > 6500))
 			{
-				this.updateLog(`Frequency ${frequency / 100} is not valid`, 0);
+				this.updateLog(`Frequency ${frequency / 100} is not valid (out of range 49-65 Hz)`, 0);
 				return null;
 			}
 			if ((frequency > 5100) && (frequency < 5700))
 			{
-				this.updateLog(`Frequency ${frequency / 100} is not valid`, 0);
+				this.updateLog(`Frequency ${frequency / 100} is not valid (in excluded range 51-57 Hz)`, 0);
 				return null;
 			}
-			this.updateLog(`Frequency ${frequency / 100} is good`, 0);
+			this.updateLog(`Frequency ${frequency / 100} is good - MATCHED ${lookupFile}`, 0);
 		}
 		catch (err)
 		{
+			this.updateLog(`Register ${register} (${lookupFile}): Error reading - ${err.message}`, 0);
 			return null;
 		}
 
