@@ -175,10 +175,11 @@ class MyApp extends Homey.App
 
 					if ((result !== null) && (result.Grid_Frequency !== 0))
 					{
-						if (result.Grid_Voltage)
+						// set gridVoltage to the first available of Grid_Voltage, GridPVoltage1, GridPVoltage2, GridPVoltage3 for backwards compatibility with older versions of the app and devices that don't have all 3 phases
+						const gridVoltage = result.Grid_Voltage || result.GridPVoltage1 || result.GridPVoltage2 || result.GridPVoltage3 || result.GridVoltage_L1 || result.GridVoltage_L2 || result.GridVoltage_L3;
+						if (gridVoltage)
 						{
 							const serial = sensor.getSerial();
-
 							this.updateLog(`Inverter data: : ${serial}, ${this.varToString(result)}`);
 
 							const drivers = this.homey.drivers.getDrivers();
@@ -196,7 +197,9 @@ class MyApp extends Homey.App
 						}
 						else
 						{
-							this.updateLog(`Missing one or more of Frequency = ${result.Grid_Frequency}, Grid_Voltage = ${result.Grid_Voltage}`, 0);
+							const serial = sensor.getSerial();
+							this.updateLog(`Inverter data: : ${serial}, ${this.varToString(result)}`);
+							this.updateLog(`Missing one or more of Frequency = ${result.Grid_Frequency}, Grid_Voltage = ${gridVoltage}`, 0);
 						}
 					}
 					else

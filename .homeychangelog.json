@@ -157,5 +157,8 @@
 	},
 	"1.1.38": {
 		"en": "Fixed registry entries for Sun3P inverters."
+	},
+	"1.1.39": {
+		"en": "Added extra checks for Voltages returned by 3 phase inverters."
 	}
 }
