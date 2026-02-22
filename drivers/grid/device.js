@@ -201,6 +201,11 @@ class GridDevice extends LanDevice
 	{
 		try
 		{
+			if (!data || typeof data !== 'object')
+			{
+				return;
+			}
+			const hasData = (key) => Object.prototype.hasOwnProperty.call(data, key) && data[key] !== null;
 			const dd = this.getData();
 
 			if (serial === dd.id)
@@ -212,18 +217,21 @@ class GridDevice extends LanDevice
 
 				this.setAvailable();
 
-				this.setCapabilityValue('measure_power', -data.Grid_Power).catch(this.error);
-				this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: -data.Grid_Power });
+				if (hasData('Grid_Power'))
+				{
+					this.setCapabilityValue('measure_power', -data.Grid_Power).catch(this.error);
+					this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: -data.Grid_Power });
+				}
 
 				// Check for voltage on the grid first as some inverters have multiple voltage parameters but not all of them are populated so we want to use the one that is populated
-				if (data.Grid_Voltage)
+				if (hasData('Grid_Voltage'))
 				{
 					this.setCapabilityValue('measure_voltage', data.Grid_Voltage).catch(this.error);
 				}
-				else if (data.Grid_Voltage_L1)
+				else if (hasData('Grid_Voltage_L1'))
 				{
 					this.setCapabilityValue('measure_voltage', data.Grid_Voltage_L1).catch(this.error);
-					if (data.Grid_Voltage_L2)
+					if (hasData('Grid_Voltage_L2'))
 					{
 						if (!this.hasCapability('measure_voltage.L2'))
 						{
@@ -232,10 +240,10 @@ class GridDevice extends LanDevice
 						this.setCapabilityValue('measure_voltage.L2', data.Grid_Voltage_L2).catch(this.error);
 					}
 				}
-				else if (data.Grid_Voltage1)
+				else if (hasData('Grid_Voltage1'))
 				{
 					this.setCapabilityValue('measure_voltage', data.Grid_Voltage1).catch(this.error);
-					if (data.Grid_Voltage2)
+					if (hasData('Grid_Voltage2'))
 					{
 						if (!this.hasCapability('measure_voltage.L2'))
 						{
@@ -243,7 +251,7 @@ class GridDevice extends LanDevice
 						}
 						this.setCapabilityValue('measure_voltage.L2', data.Grid_Voltage2).catch(this.error);
 					}
-					if (data.Grid_Voltage3)
+					if (hasData('Grid_Voltage3'))
 					{
 						if (!this.hasCapability('measure_voltage.L3'))
 						{
@@ -253,14 +261,14 @@ class GridDevice extends LanDevice
 					}
 				}
 
-				if (data.Grid_Current)
+				if (hasData('Grid_Current'))
 				{
 					this.setCapabilityValue('measure_current', data.Grid_Current).catch(this.error);
 				}
-				else if (data.Grid_Current1)
+				else if (hasData('Grid_Current1'))
 				{
 					this.setCapabilityValue('measure_current', data.Grid_Current1).catch(this.error);
-					if (data.Grid_Current2)
+					if (hasData('Grid_Current2'))
 					{
 						if (!this.hasCapability('measure_current.L2'))
 						{
@@ -268,7 +276,7 @@ class GridDevice extends LanDevice
 						}
 						this.setCapabilityValue('measure_current.L2', data.Grid_Current2).catch(this.error);
 					}
-					if (data.Grid_Current3)
+					if (hasData('Grid_Current3'))
 					{
 						if (!this.hasCapability('measure_current.L3'))
 						{
@@ -278,13 +286,13 @@ class GridDevice extends LanDevice
 					}
 				}
 
-				if (data.Grid_Frequency)
+				if (hasData('Grid_Frequency'))
 				{
 					this.setCapabilityValue('measure_frequency', data.Grid_Frequency).catch(this.error);
 				}
 
 				// Import with cost and dual rate option
-				if (this.hasCapability('meter_power.today_import') && (data.Import_Today > 0))
+				if (this.hasCapability('meter_power.today_import') && hasData('Import_Today') && (data.Import_Today > 0))
 				{
 					this.setCapabilityValue('meter_power.today_import', data.Import_Today).catch(this.error);
 					this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'meter_power.today_import', value: data.Import_Today });
@@ -389,7 +397,7 @@ class GridDevice extends LanDevice
 					}
 				}
 
-				if (this.hasCapability('meter_power.today_export') && data.Export_Today > 0)
+				if (this.hasCapability('meter_power.today_export') && hasData('Export_Today') && data.Export_Today > 0)
 				{
 					this.setCapabilityValue('meter_power.today_export', data.Export_Today).catch(this.error);
 
@@ -407,11 +415,11 @@ class GridDevice extends LanDevice
 						}
 					}
 				}
-				if (this.hasCapability('meter_power.total_import') && data.Total_Import > 0)
+				if (this.hasCapability('meter_power.total_import') && hasData('Total_Import') && data.Total_Import > 0)
 				{
 					this.setCapabilityValue('meter_power.total_import', data.Total_Import).catch(this.error);
 				}
-				if (this.hasCapability('meter_power.total_export') && data.Total_Export > 0)
+				if (this.hasCapability('meter_power.total_export') && hasData('Total_Export') && data.Total_Export > 0)
 				{
 					this.setCapabilityValue('meter_power.total_export', data.Total_Export).catch(this.error);
 				}

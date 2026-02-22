@@ -51,6 +51,11 @@ class SolarPanelDevice extends LanDevice
 	{
 		try
 		{
+			if (!data || typeof data !== 'object')
+			{
+				return;
+			}
+			const hasData = (key) => Object.prototype.hasOwnProperty.call(data, key) && data[key] !== null;
 			const dd = this.getData();
 
 			if (serial === dd.id)
@@ -65,38 +70,60 @@ class SolarPanelDevice extends LanDevice
 
 				if (this.sumPV1_PV2)
 				{
-					this.setCapabilityValue('measure_power', data.PV1_Power + data.PV2_Power).catch(this.error);
-					this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: data.PV1_Power + data.PV2_Power });
+					if (hasData('PV1_Power') && hasData('PV2_Power'))
+					{
+						this.setCapabilityValue('measure_power', data.PV1_Power + data.PV2_Power).catch(this.error);
+						this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: data.PV1_Power + data.PV2_Power });
+					}
 				}
 				else
-				{
-					this.setCapabilityValue('measure_power', data.PV_Power).catch(this.error);
-					this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: data.PV_Power });
-				}
+				if (hasData('PV_Power'))
+					{
+						this.setCapabilityValue('measure_power', data.PV_Power).catch(this.error);
+						this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: data.PV_Power });
+					}
 
-				if (this.hasCapability('meter_power.today'))
+				if (this.hasCapability('meter_power.today') && hasData('Daily_Production'))
 				{
 					this.setCapabilityValue('meter_power.today', data.Daily_Production).catch(this.error);
 					this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'meter_power.today', value: data.Daily_Production });
 				}
 
-				if (this.hasCapability('meter_power') && data.Total_Generation > 0)
+				if (this.hasCapability('meter_power') && hasData('Total_Generation') && data.Total_Generation > 0)
 				{
 					this.setCapabilityValue('meter_power', data.Total_Generation).catch(this.error);
 				}
 
-				this.setCapabilityValue('measure_power.pv1', data.PV1_Power).catch(this.error);
-				this.setCapabilityValue('measure_voltage.pv1', data.PV1_Voltage).catch(this.error);
-				this.setCapabilityValue('measure_current.pv1', data.PV1_Current).catch(this.error);
-				this.setCapabilityValue('measure_power.pv2', data.PV2_Power).catch(this.error);
-				this.setCapabilityValue('measure_voltage.pv2', data.PV2_Voltage).catch(this.error);
-				this.setCapabilityValue('measure_current.pv2', data.PV2_Current).catch(this.error);
+				if (hasData('PV1_Power'))
+				{
+					this.setCapabilityValue('measure_power.pv1', data.PV1_Power).catch(this.error);
+				}
+				if (hasData('PV1_Voltage'))
+				{
+					this.setCapabilityValue('measure_voltage.pv1', data.PV1_Voltage).catch(this.error);
+				}
+				if (hasData('PV1_Current'))
+				{
+					this.setCapabilityValue('measure_current.pv1', data.PV1_Current).catch(this.error);
+				}
+				if (hasData('PV2_Power'))
+				{
+					this.setCapabilityValue('measure_power.pv2', data.PV2_Power).catch(this.error);
+				}
+				if (hasData('PV2_Voltage'))
+				{
+					this.setCapabilityValue('measure_voltage.pv2', data.PV2_Voltage).catch(this.error);
+				}
+				if (hasData('PV2_Current'))
+				{
+					this.setCapabilityValue('measure_current.pv2', data.PV2_Current).catch(this.error);
+				}
 
-				if (this.hasCapability('measure_generation_time'))
+				if (this.hasCapability('measure_generation_time') && hasData('Generation_Time_Today'))
 				{
 					this.setCapabilityValue('measure_generation_time', data.Generation_Time_Today).catch(this.error);
 				}
-				if (this.hasCapability('measure_generation_time_total'))
+				if (this.hasCapability('measure_generation_time_total') && hasData('Generation_Time_Total'))
 				{
 					this.setCapabilityValue('measure_generation_time_total', data.Generation_Time_Total).catch(this.error);
 				}

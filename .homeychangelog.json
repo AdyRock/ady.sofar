@@ -166,5 +166,8 @@
 	},
 	"1.1.41": {
 		"en": "Fixed offset and scale for some parameters returned by 3 phase inverters."
+	},
+	"1.1.42": {
+		"en": "Added data-availability checks before updating capabilities and realtime values."
 	}
 }
