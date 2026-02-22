@@ -160,5 +160,8 @@
 	},
 	"1.1.39": {
 		"en": "Added extra checks for Voltages returned by 3 phase inverters."
+	},
+	"1.1.40": {
+		"en": "Fix spelling error when checking Voltages returned by 3 phase inverters."
 	}
 }

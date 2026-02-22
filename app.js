@@ -176,7 +176,7 @@ class MyApp extends Homey.App
 					if ((result !== null) && (result.Grid_Frequency !== 0))
 					{
 						// set gridVoltage to the first available of Grid_Voltage, GridPVoltage1, GridPVoltage2, GridPVoltage3 for backwards compatibility with older versions of the app and devices that don't have all 3 phases
-						const gridVoltage = result.Grid_Voltage || result.GridPVoltage1 || result.GridPVoltage2 || result.GridPVoltage3 || result.GridVoltage_L1 || result.GridVoltage_L2 || result.GridVoltage_L3;
+						const gridVoltage = result.Grid_Voltage || result.Grid_Voltage1 || result.Grid_Voltage2 || result.Grid_Voltage3 || result.Grid_Voltage_L1 || result.Grid_Voltage_L2 || result.Grid_Voltage_L3;
 						if (gridVoltage)
 						{
 							const serial = sensor.getSerial();
