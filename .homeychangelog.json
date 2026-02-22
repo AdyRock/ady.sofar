@@ -163,5 +163,8 @@
 	},
 	"1.1.40": {
 		"en": "Fix spelling error when checking Voltages returned by 3 phase inverters."
+	},
+	"1.1.41": {
+		"en": "Fixed offset and scale for some parameters returned by 3 phase inverters."
 	}
 }

@@ -1,17 +1,17 @@
 {
 	"requests": [
 		{
-			"start": 224,
-			"end": 224,
+			"start": 500,
+			"end": 500,
 			"mb_functioncode": 3
 		},
 		{
-			"start": 522,
+			"start": 514,
 			"end": 529,
 			"mb_functioncode": 3
 		},
 		{
-			"start": 537,
+			"start": 534,
 			"end": 538,
 			"mb_functioncode": 3
 		},
@@ -38,11 +38,6 @@
 		{
 			"start": 609,
 			"end": 609,
-			"mb_functioncode": 3
-		},
-		{
-			"start": 613,
-			"end": 615,
 			"mb_functioncode": 3
 		},
 		{
@@ -100,7 +95,7 @@
 				{
 					"name": "PV1_Power",
 					"uom": "W",
-					"scale": 10,
+					"scale": 1,
 					"rule": 1,
 					"registers": [
 						672
@@ -127,7 +122,7 @@
 				{
 					"name": "PV2_Power",
 					"uom": "W",
-					"scale": 10,
+					"scale": 1,
 					"rule": 1,
 					"registers": [
 						673
@@ -141,7 +136,7 @@
 				{
 					"name": "Battery_Power",
 					"uom": "W",
-					"scale": 10,
+					"scale": 1,
 					"rule": 2,
 					"registers": [
 						590
@@ -195,15 +190,6 @@
 					]
 				},
 				{
-					"name": "Battery_SOH",
-					"uom": "%",
-					"scale": 1,
-					"rule": 1,
-					"registers": [
-						224
-					]
-				},
-				{
 					"name": "Battery_Voltage",
 					"uom": "V",
 					"scale": 0.01,
@@ -224,7 +210,8 @@
 				{
 					"name": "Battery_Temperature",
 					"uom": "°C",
-					"scale": 1,
+					"scale": 0.1,
+					"offset": 1000,
 					"rule": 2,
 					"registers": [
 						586
@@ -423,6 +410,7 @@
 					"name": "Internal_Temperature",
 					"uom": "°C",
 					"scale": 0.1,
+					"offset": 1000,
 					"rule": 1,
 					"registers": [
 						540
@@ -432,6 +420,7 @@
 					"name": "Heatsink_Temperature",
 					"uom": "°C",
 					"scale": 0.1,
+					"offset": 1000,
 					"rule": 1,
 					"registers": [
 						541
