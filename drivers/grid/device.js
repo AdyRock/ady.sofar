@@ -119,36 +119,54 @@ class GridDevice extends LanDevice
 		if (changedKeys.indexOf('cost_units') >= 0)
 		{
 			// Update the of all the cost capabilities
-			let options = this.getCapabilityOptions('meter_cost.today_import');
-			if (this.options)
+			if (this.hasCapability('meter_cost.today_import'))
 			{
-				options.units = newSettings.cost_units;
-				await this.setCapabilityOptionsSafe('meter_cost.today_import', options);
-			}
-			options = this.getCapabilityOptions('meter_cost.hi_rate_import');
-			if (this.options)
-			{
-				options.units = newSettings.cost_units;
-				await this.setCapabilityOptionsSafe('meter_cost.hi_rate_import', options);
-			}
-			options = this.getCapabilityOptions('meter_cost.low_rate_import');
-			if (this.options)
-			{
-				options.units = newSettings.cost_units;
-				await this.setCapabilityOptionsSafe('meter_cost.low_rate_import', options);
-			}
-			options = this.getCapabilityOptions('meter_cost.today_export');
-			if (this.options)
-			{
-				options.units = newSettings.cost_units;
-				await this.setCapabilityOptionsSafe('meter_cost.today_export', options);
+				const options = this.getCapabilityOptions('meter_cost.today_import');
+				if (this.options)
+				{
+					options.units = newSettings.cost_units;
+					await this.setCapabilityOptionsSafe('meter_cost.today_import', options);
+				}
 			}
 
-			options = this.getCapabilityOptions('meter_cost.today_total');
-			if (this.options)
+			if (this.hasCapability('meter_cost.hi_rate_import'))
 			{
-				options.units = newSettings.cost_units;
-				await this.setCapabilityOptionsSafe('meter_cost.today_total', options);
+				const options = this.getCapabilityOptions('meter_cost.hi_rate_import');
+				if (this.options)
+				{
+					options.units = newSettings.cost_units;
+					await this.setCapabilityOptionsSafe('meter_cost.hi_rate_import', options);
+				}
+			}
+
+			if (this.hasCapability('meter_cost.low_rate_import'))
+			{
+				const options = this.getCapabilityOptions('meter_cost.low_rate_import');
+				if (this.options)
+				{
+					options.units = newSettings.cost_units;
+					await this.setCapabilityOptionsSafe('meter_cost.low_rate_import', options);
+				}
+			}
+
+			if (this.hasCapability('meter_cost.today_export'))
+			{
+				const options = this.getCapabilityOptions('meter_cost.today_export');
+				if (this.options)
+				{
+					options.units = newSettings.cost_units;
+					await this.setCapabilityOptionsSafe('meter_cost.today_export', options);
+				}
+			}
+
+			if (this.hasCapability('meter_cost.today_total'))
+			{
+				const options = this.getCapabilityOptions('meter_cost.today_total');
+				if (this.options)
+				{
+					options.units = newSettings.cost_units;
+					await this.setCapabilityOptionsSafe('meter_cost.today_total', options);
+				}
 			}
 		}
 	}
