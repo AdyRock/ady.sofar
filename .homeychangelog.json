@@ -169,5 +169,8 @@
 	},
 	"1.1.42": {
 		"en": "Added data-availability checks before updating capabilities and realtime values."
+	},
+	"1.1.43": {
+		"en": "Improved checking of valid data and fixed some 3 phase inverter registers."
 	}
 }
