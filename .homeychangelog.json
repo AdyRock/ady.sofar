@@ -172,5 +172,8 @@
 	},
 	"1.1.43": {
 		"en": "Improved checking of valid data and fixed some 3 phase inverter registers."
+	},
+	"1.1.44": {
+		"en": "Updated 3 phase inverter registers."
 	}
 }

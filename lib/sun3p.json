@@ -136,7 +136,7 @@
 				{
 					"name": "Battery_Power",
 					"uom": "W",
-					"scale": 1,
+					"scale": -1,
 					"rule": 2,
 					"registers": [
 						590
@@ -228,7 +228,7 @@
 					"scale": 1,
 					"rule": 2,
 					"registers": [
-						619
+						625
 					]
 				},
 				{
@@ -264,7 +264,7 @@
 					"scale": 0.01,
 					"rule": 1,
 					"registers": [
-						613
+						610
 					]
 				},
 				{
@@ -273,7 +273,7 @@
 					"scale": 0.01,
 					"rule": 1,
 					"registers": [
-						614
+						611
 					]
 				},
 				{
@@ -282,7 +282,7 @@
 					"scale": 0.01,
 					"rule": 1,
 					"registers": [
-						615
+						612
 					]
 				},
 				{
