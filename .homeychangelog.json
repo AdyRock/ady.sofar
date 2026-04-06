@@ -178,5 +178,8 @@
 	},
 	"1.1.45": {
 		"en": "Fixed fetch ranges for 3 phase inverter registers."
+	},
+	"1.1.46": {
+		"en": "Added support for manually adding devices by IP and Serial number. Added extra diagnostics to show when a manual device is being added."
 	}
 }
