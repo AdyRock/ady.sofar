@@ -43,8 +43,26 @@
 
 	<!-- Tab links -->
 	<div class="tab">
-		<button class="tablinks" onclick="setPage(event, 'log')" id="defaultOpen"><span data-i18n="settings.diagnosticsLog"></span></button>
+		<button class="tablinks" onclick="setPage(event, 'devices')" id="defaultOpen"><span data-i18n="settings.devices"></span></button>
+		<button class="tablinks" onclick="setPage(event, 'log')" ><span data-i18n="settings.diagnosticsLog"></span></button>
 		<button class="tablinks" onclick="setPage(event, 'send')"><span data-i18n="settings.registerLog"></span></button>
+	</div>
+
+	<!-- DEVICES PAGE - This page has a test box to enter the IP address and a text box to enter the serial number and a text area to show the manually added devices plus a button to manually add devices -->
+	<div id="devices" class="tabcontent">
+		<div class="field row">
+			<label class="homey-form-label"  for="deviceIp"><span data-i18n="settings.deviceIp"></span></label>
+			<input class="homey-form-input" id="deviceIp" type="text" value="" />
+
+			<label class="homey-form-label"  for="deviceSerial"><span data-i18n="settings.deviceSerial"></span></label>
+			<input class="homey-form-input" id="deviceSerial" type="text" value="" />
+			<p style="margin-top: 10px; margin-bottom: 10px;"><button class="homey-button-secondary-shadow" id="addDevice"><span data-i18n="settings.addDevice"></span></button></p>
+
+			<label class="homey-form-label"  for="manualDevices"><span data-i18n="settings.devicesList"></span></label>
+			<textarea id="manualDevices" style="white-space: nowrap; width: 100%; box-sizing: border-box;"></textarea>
+			<p style="margin-top: 8px; margin-bottom: 0;"><button class="homey-button-secondary-shadow" id="removeDevice">Remove Selected Device</button></p>
+			<p></p>
+		</div>
 	</div>
 
 	<!-- LOG PAGE -->
@@ -96,6 +114,11 @@
 
 		var clearLogElement = document.getElementById('clearDiagLog');
 		var sendDiagLogElement = document.getElementById('sendDiagLog');
+		var manualDevicesElement = document.getElementById('manualDevices');
+		var deviceIpElement = document.getElementById('deviceIp');
+		var deviceSerialElement = document.getElementById('deviceSerial');
+		var addDeviceElement = document.getElementById('addDevice');
+		var removeDeviceElement = document.getElementById('removeDevice');
 
 		// Send data tab
 		var commandDataElement = document.getElementById('commandData');
@@ -106,6 +129,74 @@
 		var stopElement = document.getElementById('stop');
 
 		var itemDisplyType = "flex";
+
+		function updateManualDevices(manualSensors)
+		{
+			if (!Array.isArray(manualSensors))
+			{
+				manualDevicesElement.value = '';
+				return;
+			}
+
+			manualDevicesElement.value = manualSensors
+				.map(function(sensor)
+				{
+					if (!sensor)
+					{
+						return '';
+					}
+					var ip = sensor.ip || '';
+					var serial = sensor.serial || '';
+					return ip + '  ,  ' + serial;
+				})
+				.filter(function(line)
+				{
+					return line !== ',' && line !== '';
+				})
+				.join('\n');
+		}
+
+		function resizeDevicesTextArea()
+		{
+			manualDevicesElement.style.width = '100%';
+			var top = manualDevicesElement.getBoundingClientRect().top;
+			var removeButtonBox = removeDeviceElement.getBoundingClientRect();
+			var removeButtonHeight = Math.max(34, removeButtonBox.height + 12);
+			var height = window.innerHeight - top - removeButtonHeight - 30;
+			manualDevicesElement.style.height = Math.max(120, height) + 'px';
+		}
+
+		function getSelectedManualDeviceIndex()
+		{
+			if (!manualDevicesElement.value)
+			{
+				return -1;
+			}
+
+			var start = manualDevicesElement.selectionStart;
+			var selectedPrefix = manualDevicesElement.value.substring(0, start);
+			return selectedPrefix.split('\n').length - 1;
+		}
+
+		function selectManualDeviceLineAtCursor()
+		{
+			var value = manualDevicesElement.value;
+			if (!value)
+			{
+				return;
+			}
+
+			var cursor = manualDevicesElement.selectionStart;
+			var lineStart = value.lastIndexOf('\n', cursor - 1) + 1;
+			var lineEnd = value.indexOf('\n', cursor);
+			if (lineEnd === -1)
+			{
+				lineEnd = value.length;
+			}
+
+			manualDevicesElement.focus();
+			manualDevicesElement.setSelectionRange(lineStart, lineEnd);
+		}
 
 		// a method named 'onHomeyReady' must be present in your code
 		function onHomeyReady(Homey)
@@ -178,6 +269,87 @@
 			{
 				if (err) return Homey.alert(err);
 				logEnabledElement.checked = logEnabled;
+			});
+
+			Homey.get('manualSensors', function(err, manualSensors)
+			{
+				if (err) return Homey.alert(err);
+				updateManualDevices(manualSensors);
+				resizeDevicesTextArea();
+			});
+
+			addDeviceElement.addEventListener('click', function(e)
+			{
+				e.preventDefault();
+
+				var ip = deviceIpElement.value.trim();
+				var serial = deviceSerialElement.value.trim();
+				if (!ip || !serial)
+				{
+					return Homey.alert('Please enter both device IP and serial number');
+				}
+
+				Homey.get('manualSensors', function(err, manualSensors)
+				{
+					if (err) return Homey.alert(err);
+
+					var updatedSensors = Array.isArray(manualSensors) ? manualSensors.slice() : [];
+					updatedSensors.push({
+						ip: ip,
+						serial: serial,
+					});
+
+					Homey.set('manualSensors', updatedSensors, function(setErr)
+					{
+						if (setErr) return Homey.alert(setErr);
+						updateManualDevices(updatedSensors);
+						deviceIpElement.value = '';
+						deviceSerialElement.value = '';
+					});
+				});
+			});
+
+			manualDevicesElement.addEventListener('click', function()
+			{
+				selectManualDeviceLineAtCursor();
+			});
+
+			removeDeviceElement.addEventListener('click', function(e)
+			{
+				e.preventDefault();
+
+				Homey.get('manualSensors', function(err, manualSensors)
+				{
+					if (err) return Homey.alert(err);
+					if (!Array.isArray(manualSensors) || manualSensors.length === 0)
+					{
+						return;
+					}
+
+					var selectedIndex = getSelectedManualDeviceIndex();
+					if (selectedIndex < 0 || selectedIndex >= manualSensors.length)
+					{
+						return Homey.alert('Select a device entry in the list first');
+					}
+
+					var updatedSensors = manualSensors.slice();
+					updatedSensors.splice(selectedIndex, 1);
+
+					Homey.set('manualSensors', updatedSensors, function(setErr)
+					{
+						if (setErr) return Homey.alert(setErr);
+						updateManualDevices(updatedSensors);
+						resizeDevicesTextArea();
+					});
+				});
+			});
+
+			window.addEventListener('resize', function()
+			{
+				if (document.getElementById('devices').style.display === 'block')
+				{
+					resizeDevicesTextArea();
+				}
 			});
 
 			Homey.api('GET', '/getLog/',
@@ -354,6 +526,11 @@
 				// Make the log text area fill the page
 				diagLogElement.setAttribute('cols', diagLogElement.parentElement.clientWidth / 8);
 				diagLogElement.style.height = (window.innerHeight - diagLogElement.offsetTop - 30) + 'px';
+			}
+			else if (tabPage == 'devices')
+			{
+				// Make the manual devices list fill the remaining page area
+				resizeDevicesTextArea();
 			}
 			else if (tabPage == 'send')
 			{

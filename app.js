@@ -70,6 +70,16 @@ class MyApp extends Homey.App
 		this.lanSensors = [];
 		this.lanSensorTimer = null;
 
+		if (this.homey.settings.get('manualSensors'))
+		{
+			this.homey.app.updateLog('Registering manual sensors from settings', 0);
+			const manualSensors = this.homey.settings.get('manualSensors');
+			for (const sensorData of manualSensors)
+			{
+				await this.registerSensor(sensorData.ip, sensorData.serial);
+			}
+		}
+
 		try
 		{
 			this.homeyIP = await this.homey.cloud.getLocalAddress();

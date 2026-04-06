@@ -16,6 +16,11 @@
 		"response": "Response",
 		"logData": "Log Data",
 		"registerLog": "Register Log",
-		"stop": "Stop"
+		"stop": "Stop",
+		"devices": "Manual Devices",
+		"addDevice": "Add Device",
+		"deviceIp": "IP Address",
+		"deviceSerial": "Serial Number",
+		"devicesList": "Devices List (IP - Serial)"
 	}
 }
