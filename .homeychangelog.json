@@ -181,5 +181,8 @@
 	},
 	"1.1.46": {
 		"en": "Added support for manually adding devices by IP and Serial number. Added extra diagnostics to show when a manual device is being added."
+	},
+	"1.1.47": {
+		"en": "Added support for Deye hybrid inverters."
 	}
 }

@@ -2,5 +2,11 @@
     "cSpell.words": [
         "unmute"
     ],
-    "cSpell.suggestionMenuType": "quickFix"
+    "cSpell.suggestionMenuType": "quickFix",
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell"
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "PowerShell"
 }

@@ -346,6 +346,18 @@ class MyApp extends Homey.App
 		}
 		if (sensor === null)
 		{
+			this.updateLog('Returned null.\n\nChecking register 552 for grid frequency:', 0);
+			sensor = await this.checkSensor(ip, serial, 552, 'deye_sg04lp3');
+			if (sensor !== null) profileName = 'deye_sg04lp3';
+		}
+		if (sensor === null)
+		{
+			this.updateLog('Returned null.\n\nChecking register 79 for grid frequency:', 0);
+			sensor = await this.checkSensor(ip, serial, 79, 'deye_sg04lp3');
+			if (sensor !== null) profileName = 'deye_sg04lp3';
+		}
+		if (sensor === null)
+		{
 			this.updateLog('Returned null.\n\nNo suitable inverters found', 0);
 		}
 		else

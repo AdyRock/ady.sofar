@@ -257,6 +257,14 @@ class GridDevice extends LanDevice
 						}
 						this.setCapabilityValue('measure_voltage.L2', data.Grid_Voltage_L2).catch(this.error);
 					}
+					if (hasData('Grid_Voltage_L3'))
+					{
+						if (!this.hasCapability('measure_voltage.L3'))
+						{
+							await this.addCapabilitySafe('measure_voltage.L3');
+						}
+						this.setCapabilityValue('measure_voltage.L3', data.Grid_Voltage_L3).catch(this.error);
+					}
 				}
 				else if (hasData('Grid_Voltage1'))
 				{

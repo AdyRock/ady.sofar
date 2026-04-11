@@ -1,0 +1,930 @@
+{
+	"requests": [
+		{
+			"start": 3,
+			"end": 89,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 99,
+			"end": 109,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 133,
+			"end": 133,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 160,
+			"end": 162,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 514,
+			"end": 558,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 586,
+			"end": 591,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 598,
+			"end": 636,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 644,
+			"end": 653,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 661,
+			"end": 671,
+			"mb_functioncode": 3
+		},
+		{
+			"start": 672,
+			"end": 679,
+			"mb_functioncode": 3
+		}
+	],
+	"parameters": [
+		{
+			"group": "panel",
+			"items": [
+				{
+					"name": "PV1_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						672
+					]
+				},
+				{
+					"name": "PV_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						672
+					]
+				},
+				{
+					"name": "PV2_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						673
+					]
+				},
+				{
+					"name": "PV1_Voltage",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						676
+					]
+				},
+				{
+					"name": "PV1_Current",
+					"uom": "A",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						677
+					]
+				},
+				{
+					"name": "PV2_Voltage",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						678
+					]
+				},
+				{
+					"name": "PV2_Current",
+					"uom": "A",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						679
+					]
+				},
+				{
+					"name": "Daily_Production",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						529
+					]
+				},
+				{
+					"name": "Total_Generation",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						534,
+						535
+					]
+				}
+			]
+		},
+		{
+			"group": "battery",
+			"items": [
+				{
+					"name": "Battery_Equalization_V",
+					"uom": "V",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						99
+					]
+				},
+				{
+					"name": "Battery_Absorption_V",
+					"uom": "V",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						100
+					]
+				},
+				{
+					"name": "Battery_Float_V",
+					"uom": "V",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						101
+					]
+				},
+				{
+					"name": "Battery_Capacity",
+					"uom": "Ah",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						102
+					]
+				},
+				{
+					"name": "Battery_Max_Charge_A",
+					"uom": "A",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						108
+					]
+				},
+				{
+					"name": "Battery_Max_Discharge_A",
+					"uom": "A",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						109
+					]
+				},
+				{
+					"name": "Battery_Charge_Today",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						514
+					]
+				},
+				{
+					"name": "Daily_Battery_Charge",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						514
+					]
+				},
+				{
+					"name": "Battery_Discharge_Today",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						515
+					]
+				},
+				{
+					"name": "Daily_Battery_Discharge",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						515
+					]
+				},
+				{
+					"name": "Battery_Charge_Total",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						516,
+						517
+					]
+				},
+				{
+					"name": "Total_Battery_Charge",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						516,
+						517
+					]
+				},
+				{
+					"name": "Battery_Discharge_Total",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						518,
+						519
+					]
+				},
+				{
+					"name": "Total_Battery_Discharge",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						518,
+						519
+					]
+				},
+				{
+					"name": "Battery_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						590
+					]
+				},
+				{
+					"name": "Battery_Voltage",
+					"uom": "V",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						587
+					]
+				},
+				{
+					"name": "Battery_Charge",
+					"uom": "%",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						588
+					]
+				},
+				{
+					"name": "Battery_Current",
+					"uom": "A",
+					"scale": 0.01,
+					"rule": 2,
+					"registers": [
+						591
+					]
+				},
+				{
+					"name": "Battery_Temperature",
+					"uom": "°C",
+					"scale": 0.1,
+					"rule": 1,
+					"offset": 1000,
+					"registers": [
+						586
+					]
+				},
+				{
+					"name": "Battery_SOH",
+					"uom": "%",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						603
+					]
+				},
+				{
+					"name": "Battery_Cycles",
+					"uom": "cycle",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						604
+					]
+				}
+			]
+		},
+		{
+			"group": "grid",
+			"items": [
+				{
+					"name": "Grid_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						625
+					]
+				},
+				{
+					"name": "Grid_Voltage_L1",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						598
+					]
+				},
+				{
+					"name": "Grid_Voltage_L2",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						599
+					]
+				},
+				{
+					"name": "Grid_Voltage_L3",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						600
+					]
+				},
+				{
+					"name": "Grid_Current",
+					"uom": "A",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						160
+					]
+				},
+				{
+					"name": "Grid_Current_L2",
+					"uom": "A",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						161
+					]
+				},
+				{
+					"name": "Grid_Current_L3",
+					"uom": "A",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						162
+					]
+				},
+				{
+					"name": "Grid_Frequency",
+					"uom": "Hz",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						552
+					]
+				},
+				{
+					"name": "Internal_CT_L1_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						604
+					]
+				},
+				{
+					"name": "Internal_CT_L2_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						605
+					]
+				},
+				{
+					"name": "Internal_CT_L3_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						606
+					]
+				},
+				{
+					"name": "External_CT_L1_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						616
+					]
+				},
+				{
+					"name": "External_CT_L2_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						617
+					]
+				},
+				{
+					"name": "External_CT_L3_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						618
+					]
+				},
+				{
+					"name": "Import_Today",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						520
+					]
+				},
+				{
+					"name": "Total_Import",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						522,
+						523
+					]
+				},
+				{
+					"name": "Export_Today",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						521
+					]
+				},
+				{
+					"name": "Total_Export",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						524,
+						525
+					]
+				},
+				{
+					"name": "Total_Grid_Production",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 4,
+					"registers": [
+						524,
+						525
+					]
+				}
+			]
+		},
+		{
+			"group": "inverter",
+			"items": [
+				{
+					"name": "Consumption",
+					"uom": "W",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						653
+					]
+				},
+				{
+					"name": "Load_L1_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						650
+					]
+				},
+				{
+					"name": "Load_L2_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						651
+					]
+				},
+				{
+					"name": "Load_L3_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						652
+					]
+				},
+				{
+					"name": "Load_Voltage_L1",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						644
+					]
+				},
+				{
+					"name": "Load_Voltage_L2",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						645
+					]
+				},
+				{
+					"name": "Load_Voltage_L3",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						646
+					]
+				},
+				{
+					"name": "Consumed_Today",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						526
+					]
+				},
+				{
+					"name": "Total_Consumption",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						527,
+						528
+					]
+				},
+				{
+					"name": "Current_L1",
+					"uom": "A",
+					"scale": 0.01,
+					"rule": 2,
+					"registers": [
+						630
+					]
+				},
+				{
+					"name": "Current_L2",
+					"uom": "A",
+					"scale": 0.01,
+					"rule": 2,
+					"registers": [
+						631
+					]
+				},
+				{
+					"name": "Current_L3",
+					"uom": "A",
+					"scale": 0.01,
+					"rule": 2,
+					"registers": [
+						632
+					]
+				},
+				{
+					"name": "Inverter_L1_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						633
+					]
+				},
+				{
+					"name": "Inverter_L2_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						634
+					]
+				},
+				{
+					"name": "Inverter_L3_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						635
+					]
+				},
+				{
+					"name": "Internal_Temperature",
+					"uom": "°C",
+					"scale": 0.1,
+					"rule": 2,
+					"offset": 1000,
+					"registers": [
+						540
+					]
+				},
+				{
+					"name": "Ambient_temperature",
+					"uom": "°C",
+					"scale": 0.1,
+					"rule": 2,
+					"offset": 1000,
+					"registers": [
+						540
+					]
+				},
+				{
+					"name": "DC_Temperature",
+					"uom": "°C",
+					"scale": 0.1,
+					"rule": 2,
+					"offset": 1000,
+					"registers": [
+						540
+					]
+				},
+				{
+					"name": "Heatsink_Temperature",
+					"uom": "°C",
+					"scale": 0.1,
+					"rule": 2,
+					"offset": 1000,
+					"registers": [
+						541
+					]
+				},
+				{
+					"name": "AC_Temperature",
+					"uom": "°C",
+					"scale": 0.1,
+					"rule": 2,
+					"offset": 1000,
+					"registers": [
+						541
+					]
+				},
+				{
+					"name": "Inverter_ID",
+					"uom": "",
+					"scale": 1,
+					"rule": 5,
+					"registers": [
+						3,
+						4,
+						5,
+						6,
+						7
+					]
+				},
+				{
+					"name": "Communication_Board_Version_No.",
+					"uom": "",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						17
+					]
+				},
+				{
+					"name": "Control_Board_Version_No.",
+					"uom": "",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						13
+					]
+				}
+			]
+		},
+		{
+			"group": "smartload",
+			"items": [
+				{
+					"name": "SmartLoad_Enable_Status",
+					"uom": "",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						133
+					],
+					"lookup": [
+						{
+							"key": 0,
+							"value": "GEN Use"
+						},
+						{
+							"key": 1,
+							"value": "SMART Load output"
+						},
+						{
+							"key": 2,
+							"value": "Microinverter"
+						}
+					]
+				},
+				{
+					"name": "Phase_Voltage_Gen_A",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						661
+					]
+				},
+				{
+					"name": "Phase_Voltage_Gen_B",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						662
+					]
+				},
+				{
+					"name": "Phase_Voltage_Gen_C",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						663
+					]
+				},
+				{
+					"name": "Phase_Power_Gen_A",
+					"uom": "W",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						664,
+						668
+					]
+				},
+				{
+					"name": "Phase_Power_Gen_B",
+					"uom": "W",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						665,
+						669
+					]
+				},
+				{
+					"name": "Phase_Power_Gen_C",
+					"uom": "W",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						666,
+						670
+					]
+				},
+				{
+					"name": "Total_Gen_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						667,
+						671
+					]
+				},
+				{
+					"name": "Generator_Daily_Production",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						536
+					]
+				},
+				{
+					"name": "Generator_Total_Production",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						537,
+						538
+					]
+				}
+			]
+		},
+		{
+			"group": "alert",
+			"items": [
+				{
+					"name": "Alert",
+					"uom": "",
+					"scale": 1,
+					"rule": 6,
+					"registers": [
+						553,
+						554,
+						555,
+						556,
+						557,
+						558
+					]
+				},
+				{
+					"name": "Fault_1",
+					"uom": "",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						553
+					]
+				},
+				{
+					"name": "Fault_2",
+					"uom": "",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						554
+					]
+				},
+				{
+					"name": "Fault_3",
+					"uom": "",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						555
+					]
+				},
+				{
+					"name": "Fault_4",
+					"uom": "",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						556
+					]
+				},
+				{
+					"name": "Fault_5",
+					"uom": "",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						557
+					]
+				},
+				{
+					"name": "Fault_6",
+					"uom": "",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						558
+					]
+				}
+			]
+		}
+	]
+}
