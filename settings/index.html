@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
 
-<head>
+<head><meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="lwsa.css">
-	<link rel="stylesheet" type="text/css" href="busy_indicator.css" />
+	<link rel="stylesheet" type="text/css" href="busy_indicator.css">
 	<style>
 		label.a {
 			display: inline-block;
@@ -146,8 +147,9 @@
 						return '';
 					}
 					var ip = sensor.ip || '';
-					var serial = sensor.serial || '';
-					return ip + '  ,  ' + serial;
+					var serial = sensor.serial || 0;
+					serial = serial.toString()
+					return ip + '  :  ' + serial;
 				})
 				.filter(function(line)
 				{
@@ -284,6 +286,10 @@
 
 				var ip = deviceIpElement.value.trim();
 				var serial = deviceSerialElement.value.trim();
+
+				// convert serial from a string to a number
+				serial = Number(serial);
+
 				if (!ip || !serial)
 				{
 					return Homey.alert('Please enter both device IP and serial number');

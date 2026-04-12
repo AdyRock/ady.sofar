@@ -126,6 +126,24 @@ class MyApp extends Homey.App
 			return devices;
 		});
 
+		// Callback for app settings changed
+		this.homey.settings.on('set', async (setting) =>
+		{
+			this.homey.app.updateLog(`Setting ${setting} has changed.`, 3);
+			if (setting === 'manualSensors')
+			{
+				if (this.homey.settings.get('manualSensors'))
+				{
+					this.homey.app.updateLog('Registering manual sensors from settings', 0);
+					const manualSensors = this.homey.settings.get('manualSensors');
+					for (const sensorData of manualSensors)
+					{
+						this.registerSensor(sensorData.ip, sensorData.serial);
+					}
+				}
+			}
+		});
+
 		this.homey.app.updateLog('************** App has initialised. ***************');
 	}
 
@@ -372,7 +390,7 @@ class MyApp extends Homey.App
 		const sensor = new Sensor(serial, ip, 8899, 1, lookupFile);
 		try
 		{
-			const frequency = await sensor.getRegisterValue(register);
+			const frequency = await sensor.getRegisterValue(register, serial);
 			this.updateLog(`Register ${register} (${lookupFile}): Raw value = ${frequency}, Hz = ${frequency / 100}`, 0);
 
 			if ((frequency < 4900) || (frequency > 6500))
@@ -414,6 +432,19 @@ class MyApp extends Homey.App
 			}
 		}
 
+		// Check manual sensors from settings
+		if (this.homey.settings.get('manualSensors'))
+		{
+			const manualSensors = this.homey.settings.get('manualSensors');
+			for (const sensorData of manualSensors)
+			{
+				if (sensorData.serial === serial)
+				{
+					return new Sensor(sensorData.serial, sensorData.ip, 8899, 1, null);
+				}
+			}
+		}
+
 		return null;
 	}
 
@@ -422,7 +453,7 @@ class MyApp extends Homey.App
 		this.stopReadingRegisters = true;
 	}
 
-	async GetMultipleRegisterValues(register, count)
+	async GetMultipleRegisterValues(register, count, serial)
 	{
 		this.loggingRegisters = true;
 		this.stopReadingRegisters = false;
@@ -434,7 +465,7 @@ class MyApp extends Homey.App
 		{
 			try
 			{
-				const result = await this.GetRegisterValue(registerNumber);
+				const result = await this.GetRegisterValue(registerNumber, serial);
 				const formattedResult = `${registerNumber} = ${result}\n`;
 				fileData += formattedResult;
 				this.homey.api.realtime('ady.sofar.regupdated', { result: formattedResult });
@@ -505,12 +536,33 @@ class MyApp extends Homey.App
 		fs.unlinkSync('/userdata/register.log');
 	}
 
-	async GetRegisterValue(register)
+	async GetRegisterValue(register, serial = null)
 	{
+		const registerNumber = parseInt(register, 10);
+
+		// If a serial number is provided, try to get the value from that specific inverter
+		if (serial)
+		{
+			const inverter = this.getInverter(serial);
+			if (inverter)
+			{
+				return inverter.getRegisterValue(registerNumber, registerNumber, 3);
+			}
+		}
+
 		if (this.lanSensors.length > 0)
 		{
-			const registerNumber = parseInt(register, 10);
 			return this.lanSensors[0].getRegisterValue(registerNumber, registerNumber, 3);
+		}
+
+		if (this.homey.settings.get('manualSensors'))
+		{
+			const manualSensors = this.homey.settings.get('manualSensors');
+			for (const sensorData of manualSensors)
+			{
+				const sensor = new Sensor(sensorData.serial, sensorData.ip, 8899, 1, null);
+				return sensor.getRegisterValue(registerNumber, registerNumber, 3);
+			}
 		}
 
 		return 'No inverter available';

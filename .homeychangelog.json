@@ -184,5 +184,8 @@
 	},
 	"1.1.47": {
 		"en": "Added support for Deye hybrid inverters."
+	},
+	"1.1.48": {
+		"en": "Fixed issue with manually adding devices."
 	}
 }
