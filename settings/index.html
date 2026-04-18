@@ -44,7 +44,8 @@
 
 	<!-- Tab links -->
 	<div class="tab">
-		<button class="tablinks" onclick="setPage(event, 'devices')" id="defaultOpen"><span data-i18n="settings.devices"></span></button>
+		<button class="tablinks" onclick="setPage(event, 'settings')" id="defaultOpen"><span data-i18n="settings.settingsTab"></span></button>
+		<button class="tablinks" onclick="setPage(event, 'devices')"><span data-i18n="settings.devices"></span></button>
 		<button class="tablinks" onclick="setPage(event, 'log')" ><span data-i18n="settings.diagnosticsLog"></span></button>
 		<button class="tablinks" onclick="setPage(event, 'send')"><span data-i18n="settings.registerLog"></span></button>
 	</div>
@@ -85,6 +86,16 @@
 				<label class="homey-form-label"  for="diagLog"><span data-i18n="settings.logData"></span></label>
 				<textarea id="diagLog" style="white-space: nowrap;"></textarea>
 			</div>
+	</div>
+
+	<!-- SETTINGS PAGE -->
+	<div id="settings" class="tabcontent">
+		<div class="field row">
+			<label class="homey-form-label" for="pollingIntervalSeconds"><span data-i18n="settings.pollingInterval"></span></label>
+			<input class="homey-form-input" id="pollingIntervalSeconds" type="number" min="10" max="3600" step="1" value="15" />
+			<p><span data-i18n="settings.pollingIntervalHint"></span></p>
+			<p style="margin-top: 8px;"><button class="homey-button-secondary-shadow" id="updatePollingInterval"><span data-i18n="settings.updatePollingInterval"></span></button></p>
+		</div>
 	</div>
 
 	<!--SEND COMMAND PAGE -->
@@ -128,6 +139,8 @@
 		var clearRegistersElement = document.getElementById('clearRegisters');
 		var sendResponseElement = document.getElementById('sendResponse');
 		var stopElement = document.getElementById('stop');
+		var pollingIntervalElement = document.getElementById('pollingIntervalSeconds');
+		var updatePollingIntervalElement = document.getElementById('updatePollingInterval');
 
 		var itemDisplyType = "flex";
 
@@ -280,6 +293,28 @@
 				resizeDevicesTextArea();
 			});
 
+			Homey.get('pollingIntervalSeconds', function(err, pollingIntervalSeconds)
+			{
+				if (err) return Homey.alert(err);
+
+				var value = Number(pollingIntervalSeconds);
+				if (!Number.isFinite(value))
+				{
+					value = 15;
+				}
+
+				value = Math.max(10, Math.min(3600, Math.round(value)));
+				pollingIntervalElement.value = value;
+
+				if (value !== pollingIntervalSeconds)
+				{
+					Homey.set('pollingIntervalSeconds', value, function(setErr)
+					{
+						if (setErr) return Homey.alert(setErr);
+					});
+				}
+			});
+
 			addDeviceElement.addEventListener('click', function(e)
 			{
 				e.preventDefault();
@@ -376,6 +411,25 @@
 			logEnabledElement.addEventListener('click', function(e)
 			{
 				Homey.set('logEnabled', logEnabledElement.checked, function(err)
+				{
+					if (err) return Homey.alert(err);
+				});
+			});
+
+			updatePollingIntervalElement.addEventListener('click', function(e)
+			{
+				e.preventDefault();
+
+				var value = Number(pollingIntervalElement.value);
+				if (!Number.isFinite(value))
+				{
+					value = 15;
+				}
+
+				value = Math.max(10, Math.min(3600, Math.round(value)));
+				pollingIntervalElement.value = value;
+
+				Homey.set('pollingIntervalSeconds', value, function(err)
 				{
 					if (err) return Homey.alert(err);
 				});

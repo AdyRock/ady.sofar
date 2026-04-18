@@ -63,6 +63,7 @@ class MyApp extends Homey.App
 		this.noDataRestartMs = 5 * 60 * 1000;
 		this.scannerRestartCooldownMs = 60 * 1000;
 		this.noInverterScanCooldownMs = 60 * 1000;
+		this.pollingIntervalMs = this.getPollingIntervalMs();
 
 		// Callback for app settings changed
 		// this.homey.settings.on('set', async function settingChanged(setting) {});
@@ -141,6 +142,12 @@ class MyApp extends Homey.App
 						this.registerSensor(sensorData.ip, sensorData.serial);
 					}
 				}
+			}
+
+			if (setting === 'pollingIntervalSeconds')
+			{
+				this.pollingIntervalMs = this.getPollingIntervalMs();
+				this.updateLog(`Updated polling interval to ${this.pollingIntervalMs}ms`, 0);
 			}
 		});
 
@@ -248,9 +255,34 @@ class MyApp extends Homey.App
 				this.lanSensorTimer = this.homey.setTimeout(async () =>
 				{
 					this.getInverterData();
-				}, 10000);
+				}, this.pollingIntervalMs);
 			}
 		}
+	}
+
+	getPollingIntervalMs()
+	{
+		const defaultSeconds = 15;
+		const minSeconds = 10;
+		const maxSeconds = 3600;
+
+		const rawSetting = this.homey.settings.get('pollingIntervalSeconds');
+		let pollingIntervalSeconds = Number(rawSetting);
+
+		if (!Number.isFinite(pollingIntervalSeconds))
+		{
+			pollingIntervalSeconds = defaultSeconds;
+		}
+
+		pollingIntervalSeconds = Math.round(pollingIntervalSeconds);
+		pollingIntervalSeconds = Math.max(minSeconds, Math.min(maxSeconds, pollingIntervalSeconds));
+
+		if (pollingIntervalSeconds !== rawSetting)
+		{
+			this.homey.settings.set('pollingIntervalSeconds', pollingIntervalSeconds);
+		}
+
+		return pollingIntervalSeconds * 1000;
 	}
 
 	tryRestartScanner(reason, cooldownMs = this.scannerRestartCooldownMs)

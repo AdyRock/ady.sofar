@@ -16,11 +16,15 @@
 		"response": "Response",
 		"logData": "Log Data",
 		"registerLog": "Register Log",
+		"settingsTab": "Settings",
 		"stop": "Stop",
 		"devices": "Manual Devices",
 		"addDevice": "Add Device",
 		"deviceIp": "IP Address",
 		"deviceSerial": "Serial Number",
-		"devicesList": "Devices List (IP - Serial)"
+		"devicesList": "Devices List (IP - Serial)",
+		"pollingInterval": "Polling Interval (seconds)",
+		"updatePollingInterval": "Update Polling Interval",
+		"pollingIntervalHint": "Minimum is 10 seconds. Lower values update more frequently but can increase network and CPU usage."
 	}
 }
