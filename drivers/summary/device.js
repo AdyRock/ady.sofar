@@ -113,7 +113,7 @@ class InverterDevice extends LanDevice
 				if (this.hasCapability('measure_power.consumption') && hasData('Consumption'))
 				{
 					this.setCapabilityValue('measure_power.consumption', data.Consumption).catch(this.error);
-					this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power', value: data.Consumption });
+					this.homey.api.realtime('updateWidget', { deviceId: this.__id, capabilityID: 'measure_power.consumption', value: data.Consumption });
 				}
 
 				if (this.hasCapability('meter_power.today_solar') && hasData('Daily_Production'))

@@ -16,6 +16,37 @@
 	<canvas id="canvas9"></canvas>
 
 	<script type="text/javascript">
+		let pendingWidgetResult = null;
+
+		function isWidgetCanvasReady()
+		{
+			return Boolean(window.flowFieldSolarText
+				&& window.flowFieldBatteryText
+				&& window.flowFieldGridText
+				&& window.flowFieldHomeText
+				&& window.flowFieldSolar
+				&& window.flowFieldBattery
+				&& window.flowFieldGrid
+				&& window.flowFieldHome
+				&& window.flowFieldHomey);
+		}
+
+		function flushPendingWidgetResult()
+		{
+			if (!pendingWidgetResult || !isWidgetCanvasReady())
+			{
+				return;
+			}
+
+			updateWidget(pendingWidgetResult);
+			pendingWidgetResult = null;
+		}
+
+		window.addEventListener('energyWidgetReady', function ()
+		{
+			flushPendingWidgetResult();
+		});
+
 		function onHomeyReady(Homey)
 		{
 			Homey.ready();
@@ -27,7 +58,8 @@
 			Homey.api('GET', `/?solarDeviceId=${settings.solarDevices.id}&batteryDeviceId=${settings.batteryDevices.id}&gridDeviceId=${settings.gridDevices.id}&homeDeviceId=${settings.homeDevices.id}`, {})
 				.then((result) =>
 				{
-					updateWidget(result);
+					pendingWidgetResult = result;
+					flushPendingWidgetResult();
 				})
 				.catch(console.error);
 

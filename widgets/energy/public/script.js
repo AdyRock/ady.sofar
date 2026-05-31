@@ -215,10 +215,16 @@ function setupCanvases()
 }
 
 
-window.onload = function ()
+function notifyCanvasReady()
+{
+	window.dispatchEvent(new Event('energyWidgetReady'));
+}
+
+window.addEventListener('DOMContentLoaded', function ()
 {
 	setupCanvases();
-};
+	notifyCanvasReady();
+});
 
 window.addEventListener('resize', function ()
 {
@@ -228,4 +234,5 @@ window.addEventListener('resize', function ()
 	flowFieldHome.cancelAnimation();
 	flowFieldHomey.cancelAnimation();
 	setupCanvases();
+	notifyCanvasReady();
 });
