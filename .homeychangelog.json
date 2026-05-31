@@ -190,5 +190,8 @@
 	},
 	"1.1.49": {
 		"en": "Added app setting to set the polling interval."
+	},
+	"1.1.50": {
+		"en": "Improve widget initialization when the dashboard is opened."
 	}
 }
