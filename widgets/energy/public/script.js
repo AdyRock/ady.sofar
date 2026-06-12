@@ -62,7 +62,6 @@ function setupCanvases()
 	canvasSolar.height = height;
 	flowFieldSolar = new Animation(ctxSolar, width, height, PANEL.SOLAR, 'solar-panel.svg', forecolor);
 	flowFieldSolar.animate();
-	// Make flowFieldSolar globally accessible
 	window.flowFieldSolar = flowFieldSolar;
 
 	// Setup Power Grid in top right of screen
@@ -77,7 +76,6 @@ function setupCanvases()
 	canvasGrid.height = height;
 	flowFieldGrid = new Animation(ctxGrid, width, height, PANEL.POWER_GRID, 'pylon.svg', forecolor);
 	flowFieldGrid.animate();
-	// make flowFieldGrid globally accessible
 	window.flowFieldGrid = flowFieldGrid;
 
 	// Setup Battery in bottom left of screen
@@ -92,7 +90,6 @@ function setupCanvases()
 	canvasBattery.height = height;
 	flowFieldBattery = new Animation(ctxBattery, width, height, PANEL.BATTERY, 'battery.svg', forecolor);
 	flowFieldBattery.animate();
-	// make flowFieldBattery globally accessible
 	window.flowFieldBattery = flowFieldBattery;
 
 	// Setup Home in bottom right of screen
@@ -107,7 +104,6 @@ function setupCanvases()
 	canvasHome.height = height;
 	flowFieldHome = new Animation(ctxHome, width, height, PANEL.HOME, 'house.svg', forecolor);
 	flowFieldHome.animate();
-	// make flowFieldHome globally accessible
 	window.flowFieldHome = flowFieldHome;
 
 	// Setup Homey in center of screen
@@ -117,13 +113,11 @@ function setupCanvases()
 	canvasHomey.style.left = `${window.innerWidth / 2 - 25}px`;
 	canvasHomey.style.right = `${window.innerWidth / 2 + 25}px`;
 	canvasHomey.style.bottom = `${window.innerHeight / 2 + 25}px`;
-	// canvasHomey.style.background = window.getComputedStyle(document.body).getPropertyValue('--homey-background-color');
 	ctxHomey = canvasHomey.getContext('2d');
 	canvasHomey.width = 50;
 	canvasHomey.height = 50;
 	flowFieldHomey = new Animation(ctxHomey, canvasHomey.width, canvasHomey.height, PANEL.HOMEY, 'homey-logo.png', forecolor);
 	flowFieldHomey.animate();
-	// Make flowFieldHomey globally accessible
 	window.flowFieldHomey = flowFieldHomey;
 
 	// Create text overlay for solar panel
@@ -139,7 +133,6 @@ function setupCanvases()
 	if (!flowFieldSolarText)
 	{
 		flowFieldSolarText = new TextFields(ctxSolarText, 55, 0, true, forecolor, -1);
-		// Make flowFieldSolarText globally accessible
 		window.flowFieldSolarText = flowFieldSolarText;
 	}
 	else
@@ -161,7 +154,6 @@ function setupCanvases()
 	if (!flowFieldBatteryText)
 	{
 		flowFieldBatteryText = new TextFields(ctxBatteryText, 55, height - 80, true, forecolor, 1);
-		// Make flowFieldBatteryText globally accessible
 		window.flowFieldBatteryText = flowFieldBatteryText;
 	}
 	else
@@ -183,7 +175,6 @@ function setupCanvases()
 	if (!flowFieldGridText)
 	{
 		flowFieldGridText = new TextFields(ctxGridText, width - 80, 0, false, forecolor, -1);
-		// Make flowFieldGridText globally accessible
 		window.flowFieldGridText = flowFieldGridText;
 	}
 	else
@@ -205,13 +196,18 @@ function setupCanvases()
 	if (!flowFieldHomeText)
 	{
 		flowFieldHomeText = new TextFields(ctxHomeText, width - 80, height - 80, false, forecolor, 1);
-		// Make flowFieldHomeText globally accessible
 		window.flowFieldHomeText = flowFieldHomeText;
 	}
 	else
 	{
 		flowFieldHomeText.setXY(width - 80, height - 80);
 	}
+
+	// Couple each TextFields to its Animation so text redraws every frame
+	flowFieldSolar.setTextFields(flowFieldSolarText);
+	flowFieldGrid.setTextFields(flowFieldGridText);
+	flowFieldBattery.setTextFields(flowFieldBatteryText);
+	flowFieldHome.setTextFields(flowFieldHomeText);
 }
 
 
@@ -219,6 +215,35 @@ function notifyCanvasReady()
 {
 	window.dispatchEvent(new Event('energyWidgetReady'));
 }
+
+function rebuildCanvases()
+{
+	if (window.flowFieldSolar && window.flowFieldSolar.cancelAnimation)
+	{
+		window.flowFieldSolar.cancelAnimation();
+	}
+	if (window.flowFieldGrid && window.flowFieldGrid.cancelAnimation)
+	{
+		window.flowFieldGrid.cancelAnimation();
+	}
+	if (window.flowFieldBattery && window.flowFieldBattery.cancelAnimation)
+	{
+		window.flowFieldBattery.cancelAnimation();
+	}
+	if (window.flowFieldHome && window.flowFieldHome.cancelAnimation)
+	{
+		window.flowFieldHome.cancelAnimation();
+	}
+	if (window.flowFieldHomey && window.flowFieldHomey.cancelAnimation)
+	{
+		window.flowFieldHomey.cancelAnimation();
+	}
+
+	setupCanvases();
+	notifyCanvasReady();
+}
+
+window.refreshEnergyWidgetCanvas = rebuildCanvases;
 
 window.addEventListener('DOMContentLoaded', function ()
 {
@@ -228,11 +253,5 @@ window.addEventListener('DOMContentLoaded', function ()
 
 window.addEventListener('resize', function ()
 {
-	flowFieldSolar.cancelAnimation();
-	flowFieldGrid.cancelAnimation();
-	flowFieldBattery.cancelAnimation();
-	flowFieldHome.cancelAnimation();
-	flowFieldHomey.cancelAnimation();
-	setupCanvases();
-	notifyCanvasReady();
+	rebuildCanvases();
 });

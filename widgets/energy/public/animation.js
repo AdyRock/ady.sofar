@@ -31,6 +31,7 @@ class Animation
 	#rotation;
 	#flowToColour;
 	#flowFromColour;
+	#textFields;
 
 	constructor(ctx, width, height, Sector, imageFile)
 	{
@@ -313,6 +314,11 @@ class Animation
 		}
 
 		this.#flowFieldAnimation = requestAnimationFrame(this.animate.bind(this));
+
+		if (this.#textFields)
+		{
+			this.#textFields.draw();
+		}
 	}
 
 	cancelAnimation()
@@ -349,6 +355,11 @@ class Animation
 	setChargeValue(value)
 	{
 		this.chargeValue = value;
+	}
+
+	setTextFields(textFields)
+	{
+		this.#textFields = textFields;
 	}
 
 }

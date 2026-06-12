@@ -17,6 +17,23 @@
 
 	<script type="text/javascript">
 		let pendingWidgetResult = null;
+		let latestWidgetResult = null;
+		let requestInitialWidgetState = null;
+
+		function getDeviceSettings(settings)
+		{
+			return {
+				solarDeviceId: settings && settings.solarDevices ? settings.solarDevices.id : null,
+				batteryDeviceId: settings && settings.batteryDevices ? settings.batteryDevices.id : null,
+				gridDeviceId: settings && settings.gridDevices ? settings.gridDevices.id : null,
+				homeDeviceId: settings && settings.homeDevices ? settings.homeDevices.id : null,
+			};
+		}
+
+		function isWidgetReady()
+		{
+			return isWidgetCanvasReady() && Boolean(window.PANEL);
+		}
 
 		function isWidgetCanvasReady()
 		{
@@ -33,29 +50,92 @@
 
 		function flushPendingWidgetResult()
 		{
-			if (!pendingWidgetResult || !isWidgetCanvasReady())
+			if (!pendingWidgetResult || !isWidgetReady())
 			{
 				return;
 			}
 
-			updateWidget(pendingWidgetResult);
-			pendingWidgetResult = null;
+			try
+			{
+				ensureLatestResult();
+
+				// Merge partial API payload into the latest in-memory state so we
+				// do not lose realtime-only values between refreshes/rebuilds.
+				if (pendingWidgetResult.solar)
+				{
+					latestWidgetResult.solar = { ...latestWidgetResult.solar, ...pendingWidgetResult.solar };
+				}
+				if (pendingWidgetResult.battery)
+				{
+					latestWidgetResult.battery = { ...latestWidgetResult.battery, ...pendingWidgetResult.battery };
+				}
+				if (pendingWidgetResult.grid)
+				{
+					latestWidgetResult.grid = { ...latestWidgetResult.grid, ...pendingWidgetResult.grid };
+				}
+				if (pendingWidgetResult.home)
+				{
+					latestWidgetResult.home = { ...latestWidgetResult.home, ...pendingWidgetResult.home };
+				}
+
+				updateWidget(latestWidgetResult);
+				pendingWidgetResult = null;
+			}
+			catch (err)
+			{
+				console.error('flushPendingWidgetResult failed:', err);
+			}
 		}
 
 		window.addEventListener('energyWidgetReady', function ()
 		{
+			if (!pendingWidgetResult && latestWidgetResult)
+			{
+				pendingWidgetResult = latestWidgetResult;
+			}
 			flushPendingWidgetResult();
 		});
+
+		function refreshAfterVisibilityChange()
+		{
+			if (document.hidden)
+			{
+				return;
+			}
+
+			if (latestWidgetResult)
+			{
+				pendingWidgetResult = latestWidgetResult;
+				flushPendingWidgetResult();
+			}
+
+			if (requestInitialWidgetState)
+			{
+				requestInitialWidgetState();
+			}
+		}
+
+		document.addEventListener('visibilitychange', refreshAfterVisibilityChange);
+		window.addEventListener('pageshow', refreshAfterVisibilityChange);
+
+		function ensureLatestResult()
+		{
+			if (!latestWidgetResult)
+			{
+				latestWidgetResult = { solar: {}, battery: {}, grid: {}, home: {} };
+			}
+		}
 
 		function onHomeyReady(Homey)
 		{
 			Homey.ready();
 
 			const settings = Homey.getSettings();
+			const deviceSettings = getDeviceSettings(settings);
 			const height = settings.height || 200;
 			Homey.setHeight(height);
 
-			Homey.api('GET', `/?solarDeviceId=${settings.solarDevices.id}&batteryDeviceId=${settings.batteryDevices.id}&gridDeviceId=${settings.gridDevices.id}&homeDeviceId=${settings.homeDevices.id}`, {})
+			requestInitialWidgetState = () => Homey.api('GET', `/?solarDeviceId=${deviceSettings.solarDeviceId || ''}&batteryDeviceId=${deviceSettings.batteryDeviceId || ''}&gridDeviceId=${deviceSettings.gridDeviceId || ''}&homeDeviceId=${deviceSettings.homeDeviceId || ''}`, {})
 				.then((result) =>
 				{
 					pendingWidgetResult = result;
@@ -63,72 +143,105 @@
 				})
 				.catch(console.error);
 
+			requestInitialWidgetState();
+
+			// Mobile webview startup can race module/canvas setup; retry shortly after open.
+			setTimeout(() =>
+			{
+				if (requestInitialWidgetState)
+				{
+					requestInitialWidgetState();
+				}
+			}, 300);
+
 			Homey.on('updateWidget', function ({ deviceId, capabilityID, value })
 			{
 				const settings = Homey.getSettings();
-				if (settings.solarDevices.id === deviceId)
+				const eventDeviceSettings = getDeviceSettings(settings);
+
+				if (!isWidgetReady())
+				{
+					return;
+				}
+
+				// Keep latestWidgetResult in sync so rebuilds restore the latest live values,
+				// not the stale initial API snapshot.
+				ensureLatestResult();
+
+				if (eventDeviceSettings.solarDeviceId === deviceId)
 				{
 					if (capabilityID === 'measure_power')
 					{
+						latestWidgetResult.solar.power = value;
 						setPanelPowerValue(PANEL.SOLAR, value, 'W');
 						flowFieldSolarText.draw();
 					}
 					else if (capabilityID === 'meter_power.today')
 					{
+						latestWidgetResult.solar.export = value;
 						setPanelFromDeviceValue(PANEL.SOLAR, value, 'kW/h');
 						flowFieldSolarText.draw();
 					}
 				}
-				else if (settings.batteryDevices.id === deviceId)
+				else if (eventDeviceSettings.batteryDeviceId === deviceId)
 				{
 					if (capabilityID === 'measure_power')
 					{
+						latestWidgetResult.battery.power = value;
 						setPanelPowerValue(PANEL.BATTERY, value, 'W');
 						flowFieldBatteryText.draw();
 					}
 					else if (capabilityID === 'measure_battery')
 					{
+						latestWidgetResult.battery.level = value;
 						setChargeValue(PANEL.BATTERY, value, '%');
 						flowFieldBatteryText.draw();
 					}
 					else if (capabilityID === 'meter_power.charge_today')
 					{
+						latestWidgetResult.battery.import = value;
 						setPanelToDeviceValue(PANEL.BATTERY, value, 'kW/h');
 						flowFieldBatteryText.draw();
 					}
 					else if (capabilityID === 'meter_power.discharge_today')
 					{
+						latestWidgetResult.battery.export = value;
 						setPanelFromDeviceValue(PANEL.BATTERY, value, 'kW/h');
 						flowFieldBatteryText.draw();
 					}
 				}
-				else if (settings.gridDevices.id === deviceId)
+				else if (eventDeviceSettings.gridDeviceId === deviceId)
 				{
 					if (capabilityID === 'measure_power')
 					{
+						latestWidgetResult.grid.power = value;
 						setPanelPowerValue(PANEL.POWER_GRID, value, 'W');
 						flowFieldGridText.draw();
 					}
 					else if (capabilityID === 'meter_power.today_import')
 					{
+						latestWidgetResult.grid.import = value;
 						setPanelFromDeviceValue(PANEL.POWER_GRID, value, 'kW/h');
 						flowFieldGridText.draw();
 					}
 					else if (capabilityID === 'meter_power.today_export')
 					{
+						latestWidgetResult.grid.export = value;
 						setPanelToDeviceValue(PANEL.POWER_GRID, value, 'kW/h');
 						flowFieldGridText.draw();
 					}
 				}
-				else if (settings.homeDevices.id === deviceId)
+				else if (eventDeviceSettings.homeDeviceId === deviceId)
 				{
 					if (capabilityID === 'measure_power.consumption')
 					{
+						latestWidgetResult.home.power = value;
 						setPanelPowerValue(PANEL.HOME, value, 'W');
 						flowFieldHomeText.draw();
 					}
 					else if (capabilityID === 'meter_power.today_consumption')
 					{
+						latestWidgetResult.home.import = value;
 						setPanelToDeviceValue(PANEL.HOME, value, 'kW/h');
 						flowFieldHomeText.draw();
 					}
@@ -141,36 +254,79 @@
 	<script type="module">
 		import { PANEL } from './animation.js';
 
-		// Make PANEL available globally
 		window.PANEL = PANEL;
+		window.dispatchEvent(new Event('energyWidgetReady'));
 	</script>
 
 	<script type="text/javascript">
+		function isFiniteNumber(value)
+		{
+			return (typeof value === 'number') && Number.isFinite(value);
+		}
+
 		function updateWidget(result)
 		{
-			if (!result)
+			if (!result || !window.PANEL)
 			{
 				return;
 			}
 
-			setPanelPowerValue(PANEL.SOLAR, result.solar.power, 'W');
-			setPanelFromDeviceValue(PANEL.SOLAR, result.solar.export, 'kW/h');
+			const solar = result.solar || {};
+			const battery = result.battery || {};
+			const grid = result.grid || {};
+			const home = result.home || {};
+
+			if (isFiniteNumber(solar.power))
+			{
+				setPanelPowerValue(PANEL.SOLAR, solar.power, 'W');
+			}
+			if (isFiniteNumber(solar.export))
+			{
+				setPanelFromDeviceValue(PANEL.SOLAR, solar.export, 'kW/h');
+			}
 			flowFieldSolarText.draw();
 
-			setPanelPowerValue(PANEL.BATTERY, result.battery.power, 'W');
-			setPanelFromDeviceValue(PANEL.BATTERY, result.battery.export, 'kW/h'); // Updated to use setPanelExportedValue
-			setPanelToDeviceValue(PANEL.BATTERY, result.battery.import, 'kW/h');
-			setChargeValue(PANEL.BATTERY, result.battery.level, '%');
+			if (isFiniteNumber(battery.power))
+			{
+				setPanelPowerValue(PANEL.BATTERY, battery.power, 'W');
+			}
+			if (isFiniteNumber(battery.export))
+			{
+				setPanelFromDeviceValue(PANEL.BATTERY, battery.export, 'kW/h');
+			}
+			if (isFiniteNumber(battery.import))
+			{
+				setPanelToDeviceValue(PANEL.BATTERY, battery.import, 'kW/h');
+			}
+			if (isFiniteNumber(battery.level))
+			{
+				setChargeValue(PANEL.BATTERY, battery.level, '%');
+			}
 			flowFieldBatteryText.draw();
 
-			setPanelPowerValue(PANEL.POWER_GRID, result.grid.power, 'W');
-			setPanelToDeviceValue(PANEL.POWER_GRID, result.grid.export, 'kW/h');
-			setPanelFromDeviceValue(PANEL.POWER_GRID, result.grid.import, 'kW/h'); // Added to handle exported value for POWER_GRID
-			flowFieldGridText.draw(); // Added to redraw the home panel
+			if (isFiniteNumber(grid.power))
+			{
+				setPanelPowerValue(PANEL.POWER_GRID, grid.power, 'W');
+			}
+			if (isFiniteNumber(grid.export))
+			{
+				setPanelToDeviceValue(PANEL.POWER_GRID, grid.export, 'kW/h');
+			}
+			if (isFiniteNumber(grid.import))
+			{
+				setPanelFromDeviceValue(PANEL.POWER_GRID, grid.import, 'kW/h');
+			}
+			flowFieldGridText.draw();
 
-			setPanelPowerValue(PANEL.HOME, result.home.power, 'W');
-			setPanelToDeviceValue(PANEL.HOME, result.home.import, 'kW/h');
-			flowFieldHomeText.draw(); // Added to redraw the home panel after updating values
+			if (isFiniteNumber(home.power))
+			{
+				setPanelPowerValue(PANEL.HOME, home.power, 'W');
+			}
+			if (isFiniteNumber(home.import))
+			{
+				setPanelToDeviceValue(PANEL.HOME, home.import, 'kW/h');
+			}
+			flowFieldHomeText.draw();
 		}
 
 		function setPanelPowerValue(panel, value, unit)
@@ -183,18 +339,18 @@
 			}
 			else if ((panel === PANEL.POWER_GRID) && flowFieldGridText)
 			{
-				flowFieldGridText.setPowerValue(value, unit); // Updated to use setPowerValue
+				flowFieldGridText.setPowerValue(value, unit);
 				flowFieldGrid.setPowerValue(value);
 			}
 			else if ((panel === PANEL.BATTERY) && flowFieldBatteryText)
 			{
-				flowFieldBatteryText.setPowerValue(value, unit); // Updated to use setPowerValue
-				flowFieldBattery.setPowerValue(value); // Updated to use setPowerValue
+				flowFieldBatteryText.setPowerValue(value, unit);
+				flowFieldBattery.setPowerValue(value);
 			}
 			else if ((panel === PANEL.HOME) && flowFieldHomeText)
 			{
-				flowFieldHomeText.setPowerValue(value, unit); // Updated to use setPowerValue
-				flowFieldHome.setPowerValue(value); // Updated to use setPowerValue
+				flowFieldHomeText.setPowerValue(value, unit);
+				flowFieldHome.setPowerValue(value);
 			}
 		}
 
@@ -240,7 +396,6 @@
 
 		function setChargeValue(panel, value, unit)
 		{
-			// Only applies to the battery panel
 			if ((panel === PANEL.BATTERY) && flowFieldBatteryText)
 			{
 				flowFieldBatteryText.setChargeValue(value, unit);
