@@ -193,5 +193,8 @@
 	},
 	"1.1.50": {
 		"en": "Improve widget initialization when the dashboard is opened."
+	},
+	"1.1.51": {
+		"en": "Improve widget refresh when widget scrolls off screen."
 	}
 }
