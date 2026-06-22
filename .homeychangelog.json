@@ -196,5 +196,8 @@
 	},
 	"1.1.51": {
 		"en": "Improve widget refresh when widget scrolls off screen."
+	},
+	"1.1.52": {
+		"en": "Fix issue with reporting generation power where only one PV string was being reported."
 	}
 }
