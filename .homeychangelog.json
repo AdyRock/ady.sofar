@@ -199,5 +199,8 @@
 	},
 	"1.1.52": {
 		"en": "Fix issue with reporting generation power where only one PV string was being reported."
+	},
+	"1.1.53": {
+		"en": "Improved robustness of network connections for devices that experience intermittent connectivity."
 	}
 }
