@@ -149,6 +149,16 @@ class MyApp extends Homey.App
 				this.pollingIntervalMs = this.getPollingIntervalMs();
 				this.updateLog(`Updated polling interval to ${this.pollingIntervalMs}ms`, 0);
 			}
+
+			if (setting === 'modbusSlaveId')
+			{
+				const slaveId = this.getModbusSlaveId();
+				for (const sensor of this.lanSensors)
+				{
+					sensor.setSlaveId(slaveId);
+				}
+				this.updateLog(`Updated Modbus slave ID to ${slaveId}`, 0);
+			}
 		});
 
 		this.homey.app.updateLog('************** App has initialised. ***************');
@@ -285,6 +295,31 @@ class MyApp extends Homey.App
 		return pollingIntervalSeconds * 1000;
 	}
 
+	getModbusSlaveId()
+	{
+		const defaultSlaveId = 1;
+		const minSlaveId = 1;
+		const maxSlaveId = 247;
+
+		const rawSetting = this.homey.settings.get('modbusSlaveId');
+		let slaveId = Number(rawSetting);
+
+		if (!Number.isFinite(slaveId))
+		{
+			slaveId = defaultSlaveId;
+		}
+
+		slaveId = Math.round(slaveId);
+		slaveId = Math.max(minSlaveId, Math.min(maxSlaveId, slaveId));
+
+		if (slaveId !== rawSetting)
+		{
+			this.homey.settings.set('modbusSlaveId', slaveId);
+		}
+
+		return slaveId;
+	}
+
 	tryRestartScanner(reason, cooldownMs = this.scannerRestartCooldownMs)
 	{
 		if (!this.scanner)
@@ -334,6 +369,9 @@ class MyApp extends Homey.App
 
 	async registerSensor(ip, serial)
 	{
+		const modbusSlaveId = this.getModbusSlaveId();
+		this.updateLog(`Using Modbus slave ID ${modbusSlaveId} when registering sensor ${serial}`, 0);
+
 		for (const sensor of this.lanSensors)
 		{
 			// Check if this one already registered
@@ -341,6 +379,7 @@ class MyApp extends Homey.App
 			{
 				// Yep, found it so update the IP just incase it changed
 				sensor.setHost(ip);
+				sensor.setSlaveId(modbusSlaveId);
 				return;
 			}
 		}
@@ -419,7 +458,7 @@ class MyApp extends Homey.App
 
 	async checkSensor(ip, serial, register, lookupFile)
 	{
-		const sensor = new Sensor(serial, ip, 8899, 1, lookupFile);
+		const sensor = new Sensor(serial, ip, 8899, this.getModbusSlaveId(), lookupFile);
 		try
 		{
 			const frequency = await sensor.getRegisterValue(register, serial);
@@ -439,7 +478,23 @@ class MyApp extends Homey.App
 		}
 		catch (err)
 		{
-			this.updateLog(`Register ${register} (${lookupFile}): Error reading - ${err.message}`, 0);
+			const expectedProbeMissErrors = [
+				'Invalid MODBUS packet',
+				'Invalid V5 checksum',
+				'Incomplete MODBUS packet',
+				'Invalid V5 packet start',
+				'Empty MODBUS packet',
+				`No data returned for register ${register}`,
+			];
+
+			if (expectedProbeMissErrors.includes(err.message))
+			{
+				this.updateLog(`Register ${register} (${lookupFile}): No probe match (${err.message})`, 1);
+			}
+			else
+			{
+				this.updateLog(`Register ${register} (${lookupFile}): Error reading - ${err.message}`, 0);
+			}
 			return null;
 		}
 
@@ -472,7 +527,7 @@ class MyApp extends Homey.App
 			{
 				if (sensorData.serial === serial)
 				{
-					return new Sensor(sensorData.serial, sensorData.ip, 8899, 1, null);
+					return new Sensor(sensorData.serial, sensorData.ip, 8899, this.getModbusSlaveId(), null);
 				}
 			}
 		}
@@ -592,7 +647,7 @@ class MyApp extends Homey.App
 			const manualSensors = this.homey.settings.get('manualSensors');
 			for (const sensorData of manualSensors)
 			{
-				const sensor = new Sensor(sensorData.serial, sensorData.ip, 8899, 1, null);
+				const sensor = new Sensor(sensorData.serial, sensorData.ip, 8899, this.getModbusSlaveId(), null);
 				return sensor.getRegisterValue(registerNumber, registerNumber, 3);
 			}
 		}

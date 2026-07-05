@@ -1,8 +1,9 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head><meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sofar Settings</title>
 	<link rel="stylesheet" type="text/css" href="lwsa.css">
 	<link rel="stylesheet" type="text/css" href="busy_indicator.css">
 	<style>
@@ -11,6 +12,29 @@
 			width: 200px;
 			height: 15px;
 			padding: 5px;
+		}
+
+		.mt-10-mb-10 {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+
+		.mt-8-mb-0 {
+			margin-top: 8px;
+			margin-bottom: 0;
+		}
+
+		.mt-8 {
+			margin-top: 8px;
+		}
+
+		.no-wrap {
+			white-space: nowrap;
+		}
+
+		.full-width-box {
+			width: 100%;
+			box-sizing: border-box;
 		}
 	</style>
 
@@ -44,25 +68,25 @@
 
 	<!-- Tab links -->
 	<div class="tab">
-		<button class="tablinks" onclick="setPage(event, 'settings')" id="defaultOpen"><span data-i18n="settings.settingsTab"></span></button>
-		<button class="tablinks" onclick="setPage(event, 'devices')"><span data-i18n="settings.devices"></span></button>
-		<button class="tablinks" onclick="setPage(event, 'log')" ><span data-i18n="settings.diagnosticsLog"></span></button>
-		<button class="tablinks" onclick="setPage(event, 'send')"><span data-i18n="settings.registerLog"></span></button>
+		<button class="tablinks" onclick="setPage(event, 'settings')" id="defaultOpen" title="Settings"><span data-i18n="settings.settingsTab"></span></button>
+		<button class="tablinks" onclick="setPage(event, 'devices')" title="Devices"><span data-i18n="settings.devices"></span></button>
+		<button class="tablinks" onclick="setPage(event, 'log')" title="Diagnostics Log"><span data-i18n="settings.diagnosticsLog"></span></button>
+		<button class="tablinks" onclick="setPage(event, 'send')" title="Register Log"><span data-i18n="settings.registerLog"></span></button>
 	</div>
 
 	<!-- DEVICES PAGE - This page has a test box to enter the IP address and a text box to enter the serial number and a text area to show the manually added devices plus a button to manually add devices -->
 	<div id="devices" class="tabcontent">
 		<div class="field row">
 			<label class="homey-form-label"  for="deviceIp"><span data-i18n="settings.deviceIp"></span></label>
-			<input class="homey-form-input" id="deviceIp" type="text" value="" />
+			<input class="homey-form-input" id="deviceIp" type="text" value="" title="Device IP" />
 
 			<label class="homey-form-label"  for="deviceSerial"><span data-i18n="settings.deviceSerial"></span></label>
-			<input class="homey-form-input" id="deviceSerial" type="text" value="" />
-			<p style="margin-top: 10px; margin-bottom: 10px;"><button class="homey-button-secondary-shadow" id="addDevice"><span data-i18n="settings.addDevice"></span></button></p>
+			<input class="homey-form-input" id="deviceSerial" type="text" value="" title="Device Serial" />
+			<p class="mt-10-mb-10"><button class="homey-button-secondary-shadow" id="addDevice" title="Add Device"><span data-i18n="settings.addDevice"></span></button></p>
 
 			<label class="homey-form-label"  for="manualDevices"><span data-i18n="settings.devicesList"></span></label>
-			<textarea id="manualDevices" style="white-space: nowrap; width: 100%; box-sizing: border-box;"></textarea>
-			<p style="margin-top: 8px; margin-bottom: 0;"><button class="homey-button-secondary-shadow" id="removeDevice">Remove Selected Device</button></p>
+			<textarea id="manualDevices" class="no-wrap full-width-box" title="Devices List"></textarea>
+			<p class="mt-8-mb-0"><button class="homey-button-secondary-shadow" id="removeDevice" title="Remove Selected Device">Remove Selected Device</button></p>
 			<p></p>
 		</div>
 	</div>
@@ -71,30 +95,36 @@
 	<div id="log" class="tabcontent">
 			<div class="field row">
 				<label class="homey-form-checkbox">
-					<input class="homey-form-checkbox-input" id="logEnabled" type="checkbox" value="logEnabled" />
+					<input class="homey-form-checkbox-input" id="logEnabled" type="checkbox" value="logEnabled" title="Enable Diagnostics Logging" />
 					<span class="homey-form-checkbox-checkmark"></span>
 					<span class="homey-form-checkbox-text"><span data-i18n="settings.logEnabled"></span></span>
 				</label>
 			</div>
 		<div class="field row">
 			<label class="homey-form-label"  for="email"><span data-i18n="settings.email"></span></label>
-			<input class="homey-form-input" id="email" type="text" value="" />
+			<input class="homey-form-input" id="email" type="text" value="" title="Email" />
 			<P></P>
 		</div>
-			<p><button class="homey-button-secondary-shadow" id="clearDiagLog"><span data-i18n="settings.clearLog"></span></button> <button class="homey-button-secondary-shadow" id="sendDiagLog"><span data-i18n="settings.sendLog"></span></button></p>
+			<p><button class="homey-button-secondary-shadow" id="clearDiagLog" title="Clear Log"><span data-i18n="settings.clearLog"></span></button> <button class="homey-button-secondary-shadow" id="sendDiagLog" title="Send Log"><span data-i18n="settings.sendLog"></span></button></p>
 			<div class="field row">
 				<label class="homey-form-label"  for="diagLog"><span data-i18n="settings.logData"></span></label>
-				<textarea id="diagLog" style="white-space: nowrap;"></textarea>
+				<textarea id="diagLog" class="no-wrap" title="Log Data"></textarea>
 			</div>
 	</div>
 
 	<!-- SETTINGS PAGE -->
 	<div id="settings" class="tabcontent">
 		<div class="field row">
+			<label class="homey-form-label" for="modbusSlaveId"><span data-i18n="settings.modbusSlaveId"></span></label>
+			<input class="homey-form-input" id="modbusSlaveId" type="number" min="1" max="247" step="1" value="1" title="Modbus Slave ID" />
+			<p><span data-i18n="settings.modbusSlaveIdHint"></span></p>
+			<p class="mt-8"><button class="homey-button-secondary-shadow" id="updateModbusSlaveId" title="Update Modbus Slave ID"><span data-i18n="settings.updateModbusSlaveId"></span></button></p>
+		</div>
+		<div class="field row">
 			<label class="homey-form-label" for="pollingIntervalSeconds"><span data-i18n="settings.pollingInterval"></span></label>
-			<input class="homey-form-input" id="pollingIntervalSeconds" type="number" min="10" max="3600" step="1" value="15" />
+			<input class="homey-form-input" id="pollingIntervalSeconds" type="number" min="10" max="3600" step="1" value="15" title="Polling Interval Seconds" />
 			<p><span data-i18n="settings.pollingIntervalHint"></span></p>
-			<p style="margin-top: 8px;"><button class="homey-button-secondary-shadow" id="updatePollingInterval"><span data-i18n="settings.updatePollingInterval"></span></button></p>
+			<p class="mt-8"><button class="homey-button-secondary-shadow" id="updatePollingInterval" title="Update Polling Interval"><span data-i18n="settings.updatePollingInterval"></span></button></p>
 		</div>
 	</div>
 
@@ -103,16 +133,16 @@
 		<h1>For debug use only</h1>
 		<div class="field row">
 			<label class="homey-form-label"  for="commandData"><span data-i18n="settings.readRegister"></span></label>
-			<input class="homey-form-input" id="commandData" type="text" value="" />
+			<input class="homey-form-input" id="commandData" type="text" value="" title="Read Register" />
 
 			<label class="homey-form-label"  for="commandDataNum"><span data-i18n="settings.readRegisterNum"></span></label>
-			<input class="homey-form-input" id="commandDataNum" type="text" value="1" />
+			<input class="homey-form-input" id="commandDataNum" type="text" value="1" title="Read Register Number" />
 			<P></P>
-			<p><button class="homey-button-secondary-shadow" id="getRegisters"><span data-i18n="settings.sendCommand"></span></button> <button class="homey-button-secondary-shadow" id="stop"><span data-i18n="settings.stop"></span></button> <button class="homey-button-secondary-shadow" id="clearRegisters"><span data-i18n="settings.clearResponse"></span></button></p>
+			<p><button class="homey-button-secondary-shadow" id="getRegisters" title="Send Command"><span data-i18n="settings.sendCommand"></span></button> <button class="homey-button-secondary-shadow" id="stop" title="Stop"><span data-i18n="settings.stop"></span></button> <button class="homey-button-secondary-shadow" id="clearRegisters" title="Clear Response"><span data-i18n="settings.clearResponse"></span></button></p>
 		</div>
 		<div class="field row">
 			<label class="homey-form-label"  for="sendResponse"><span data-i18n="settings.response"></span></label>
-			<textarea id="sendResponse" style="white-space: nowrap;"></textarea>
+			<textarea id="sendResponse" class="no-wrap" title="Response"></textarea>
 		</div>
 	</div>
 
@@ -141,6 +171,8 @@
 		var stopElement = document.getElementById('stop');
 		var pollingIntervalElement = document.getElementById('pollingIntervalSeconds');
 		var updatePollingIntervalElement = document.getElementById('updatePollingInterval');
+		var modbusSlaveIdElement = document.getElementById('modbusSlaveId');
+		var updateModbusSlaveIdElement = document.getElementById('updateModbusSlaveId');
 
 		var itemDisplyType = "flex";
 
@@ -315,6 +347,28 @@
 				}
 			});
 
+			Homey.get('modbusSlaveId', function(err, modbusSlaveId)
+			{
+				if (err) return Homey.alert(err);
+
+				var value = Number(modbusSlaveId);
+				if (!Number.isFinite(value))
+				{
+					value = 1;
+				}
+
+				value = Math.max(1, Math.min(247, Math.round(value)));
+				modbusSlaveIdElement.value = value;
+
+				if (value !== modbusSlaveId)
+				{
+					Homey.set('modbusSlaveId', value, function(setErr)
+					{
+						if (setErr) return Homey.alert(setErr);
+					});
+				}
+			});
+
 			addDeviceElement.addEventListener('click', function(e)
 			{
 				e.preventDefault();
@@ -430,6 +484,25 @@
 				pollingIntervalElement.value = value;
 
 				Homey.set('pollingIntervalSeconds', value, function(err)
+				{
+					if (err) return Homey.alert(err);
+				});
+			});
+
+			updateModbusSlaveIdElement.addEventListener('click', function(e)
+			{
+				e.preventDefault();
+
+				var value = Number(modbusSlaveIdElement.value);
+				if (!Number.isFinite(value))
+				{
+					value = 1;
+				}
+
+				value = Math.max(1, Math.min(247, Math.round(value)));
+				modbusSlaveIdElement.value = value;
+
+				Homey.set('modbusSlaveId', value, function(err)
 				{
 					if (err) return Homey.alert(err);
 				});

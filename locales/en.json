@@ -23,6 +23,9 @@
 		"deviceIp": "IP Address",
 		"deviceSerial": "Serial Number",
 		"devicesList": "Devices List (IP - Serial)",
+		"modbusSlaveId": "Modbus Slave ID",
+		"updateModbusSlaveId": "Update Modbus Slave ID",
+		"modbusSlaveIdHint": "Default is 1. Valid range is 1 to 247.",
 		"pollingInterval": "Polling Interval (seconds)",
 		"updatePollingInterval": "Update Polling Interval",
 		"pollingIntervalHint": "Minimum is 10 seconds. Lower values update more frequently but can increase network and CPU usage."
