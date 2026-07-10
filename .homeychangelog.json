@@ -202,5 +202,8 @@
 	},
 	"1.1.53": {
 		"en": "Improved robustness of network connections for devices that experience intermittent connectivity."
+	},
+	"1.1.54": {
+		"en": "Added support for sofar_ktlx_g inverters."
 	}
 }

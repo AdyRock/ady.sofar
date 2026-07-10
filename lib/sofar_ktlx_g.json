@@ -1,0 +1,200 @@
+{
+	"requests": [
+		{
+			"start": 512,
+			"end": 535,
+			"mb_functioncode": 4
+		},
+		{
+			"start": 594,
+			"end": 603,
+			"mb_functioncode": 4
+		},
+		{
+			"start": 604,
+			"end": 609,
+			"mb_functioncode": 4
+		},
+		{
+			"start": 618,
+			"end": 619,
+			"mb_functioncode": 4
+		}
+	],
+	"parameters": [
+		{
+			"group": "panel",
+			"items": [
+				{
+					"name": "Daily_Production",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						603
+					]
+				},
+				{
+					"name": "PV1_Voltage",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						604
+					]
+				},
+				{
+					"name": "PV1_Current",
+					"uom": "A",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						605
+					]
+				},
+				{
+					"name": "PV1_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						606
+					]
+				},
+				{
+					"name": "PV2_Voltage",
+					"uom": "V",
+					"scale": 0.1,
+					"rule": 1,
+					"registers": [
+						607
+					]
+				},
+				{
+					"name": "PV2_Current",
+					"uom": "A",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						608
+					]
+				},
+				{
+					"name": "PV2_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						609
+					]
+				}
+			]
+		},
+		{
+			"group": "grid",
+			"items": [
+				{
+					"name": "Grid_Power",
+					"uom": "W",
+					"scale": 1,
+					"rule": 2,
+					"registers": [
+						618
+					]
+				},
+				{
+					"name": "Grid_Frequency",
+					"uom": "Hz",
+					"scale": 0.01,
+					"rule": 1,
+					"registers": [
+						619
+					]
+				}
+			]
+		},
+		{
+			"group": "inverter",
+			"items": [
+				{
+					"name": "Inverter_Status",
+					"uom": "",
+					"scale": 1,
+					"rule": 1,
+					"registers": [
+						600
+					],
+					"lookup": [
+						{
+							"key": 0,
+							"value": "waiting"
+						},
+						{
+							"key": 1,
+							"value": "check"
+						},
+						{
+							"key": 2,
+							"value": "normal"
+						},
+						{
+							"key": 3,
+							"value": "fault"
+						}
+					]
+				},
+				{
+					"name": "System_Fault",
+					"uom": "",
+					"scale": 1,
+					"rule": 6,
+					"registers": [
+						594,
+						595,
+						596
+					]
+				},
+				{
+					"name": "Total_Generation",
+					"uom": "kWh",
+					"scale": 0.1,
+					"rule": 3,
+					"registers": [
+						602,
+						601
+					]
+				},
+				{
+					"name": "Serial_Number",
+					"uom": "",
+					"scale": 1,
+					"rule": 5,
+					"registers": [
+						522,
+						523,
+						524,
+						525,
+						526,
+						527,
+						528,
+						529
+					]
+				},
+				{
+					"name": "Inverter_Model",
+					"uom": "",
+					"scale": 1,
+					"rule": 5,
+					"registers": [
+						530,
+						531,
+						532,
+						533,
+						534,
+						535
+					]
+				}
+			]
+		}
+	]
+}

@@ -435,6 +435,12 @@ class MyApp extends Homey.App
 		}
 		if (sensor === null)
 		{
+			this.updateLog('Returned null.\n\nChecking register 619 for grid frequency using FC4:', 0);
+			sensor = await this.checkSensor(ip, serial, 619, 'sofar_ktlx_g', 4);
+			if (sensor !== null) profileName = 'sofar_ktlx_g';
+		}
+		if (sensor === null)
+		{
 			this.updateLog('Returned null.\n\nChecking register 552 for grid frequency:', 0);
 			sensor = await this.checkSensor(ip, serial, 552, 'deye_sg04lp3');
 			if (sensor !== null) profileName = 'deye_sg04lp3';
@@ -456,12 +462,12 @@ class MyApp extends Homey.App
 		}
 	}
 
-	async checkSensor(ip, serial, register, lookupFile)
+	async checkSensor(ip, serial, register, lookupFile, mbFunctionCode = 3)
 	{
 		const sensor = new Sensor(serial, ip, 8899, this.getModbusSlaveId(), lookupFile);
 		try
 		{
-			const frequency = await sensor.getRegisterValue(register, serial);
+			const frequency = await sensor.getRegisterValue(register, mbFunctionCode);
 			this.updateLog(`Register ${register} (${lookupFile}): Raw value = ${frequency}, Hz = ${frequency / 100}`, 0);
 
 			if ((frequency < 4900) || (frequency > 6500))
