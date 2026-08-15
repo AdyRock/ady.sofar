@@ -1,116 +1,39 @@
 {
 	"requests": [
-		{
-			"start": 512,
-			"end": 535,
-			"mb_functioncode": 4
-		},
-		{
-			"start": 594,
-			"end": 603,
-			"mb_functioncode": 4
-		},
-		{
-			"start": 604,
-			"end": 609,
-			"mb_functioncode": 4
-		},
-		{
-			"start": 618,
-			"end": 619,
-			"mb_functioncode": 4
-		}
+		{ "start": 1028, "end": 1028, "mb_functioncode": 3 },
+		{ "start": 1048, "end": 1048, "mb_functioncode": 3 },
+		{ "start": 1050, "end": 1050, "mb_functioncode": 3 },
+		{ "start": 1056, "end": 1056, "mb_functioncode": 3 },
+		{ "start": 1156, "end": 1173, "mb_functioncode": 3 },
+		{ "start": 1176, "end": 1184, "mb_functioncode": 3 },
+		{ "start": 1187, "end": 1195, "mb_functioncode": 3 },
+		{ "start": 1412, "end": 1417, "mb_functioncode": 3 },
+		{ "start": 1668, "end": 1675, "mb_functioncode": 3 }
 	],
 	"parameters": [
 		{
 			"group": "panel",
 			"items": [
-				{
-					"name": "Daily_Production",
-					"uom": "kWh",
-					"scale": 0.1,
-					"rule": 1,
-					"registers": [
-						603
-					]
-				},
-				{
-					"name": "PV1_Voltage",
-					"uom": "V",
-					"scale": 0.1,
-					"rule": 1,
-					"registers": [
-						604
-					]
-				},
-				{
-					"name": "PV1_Current",
-					"uom": "A",
-					"scale": 0.01,
-					"rule": 1,
-					"registers": [
-						605
-					]
-				},
-				{
-					"name": "PV1_Power",
-					"uom": "W",
-					"scale": 1,
-					"rule": 1,
-					"registers": [
-						606
-					]
-				},
-				{
-					"name": "PV2_Voltage",
-					"uom": "V",
-					"scale": 0.1,
-					"rule": 1,
-					"registers": [
-						607
-					]
-				},
-				{
-					"name": "PV2_Current",
-					"uom": "A",
-					"scale": 0.01,
-					"rule": 1,
-					"registers": [
-						608
-					]
-				},
-				{
-					"name": "PV2_Power",
-					"uom": "W",
-					"scale": 1,
-					"rule": 1,
-					"registers": [
-						609
-					]
-				}
+				{ "name": "Daily_Production", "uom": "kWh", "scale": 0.01, "rule": 3, "registers": [1669, 1668] },
+				{ "name": "PV1_Voltage", "uom": "V", "scale": 0.1, "rule": 1, "registers": [1412] },
+				{ "name": "PV1_Current", "uom": "A", "scale": 0.01, "rule": 1, "registers": [1413] },
+				{ "name": "PV1_Power", "uom": "W", "scale": 10, "rule": 1, "registers": [1414] },
+				{ "name": "PV2_Voltage", "uom": "V", "scale": 0.1, "rule": 1, "registers": [1415] },
+				{ "name": "PV2_Current", "uom": "A", "scale": 0.01, "rule": 1, "registers": [1416] },
+				{ "name": "PV2_Power", "uom": "W", "scale": 10, "rule": 1, "registers": [1417] }
 			]
 		},
 		{
 			"group": "grid",
 			"items": [
-				{
-					"name": "Grid_Power",
-					"uom": "W",
-					"scale": 1,
-					"rule": 2,
-					"registers": [
-						618
-					]
-				},
-				{
-					"name": "Grid_Frequency",
-					"uom": "Hz",
-					"scale": 0.01,
-					"rule": 1,
-					"registers": [
-						619
-					]
-				}
+				{ "name": "Grid_Power", "uom": "W", "scale": 10, "rule": 2, "registers": [1157] },
+				{ "name": "Grid_Frequency", "uom": "Hz", "scale": 0.01, "rule": 1, "registers": [1156] },
+				{ "name": "Grid_Voltage1", "uom": "V", "scale": 0.1, "rule": 1, "registers": [1165] },
+				{ "name": "Grid_Current1", "uom": "A", "scale": 0.01, "rule": 1, "registers": [1166] },
+				{ "name": "Grid_Voltage2", "uom": "V", "scale": 0.1, "rule": 1, "registers": [1176] },
+				{ "name": "Grid_Current2", "uom": "A", "scale": 0.01, "rule": 1, "registers": [1177] },
+				{ "name": "Grid_Voltage3", "uom": "V", "scale": 0.1, "rule": 1, "registers": [1187] },
+				{ "name": "Grid_Current3", "uom": "A", "scale": 0.01, "rule": 1, "registers": [1188] }
 			]
 		},
 		{
@@ -121,79 +44,19 @@
 					"uom": "",
 					"scale": 1,
 					"rule": 1,
-					"registers": [
-						600
-					],
+					"registers": [1028],
 					"lookup": [
-						{
-							"key": 0,
-							"value": "waiting"
-						},
-						{
-							"key": 1,
-							"value": "check"
-						},
-						{
-							"key": 2,
-							"value": "normal"
-						},
-						{
-							"key": 3,
-							"value": "fault"
-						}
+						{ "key": 0, "value": "Stand-by" },
+						{ "key": 1, "value": "Self-checking" },
+						{ "key": 2, "value": "Normal" },
+						{ "key": 3, "value": "FAULT" },
+						{ "key": 4, "value": "Permanent" }
 					]
 				},
-				{
-					"name": "System_Fault",
-					"uom": "",
-					"scale": 1,
-					"rule": 6,
-					"registers": [
-						594,
-						595,
-						596
-					]
-				},
-				{
-					"name": "Total_Generation",
-					"uom": "kWh",
-					"scale": 0.1,
-					"rule": 3,
-					"registers": [
-						602,
-						601
-					]
-				},
-				{
-					"name": "Serial_Number",
-					"uom": "",
-					"scale": 1,
-					"rule": 5,
-					"registers": [
-						522,
-						523,
-						524,
-						525,
-						526,
-						527,
-						528,
-						529
-					]
-				},
-				{
-					"name": "Inverter_Model",
-					"uom": "",
-					"scale": 1,
-					"rule": 5,
-					"registers": [
-						530,
-						531,
-						532,
-						533,
-						534,
-						535
-					]
-				}
+				{ "name": "Total_Generation", "uom": "kWh", "scale": 0.1, "rule": 3, "registers": [1671, 1670] },
+				{ "name": "Ambient_temperature", "uom": "°C", "scale": 1, "rule": 2, "registers": [1048] },
+				{ "name": "Heatsink_Temperature", "uom": "°C", "scale": 1, "rule": 2, "registers": [1050] },
+				{ "name": "Internal_Temperature", "uom": "°C", "scale": 1, "rule": 2, "registers": [1056] }
 			]
 		}
 	]

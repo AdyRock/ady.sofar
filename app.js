@@ -413,7 +413,41 @@ class MyApp extends Homey.App
 		{
 			this.updateLog('Returned null.\n\nChecking register 1156 for grid frequency:', 0);
 			sensor = await this.checkSensor(ip, serial, 1156, 'sofar_g3hyd');
-			if (sensor !== null) profileName = 'sofar_g3hyd';
+			if (sensor !== null)
+			{
+				profileName = 'sofar_g3hyd';
+				let batteryVoltage = null;
+				let batteryProbeError = null;
+				for (let attempt = 1; attempt <= 2; attempt++)
+				{
+					try
+					{
+						batteryVoltage = await sensor.getRegisterValue(1540, 3);
+						batteryProbeError = null;
+						break;
+					}
+					catch (err)
+					{
+						batteryProbeError = err;
+						this.updateLog(`Battery voltage discriminator attempt ${attempt} failed (${err.message}).`, 0);
+					}
+				}
+
+				if (batteryVoltage === 0)
+				{
+					this.updateLog('Register 1540 reports no battery voltage. Using sofar_ktlx_g profile.', 0);
+					sensor = new Sensor(serial, ip, 8899, modbusSlaveId, 'sofar_ktlx_g');
+					profileName = 'sofar_ktlx_g';
+				}
+				else if (batteryVoltage !== null)
+				{
+					this.updateLog(`Register 1540 reports battery voltage raw value ${batteryVoltage}. Confirming sofar_g3hyd profile.`, 0);
+				}
+				else
+				{
+					this.updateLog(`Unable to distinguish sofar_g3hyd from sofar_ktlx_g (${batteryProbeError.message}). Keeping sofar_g3hyd profile.`, 0);
+				}
+			}
 		}
 		if (sensor === null)
 		{
@@ -435,8 +469,8 @@ class MyApp extends Homey.App
 		}
 		if (sensor === null)
 		{
-			this.updateLog('Returned null.\n\nChecking register 619 for grid frequency using FC4:', 0);
-			sensor = await this.checkSensor(ip, serial, 619, 'sofar_ktlx_g', 4);
+			this.updateLog('Returned null.\n\nChecking register 1156 for grid frequency using the sofar_ktlx_g profile:', 0);
+			sensor = await this.checkSensor(ip, serial, 1156, 'sofar_ktlx_g');
 			if (sensor !== null) profileName = 'sofar_ktlx_g';
 		}
 		if (sensor === null)
@@ -548,13 +582,27 @@ class MyApp extends Homey.App
 
 	async GetMultipleRegisterValues(register, count, serial)
 	{
+		const firstRegister = Number.parseInt(register, 10);
+		const registerCount = Number.parseInt(count, 10);
+		if (!Number.isInteger(firstRegister) || (firstRegister < 0) || (firstRegister > 65535))
+		{
+			throw new Error('Start register must be an integer between 0 and 65535');
+		}
+		if (!Number.isInteger(registerCount) || (registerCount < 1) || (registerCount > 1000))
+		{
+			throw new Error('Register count must be an integer between 1 and 1000');
+		}
+		if ((firstRegister + registerCount - 1) > 65535)
+		{
+			throw new Error('Requested register range exceeds 65535');
+		}
+
 		this.loggingRegisters = true;
 		this.stopReadingRegisters = false;
 		let fileData = '';
 
-		// eslint-disable-next-line radix
-		let registerNumber = parseInt(register);
-		for (let i = 0; i < count; i++)
+		let registerNumber = firstRegister;
+		for (let i = 0; i < registerCount; i++)
 		{
 			try
 			{
@@ -632,6 +680,10 @@ class MyApp extends Homey.App
 	async GetRegisterValue(register, serial = null)
 	{
 		const registerNumber = parseInt(register, 10);
+		if (!Number.isInteger(registerNumber) || (registerNumber < 0) || (registerNumber > 65535))
+		{
+			throw new Error('Register must be an integer between 0 and 65535');
+		}
 
 		// If a serial number is provided, try to get the value from that specific inverter
 		if (serial)
@@ -639,13 +691,13 @@ class MyApp extends Homey.App
 			const inverter = this.getInverter(serial);
 			if (inverter)
 			{
-				return inverter.getRegisterValue(registerNumber, registerNumber, 3);
+				return inverter.getRegisterValue(registerNumber, 3);
 			}
 		}
 
 		if (this.lanSensors.length > 0)
 		{
-			return this.lanSensors[0].getRegisterValue(registerNumber, registerNumber, 3);
+			return this.lanSensors[0].getRegisterValue(registerNumber, 3);
 		}
 
 		if (this.homey.settings.get('manualSensors'))
@@ -654,7 +706,7 @@ class MyApp extends Homey.App
 			for (const sensorData of manualSensors)
 			{
 				const sensor = new Sensor(sensorData.serial, sensorData.ip, 8899, this.getModbusSlaveId(), null);
-				return sensor.getRegisterValue(registerNumber, registerNumber, 3);
+				return sensor.getRegisterValue(registerNumber, 3);
 			}
 		}
 

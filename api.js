@@ -40,7 +40,22 @@ module.exports = {
 			return 'The Log has been deleted\n';
 		}
 
-		homey.app.GetMultipleRegisterValues(body.start, body.count);
+		const start = Number.parseInt(body.start, 10);
+		const count = Number.parseInt(body.count, 10);
+		if (!Number.isInteger(start) || (start < 0) || (start > 65535))
+		{
+			throw new Error('Start register must be an integer between 0 and 65535');
+		}
+		if (!Number.isInteger(count) || (count < 1) || (count > 1000))
+		{
+			throw new Error('Register count must be an integer between 1 and 1000');
+		}
+		if ((start + count - 1) > 65535)
+		{
+			throw new Error('Requested register range exceeds 65535');
+		}
+
+		homey.app.GetMultipleRegisterValues(start, count);
 		return 'Working on it...\n';
 	},
 };

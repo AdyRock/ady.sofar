@@ -205,5 +205,8 @@
 	},
 	"1.1.54": {
 		"en": "Added support for sofar_ktlx_g inverters."
+	},
+	"1.1.55": {
+		"en": "Updated sofar_ktlx_g map file. Fix issue with register log and multiple registers."
 	}
 }
