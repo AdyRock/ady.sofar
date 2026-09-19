@@ -518,18 +518,19 @@ class MyApp extends Homey.App
 		}
 		catch (err)
 		{
-			const expectedProbeMissErrors = [
+			const expectedProbeMissPrefixes = [
 				'Invalid MODBUS packet',
 				'Invalid V5 checksum',
 				'Incomplete MODBUS packet',
 				'Invalid V5 packet start',
 				'Empty MODBUS packet',
 				`No data returned for register ${register}`,
+				'Connection timeout',
 			];
 
-			if (expectedProbeMissErrors.includes(err.message))
+			if (expectedProbeMissPrefixes.some((prefix) => err.message.startsWith(prefix)))
 			{
-				this.updateLog(`Register ${register} (${lookupFile}): No probe match (${err.message})`, 1);
+				this.updateLog(`Register ${register} (${lookupFile}): No probe match (${err.message})`, 0);
 			}
 			else
 			{
