@@ -33,6 +33,12 @@
 		"modbusProtocolSolarman": "Solarman V5",
 		"modbusProtocolAuto": "Auto detect",
 		"modbusProtocolTcp": "Plain MODBUS TCP",
-		"modbusProtocolHint": "Solarman V5 is used by Solarman/Sofar LSW-3 style data loggers. Plain MODBUS TCP is for inverters/loggers that speak standard MODBUS TCP directly. Auto detect tries both when a new inverter is found."
+		"modbusProtocolHint": "Solarman V5 is used by Solarman/Sofar LSW-3 style data loggers. Plain MODBUS TCP is for inverters/loggers that speak standard MODBUS TCP directly. Auto detect tries both when a new inverter is found.",
+		"solarmanPort": "Solarman V5 Port",
+		"updateSolarmanPort": "Update Solarman V5 Port",
+		"solarmanPortHint": "Default is 8899.",
+		"modbusTcpPort": "Plain MODBUS TCP Port",
+		"updateModbusTcpPort": "Update Plain MODBUS TCP Port",
+		"modbusTcpPortHint": "Default is 502."
 	}
 }

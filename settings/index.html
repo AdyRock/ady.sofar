@@ -147,6 +147,18 @@
 			</div>
 			<p><span data-i18n="settings.modbusProtocolHint"></span></p>
 		</div>
+		<div class="field row">
+			<label class="homey-form-label" for="solarmanPort"><span data-i18n="settings.solarmanPort"></span></label>
+			<input class="homey-form-input" id="solarmanPort" type="number" min="1" max="65535" step="1" value="8899" title="Solarman V5 Port" />
+			<p><span data-i18n="settings.solarmanPortHint"></span></p>
+			<p class="mt-8"><button class="homey-button-secondary-shadow" id="updateSolarmanPort" title="Update Solarman V5 Port"><span data-i18n="settings.updateSolarmanPort"></span></button></p>
+		</div>
+		<div class="field row">
+			<label class="homey-form-label" for="modbusTcpPort"><span data-i18n="settings.modbusTcpPort"></span></label>
+			<input class="homey-form-input" id="modbusTcpPort" type="number" min="1" max="65535" step="1" value="502" title="Plain MODBUS TCP Port" />
+			<p><span data-i18n="settings.modbusTcpPortHint"></span></p>
+			<p class="mt-8"><button class="homey-button-secondary-shadow" id="updateModbusTcpPort" title="Update Plain MODBUS TCP Port"><span data-i18n="settings.updateModbusTcpPort"></span></button></p>
+		</div>
 	</div>
 
 	<!--SEND COMMAND PAGE -->
@@ -195,6 +207,10 @@
 		var modbusSlaveIdElement = document.getElementById('modbusSlaveId');
 		var updateModbusSlaveIdElement = document.getElementById('updateModbusSlaveId');
 		var modbusProtocolElements = document.getElementsByName('modbusProtocol');
+		var solarmanPortElement = document.getElementById('solarmanPort');
+		var updateSolarmanPortElement = document.getElementById('updateSolarmanPort');
+		var modbusTcpPortElement = document.getElementById('modbusTcpPort');
+		var updateModbusTcpPortElement = document.getElementById('updateModbusTcpPort');
 
 		var itemDisplyType = "flex";
 
@@ -412,6 +428,63 @@
 					});
 				});
 			}
+
+			function loadPortSetting(settingKey, defaultPort, element)
+			{
+				Homey.get(settingKey, function(err, port)
+				{
+					if (err) return Homey.alert(err);
+
+					var value = (port === null || port === undefined) ? NaN : Number(port);
+					if (!Number.isFinite(value))
+					{
+						value = defaultPort;
+					}
+
+					value = Math.max(1, Math.min(65535, Math.round(value)));
+					element.value = value;
+
+					if (value !== port)
+					{
+						Homey.set(settingKey, value, function(setErr)
+						{
+							if (setErr) return Homey.alert(setErr);
+						});
+					}
+				});
+			}
+
+			function updatePortSetting(settingKey, defaultPort, element)
+			{
+				var value = Number(element.value);
+				if (!Number.isFinite(value))
+				{
+					value = defaultPort;
+				}
+
+				value = Math.max(1, Math.min(65535, Math.round(value)));
+				element.value = value;
+
+				Homey.set(settingKey, value, function(err)
+				{
+					if (err) return Homey.alert(err);
+				});
+			}
+
+			loadPortSetting('solarmanPort', 8899, solarmanPortElement);
+			loadPortSetting('modbusTcpPort', 502, modbusTcpPortElement);
+
+			updateSolarmanPortElement.addEventListener('click', function(e)
+			{
+				e.preventDefault();
+				updatePortSetting('solarmanPort', 8899, solarmanPortElement);
+			});
+
+			updateModbusTcpPortElement.addEventListener('click', function(e)
+			{
+				e.preventDefault();
+				updatePortSetting('modbusTcpPort', 502, modbusTcpPortElement);
+			});
 
 			addDeviceElement.addEventListener('click', function(e)
 			{

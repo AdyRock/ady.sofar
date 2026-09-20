@@ -65,6 +65,16 @@ class MyApp extends Homey.App
 		this.noInverterScanCooldownMs = 60 * 1000;
 		this.pollingIntervalMs = this.getPollingIntervalMs();
 
+		// A pre-fix version of getModbusPort() incorrectly persisted 1 for an unset port setting - clear that artifact once
+		if (this.homey.settings.get('solarmanPort') === 1)
+		{
+			this.homey.settings.unset('solarmanPort');
+		}
+		if (this.homey.settings.get('modbusTcpPort') === 1)
+		{
+			this.homey.settings.unset('modbusTcpPort');
+		}
+
 		// Callback for app settings changed
 		// this.homey.settings.on('set', async function settingChanged(setting) {});
 
@@ -169,6 +179,20 @@ class MyApp extends Homey.App
 					sensor.setProtocol(protocol);
 				}
 				this.updateLog(`Updated MODBUS protocol setting to ${protocolSetting}`, 0);
+			}
+
+			if ((setting === 'solarmanPort') || (setting === 'modbusTcpPort'))
+			{
+				const changedProtocol = setting === 'modbusTcpPort' ? 'modbus_tcp' : 'solarman';
+				const port = this.getModbusPort(changedProtocol);
+				for (const sensor of this.lanSensors)
+				{
+					if (sensor.getProtocol() === changedProtocol)
+					{
+						sensor.setPort(port);
+					}
+				}
+				this.updateLog(`Updated ${changedProtocol} port to ${port}`, 0);
 			}
 		});
 
@@ -349,6 +373,31 @@ class MyApp extends Homey.App
 		return this.getModbusProtocolSetting() === 'modbus_tcp' ? 'modbus_tcp' : 'solarman';
 	}
 
+	getModbusPort(protocol)
+	{
+		const isModbusTcp = protocol === 'modbus_tcp';
+		const settingKey = isModbusTcp ? 'modbusTcpPort' : 'solarmanPort';
+		const defaultPort = isModbusTcp ? 502 : 8899;
+
+		const rawSetting = this.homey.settings.get(settingKey);
+		let port = (rawSetting === null) || (rawSetting === undefined) ? NaN : Number(rawSetting);
+
+		if (!Number.isFinite(port))
+		{
+			port = defaultPort;
+		}
+
+		port = Math.round(port);
+		port = Math.max(1, Math.min(65535, port));
+
+		if (port !== rawSetting)
+		{
+			this.homey.settings.set(settingKey, port);
+		}
+
+		return port;
+	}
+
 	tryRestartScanner(reason, cooldownMs = this.scannerRestartCooldownMs)
 	{
 		if (!this.scanner)
@@ -497,7 +546,7 @@ class MyApp extends Homey.App
 				if (batteryVoltage === 0)
 				{
 					this.updateLog('Register 1540 reports no battery voltage. Using sofar_ktlx_g profile.', 0);
-					sensor = new Sensor(serial, ip, 8899, modbusSlaveId, 'sofar_ktlx_g', protocol);
+					sensor = new Sensor(serial, ip, this.getModbusPort(protocol), modbusSlaveId, 'sofar_ktlx_g', protocol);
 					profileName = 'sofar_ktlx_g';
 				}
 				else if (batteryVoltage !== null)
@@ -552,7 +601,7 @@ class MyApp extends Homey.App
 
 	async checkSensor(ip, serial, register, lookupFile, mbFunctionCode = 3, protocol = this.getModbusProtocol())
 	{
-		const sensor = new Sensor(serial, ip, 8899, this.getModbusSlaveId(), lookupFile, protocol);
+		const sensor = new Sensor(serial, ip, this.getModbusPort(protocol), this.getModbusSlaveId(), lookupFile, protocol);
 		try
 		{
 			const frequency = await sensor.getRegisterValue(register, mbFunctionCode);
@@ -622,7 +671,7 @@ class MyApp extends Homey.App
 			{
 				if (sensorData.serial === serial)
 				{
-					return new Sensor(sensorData.serial, sensorData.ip, 8899, this.getModbusSlaveId(), null, this.getModbusProtocol());
+					return new Sensor(sensorData.serial, sensorData.ip, this.getModbusPort(this.getModbusProtocol()), this.getModbusSlaveId(), null, this.getModbusProtocol());
 				}
 			}
 		}
@@ -760,7 +809,7 @@ class MyApp extends Homey.App
 			const manualSensors = this.homey.settings.get('manualSensors');
 			for (const sensorData of manualSensors)
 			{
-				const sensor = new Sensor(sensorData.serial, sensorData.ip, 8899, this.getModbusSlaveId(), null, this.getModbusProtocol());
+				const sensor = new Sensor(sensorData.serial, sensorData.ip, this.getModbusPort(this.getModbusProtocol()), this.getModbusSlaveId(), null, this.getModbusProtocol());
 				return sensor.getRegisterValue(registerNumber, 3);
 			}
 		}

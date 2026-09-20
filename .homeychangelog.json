@@ -214,5 +214,8 @@
 	},
 	"1.1.57": {
 		"en": "Added support for selecting the MODBUS protocol setting (solarman, modbus_tcp, auto) and improved auto-detection of the correct protocol."
+	},
+	"1.1.58": {
+		"en": "Added port settings for V5 and MODBUS protocols."
 	}
 }
