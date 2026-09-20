@@ -126,6 +126,27 @@
 			<p><span data-i18n="settings.pollingIntervalHint"></span></p>
 			<p class="mt-8"><button class="homey-button-secondary-shadow" id="updatePollingInterval" title="Update Polling Interval"><span data-i18n="settings.updatePollingInterval"></span></button></p>
 		</div>
+		<div class="field row">
+			<label class="homey-form-label"><span data-i18n="settings.modbusProtocol"></span></label>
+			<div class="homey-form-radio-set">
+				<label class="homey-form-radio">
+					<input class="homey-form-radio-input" name="modbusProtocol" id="modbusProtocolSolarman" type="radio" value="solarman" title="Solarman V5" />
+					<span class="homey-form-radio-checkmark"></span>
+					<span class="homey-form-radio-text"><span data-i18n="settings.modbusProtocolSolarman"></span></span>
+				</label>
+				<label class="homey-form-radio">
+					<input class="homey-form-radio-input" name="modbusProtocol" id="modbusProtocolAuto" type="radio" value="auto" title="Auto detect" />
+					<span class="homey-form-radio-checkmark"></span>
+					<span class="homey-form-radio-text"><span data-i18n="settings.modbusProtocolAuto"></span></span>
+				</label>
+				<label class="homey-form-radio">
+					<input class="homey-form-radio-input" name="modbusProtocol" id="modbusProtocolTcp" type="radio" value="modbus_tcp" title="Plain MODBUS TCP" />
+					<span class="homey-form-radio-checkmark"></span>
+					<span class="homey-form-radio-text"><span data-i18n="settings.modbusProtocolTcp"></span></span>
+				</label>
+			</div>
+			<p><span data-i18n="settings.modbusProtocolHint"></span></p>
+		</div>
 	</div>
 
 	<!--SEND COMMAND PAGE -->
@@ -173,6 +194,7 @@
 		var updatePollingIntervalElement = document.getElementById('updatePollingInterval');
 		var modbusSlaveIdElement = document.getElementById('modbusSlaveId');
 		var updateModbusSlaveIdElement = document.getElementById('updateModbusSlaveId');
+		var modbusProtocolElements = document.getElementsByName('modbusProtocol');
 
 		var itemDisplyType = "flex";
 
@@ -368,6 +390,28 @@
 					});
 				}
 			});
+
+			Homey.get('modbusProtocol', function(err, modbusProtocol)
+			{
+				if (err) return Homey.alert(err);
+
+				var value = (modbusProtocol === 'solarman' || modbusProtocol === 'modbus_tcp') ? modbusProtocol : 'auto';
+				for (var i = 0; i < modbusProtocolElements.length; i++)
+				{
+					modbusProtocolElements[i].checked = (modbusProtocolElements[i].value === value);
+				}
+			});
+
+			for (var i = 0; i < modbusProtocolElements.length; i++)
+			{
+				modbusProtocolElements[i].addEventListener('click', function(e)
+				{
+					Homey.set('modbusProtocol', e.target.value, function(err)
+					{
+						if (err) return Homey.alert(err);
+					});
+				});
+			}
 
 			addDeviceElement.addEventListener('click', function(e)
 			{

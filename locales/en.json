@@ -28,6 +28,11 @@
 		"modbusSlaveIdHint": "Default is 1. Valid range is 1 to 247.",
 		"pollingInterval": "Polling Interval (seconds)",
 		"updatePollingInterval": "Update Polling Interval",
-		"pollingIntervalHint": "Minimum is 10 seconds. Lower values update more frequently but can increase network and CPU usage."
+		"pollingIntervalHint": "Minimum is 10 seconds. Lower values update more frequently but can increase network and CPU usage.",
+		"modbusProtocol": "MODBUS Protocol",
+		"modbusProtocolSolarman": "Solarman V5",
+		"modbusProtocolAuto": "Auto detect",
+		"modbusProtocolTcp": "Plain MODBUS TCP",
+		"modbusProtocolHint": "Solarman V5 is used by Solarman/Sofar LSW-3 style data loggers. Plain MODBUS TCP is for inverters/loggers that speak standard MODBUS TCP directly. Auto detect tries both when a new inverter is found."
 	}
 }

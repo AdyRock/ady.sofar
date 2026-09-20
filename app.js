@@ -159,6 +159,17 @@ class MyApp extends Homey.App
 				}
 				this.updateLog(`Updated Modbus slave ID to ${slaveId}`, 0);
 			}
+
+			if (setting === 'modbusProtocol')
+			{
+				const protocolSetting = this.getModbusProtocolSetting();
+				const protocol = this.getModbusProtocol();
+				for (const sensor of this.lanSensors)
+				{
+					sensor.setProtocol(protocol);
+				}
+				this.updateLog(`Updated MODBUS protocol setting to ${protocolSetting}`, 0);
+			}
 		});
 
 		this.homey.app.updateLog('************** App has initialised. ***************');
@@ -320,6 +331,24 @@ class MyApp extends Homey.App
 		return slaveId;
 	}
 
+	// Raw user-facing setting: 'solarman', 'modbus_tcp' or 'auto' (default)
+	getModbusProtocolSetting()
+	{
+		const rawSetting = this.homey.settings.get('modbusProtocol');
+		if ((rawSetting === 'solarman') || (rawSetting === 'modbus_tcp') || (rawSetting === 'auto'))
+		{
+			return rawSetting;
+		}
+
+		return 'auto';
+	}
+
+	// Concrete protocol to use for a one-off sensor construction outside the discovery cascade ('auto' defaults to 'solarman')
+	getModbusProtocol()
+	{
+		return this.getModbusProtocolSetting() === 'modbus_tcp' ? 'modbus_tcp' : 'solarman';
+	}
+
 	tryRestartScanner(reason, cooldownMs = this.scannerRestartCooldownMs)
 	{
 		if (!this.scanner)
@@ -384,9 +413,41 @@ class MyApp extends Homey.App
 			}
 		}
 
+		const protocolSetting = this.getModbusProtocolSetting();
+		const primaryProtocol = protocolSetting === 'modbus_tcp' ? 'modbus_tcp' : 'solarman';
+		let { sensor, profileName } = await this.findSensorProfile(ip, serial, modbusSlaveId, primaryProtocol);
+
+		if ((sensor === null) && (protocolSetting === 'auto'))
+		{
+			// Nothing matched using the default framing, so try the other one before giving up -
+			// this auto-detects Solarman V5 vs plain MODBUS TCP without requiring the user to guess.
+			const alternateProtocol = primaryProtocol === 'modbus_tcp' ? 'solarman' : 'modbus_tcp';
+			this.updateLog(`Returned null.\n\nNo profile matched using the ${primaryProtocol} protocol. Retrying discovery for ${serial} using the ${alternateProtocol} protocol (Auto mode).`, 0);
+			const alternateResult = await this.findSensorProfile(ip, serial, modbusSlaveId, alternateProtocol);
+			if (alternateResult.sensor !== null)
+			{
+				sensor = alternateResult.sensor;
+				profileName = alternateResult.profileName;
+				this.updateLog(`Detected the ${alternateProtocol} protocol for inverter ${serial}.`, 0);
+			}
+		}
+
+		if (sensor === null)
+		{
+			this.updateLog('Returned null.\n\nNo suitable inverters found', 0);
+		}
+		else
+		{
+			this.updateLog(`Successfully registered inverter with profile: ${profileName}`, 0);
+			this.lanSensors.push(sensor);
+		}
+	}
+
+	async findSensorProfile(ip, serial, modbusSlaveId, protocol)
+	{
 		// Try to read the grid frequency address
-		this.updateLog('Checking register 14 for grid frequency:', 0);
-		let sensor = await this.checkSensor(ip, serial, 14, 'sofar_lsw3');
+		this.updateLog(`Checking register 14 for grid frequency (${protocol} protocol):`, 0);
+		let sensor = await this.checkSensor(ip, serial, 14, 'sofar_lsw3', 3, protocol);
 		let profileName = null;
 
 		// If sofar_lsw3 matched, also check if this could be a sun3p inverter
@@ -396,7 +457,7 @@ class MyApp extends Homey.App
 		{
 			profileName = 'sofar_lsw3';
 			this.updateLog('Register 14 matched sofar_lsw3. Checking register 609 to verify it is not a sun3p inverter:', 0);
-			const sun3pSensor = await this.checkSensor(ip, serial, 609, 'sun3p');
+			const sun3pSensor = await this.checkSensor(ip, serial, 609, 'sun3p', 3, protocol);
 			if (sun3pSensor !== null)
 			{
 				this.updateLog('Register 609 also matched sun3p. Using sun3p profile (more specific match).', 0);
@@ -412,7 +473,7 @@ class MyApp extends Homey.App
 		if (sensor === null)
 		{
 			this.updateLog('Returned null.\n\nChecking register 1156 for grid frequency:', 0);
-			sensor = await this.checkSensor(ip, serial, 1156, 'sofar_g3hyd');
+			sensor = await this.checkSensor(ip, serial, 1156, 'sofar_g3hyd', 3, protocol);
 			if (sensor !== null)
 			{
 				profileName = 'sofar_g3hyd';
@@ -436,7 +497,7 @@ class MyApp extends Homey.App
 				if (batteryVoltage === 0)
 				{
 					this.updateLog('Register 1540 reports no battery voltage. Using sofar_ktlx_g profile.', 0);
-					sensor = new Sensor(serial, ip, 8899, modbusSlaveId, 'sofar_ktlx_g');
+					sensor = new Sensor(serial, ip, 8899, modbusSlaveId, 'sofar_ktlx_g', protocol);
 					profileName = 'sofar_ktlx_g';
 				}
 				else if (batteryVoltage !== null)
@@ -452,53 +513,46 @@ class MyApp extends Homey.App
 		if (sensor === null)
 		{
 			this.updateLog('Returned null.\n\nChecking register 524 for grid frequency:', 0);
-			sensor = await this.checkSensor(ip, serial, 524, 'sofar_hy_es');
+			sensor = await this.checkSensor(ip, serial, 524, 'sofar_hy_es', 3, protocol);
 			if (sensor !== null) profileName = 'sofar_hy_es';
 		}
 		if (sensor === null)
 		{
 			this.updateLog('Returned null.\n\nChecking register 33282 for grid frequency:', 0);
-			sensor = await this.checkSensor(ip, serial, 33282, 'solis_hybrid');
+			sensor = await this.checkSensor(ip, serial, 33282, 'solis_hybrid', 3, protocol);
 			if (sensor !== null) profileName = 'solis_hybrid';
 		}
 		if (sensor === null)
 		{
 			this.updateLog('Returned null.\n\nChecking register 609 for grid frequency:', 0);
-			sensor = await this.checkSensor(ip, serial, 609, 'sun3p');
+			sensor = await this.checkSensor(ip, serial, 609, 'sun3p', 3, protocol);
 			if (sensor !== null) profileName = 'sun3p';
 		}
 		if (sensor === null)
 		{
 			this.updateLog('Returned null.\n\nChecking register 1156 for grid frequency using the sofar_ktlx_g profile:', 0);
-			sensor = await this.checkSensor(ip, serial, 1156, 'sofar_ktlx_g');
+			sensor = await this.checkSensor(ip, serial, 1156, 'sofar_ktlx_g', 3, protocol);
 			if (sensor !== null) profileName = 'sofar_ktlx_g';
 		}
 		if (sensor === null)
 		{
 			this.updateLog('Returned null.\n\nChecking register 552 for grid frequency:', 0);
-			sensor = await this.checkSensor(ip, serial, 552, 'deye_sg04lp3');
+			sensor = await this.checkSensor(ip, serial, 552, 'deye_sg04lp3', 3, protocol);
 			if (sensor !== null) profileName = 'deye_sg04lp3';
 		}
 		if (sensor === null)
 		{
 			this.updateLog('Returned null.\n\nChecking register 79 for grid frequency:', 0);
-			sensor = await this.checkSensor(ip, serial, 79, 'deye_sg04lp3');
+			sensor = await this.checkSensor(ip, serial, 79, 'deye_sg04lp3', 3, protocol);
 			if (sensor !== null) profileName = 'deye_sg04lp3';
 		}
-		if (sensor === null)
-		{
-			this.updateLog('Returned null.\n\nNo suitable inverters found', 0);
-		}
-		else
-		{
-			this.updateLog(`Successfully registered inverter with profile: ${profileName}`, 0);
-			this.lanSensors.push(sensor);
-		}
+
+		return { sensor, profileName };
 	}
 
-	async checkSensor(ip, serial, register, lookupFile, mbFunctionCode = 3)
+	async checkSensor(ip, serial, register, lookupFile, mbFunctionCode = 3, protocol = this.getModbusProtocol())
 	{
-		const sensor = new Sensor(serial, ip, 8899, this.getModbusSlaveId(), lookupFile);
+		const sensor = new Sensor(serial, ip, 8899, this.getModbusSlaveId(), lookupFile, protocol);
 		try
 		{
 			const frequency = await sensor.getRegisterValue(register, mbFunctionCode);
@@ -568,7 +622,7 @@ class MyApp extends Homey.App
 			{
 				if (sensorData.serial === serial)
 				{
-					return new Sensor(sensorData.serial, sensorData.ip, 8899, this.getModbusSlaveId(), null);
+					return new Sensor(sensorData.serial, sensorData.ip, 8899, this.getModbusSlaveId(), null, this.getModbusProtocol());
 				}
 			}
 		}
@@ -706,7 +760,7 @@ class MyApp extends Homey.App
 			const manualSensors = this.homey.settings.get('manualSensors');
 			for (const sensorData of manualSensors)
 			{
-				const sensor = new Sensor(sensorData.serial, sensorData.ip, 8899, this.getModbusSlaveId(), null);
+				const sensor = new Sensor(sensorData.serial, sensorData.ip, 8899, this.getModbusSlaveId(), null, this.getModbusProtocol());
 				return sensor.getRegisterValue(registerNumber, 3);
 			}
 		}
