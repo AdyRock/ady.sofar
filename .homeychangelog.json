@@ -217,5 +217,8 @@
 	},
 	"1.1.58": {
 		"en": "Added port settings for V5 and MODBUS protocols."
+	},
+	"1.1.59": {
+		"en": "Use a single TCP connection for all MODBUS communications."
 	}
 }
