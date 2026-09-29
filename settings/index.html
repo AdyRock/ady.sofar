@@ -36,6 +36,42 @@
 			width: 100%;
 			box-sizing: border-box;
 		}
+
+		.test-result {
+			height: 160px;
+		}
+
+		.device-list {
+			font-family: monospace;
+		}
+
+		.advanced {
+			margin: 10px 0;
+		}
+
+		.dialog_div {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			z-index: 200;
+			background-color: rgba(30, 30, 30, 0.5);
+			overflow-y: auto;
+		}
+
+		.dialog_div.show {
+			display: block;
+		}
+
+		.dialog_box {
+			background-color: #fff;
+			border-radius: 8px;
+			margin: 20px auto;
+			padding: 16px;
+			max-width: 420px;
+		}
 	</style>
 
 	<style type="text/css">
@@ -74,20 +110,18 @@
 		<button class="tablinks" onclick="setPage(event, 'send')" title="Register Log"><span data-i18n="settings.registerLog"></span></button>
 	</div>
 
-	<!-- DEVICES PAGE - This page has a test box to enter the IP address and a text box to enter the serial number and a text area to show the manually added devices plus a button to manually add devices -->
+	<!-- DEVICES PAGE - lists the manually configured devices and the actions that can be performed on them -->
 	<div id="devices" class="tabcontent">
 		<div class="field row">
-			<label class="homey-form-label"  for="deviceIp"><span data-i18n="settings.deviceIp"></span></label>
-			<input class="homey-form-input" id="deviceIp" type="text" value="" title="Device IP" />
-
-			<label class="homey-form-label"  for="deviceSerial"><span data-i18n="settings.deviceSerial"></span></label>
-			<input class="homey-form-input" id="deviceSerial" type="text" value="" title="Device Serial" />
-			<p class="mt-10-mb-10"><button class="homey-button-secondary-shadow" id="addDevice" title="Add Device"><span data-i18n="settings.addDevice"></span></button></p>
-
-			<label class="homey-form-label"  for="manualDevices"><span data-i18n="settings.devicesList"></span></label>
-			<textarea id="manualDevices" class="no-wrap full-width-box" title="Devices List"></textarea>
-			<p class="mt-8-mb-0"><button class="homey-button-secondary-shadow" id="removeDevice" title="Remove Selected Device">Remove Selected Device</button></p>
-			<p></p>
+			<label class="homey-form-label" for="manualDevices"><span data-i18n="settings.devicesList"></span></label>
+			<select class="full-width-box device-list" id="manualDevices" size="10" title="Devices List"></select>
+			<p class="mt-10-mb-10">
+				<button class="homey-button-secondary-shadow" id="addDevice" title="Add"><span data-i18n="settings.addDevice"></span></button>
+				<button class="homey-button-secondary-shadow" id="editDevice" title="Edit"><span data-i18n="settings.editDevice"></span></button>
+				<button class="homey-button-secondary-shadow" id="testDevice" title="Test"><span data-i18n="settings.testDevice"></span></button>
+				<button class="homey-button-secondary-shadow" id="removeDevice" title="Delete"><span data-i18n="settings.removeDevice"></span></button>
+			</p>
+			<p><span data-i18n="settings.devicesListHint"></span></p>
 		</div>
 	</div>
 
@@ -115,49 +149,28 @@
 	<!-- SETTINGS PAGE -->
 	<div id="settings" class="tabcontent">
 		<div class="field row">
-			<label class="homey-form-label" for="modbusSlaveId"><span data-i18n="settings.modbusSlaveId"></span></label>
-			<input class="homey-form-input" id="modbusSlaveId" type="number" min="1" max="247" step="1" value="1" title="Modbus Slave ID" />
-			<p><span data-i18n="settings.modbusSlaveIdHint"></span></p>
-			<p class="mt-8"><button class="homey-button-secondary-shadow" id="updateModbusSlaveId" title="Update Modbus Slave ID"><span data-i18n="settings.updateModbusSlaveId"></span></button></p>
-		</div>
-		<div class="field row">
 			<label class="homey-form-label" for="pollingIntervalSeconds"><span data-i18n="settings.pollingInterval"></span></label>
 			<input class="homey-form-input" id="pollingIntervalSeconds" type="number" min="10" max="3600" step="1" value="15" title="Polling Interval Seconds" />
 			<p><span data-i18n="settings.pollingIntervalHint"></span></p>
-			<p class="mt-8"><button class="homey-button-secondary-shadow" id="updatePollingInterval" title="Update Polling Interval"><span data-i18n="settings.updatePollingInterval"></span></button></p>
 		</div>
 		<div class="field row">
-			<label class="homey-form-label"><span data-i18n="settings.modbusProtocol"></span></label>
+			<label class="homey-form-label"><span data-i18n="settings.connectionMode"></span></label>
 			<div class="homey-form-radio-set">
 				<label class="homey-form-radio">
-					<input class="homey-form-radio-input" name="modbusProtocol" id="modbusProtocolSolarman" type="radio" value="solarman" title="Solarman V5" />
+					<input class="homey-form-radio-input" name="connectionMode" id="connectionModeAuto" type="radio" value="auto" title="Automatic" />
 					<span class="homey-form-radio-checkmark"></span>
-					<span class="homey-form-radio-text"><span data-i18n="settings.modbusProtocolSolarman"></span></span>
+					<span class="homey-form-radio-text"><span data-i18n="settings.connectionModeAuto"></span></span>
 				</label>
 				<label class="homey-form-radio">
-					<input class="homey-form-radio-input" name="modbusProtocol" id="modbusProtocolAuto" type="radio" value="auto" title="Auto detect" />
+					<input class="homey-form-radio-input" name="connectionMode" id="connectionModeManual" type="radio" value="manual" title="Manual" />
 					<span class="homey-form-radio-checkmark"></span>
-					<span class="homey-form-radio-text"><span data-i18n="settings.modbusProtocolAuto"></span></span>
-				</label>
-				<label class="homey-form-radio">
-					<input class="homey-form-radio-input" name="modbusProtocol" id="modbusProtocolTcp" type="radio" value="modbus_tcp" title="Plain MODBUS TCP" />
-					<span class="homey-form-radio-checkmark"></span>
-					<span class="homey-form-radio-text"><span data-i18n="settings.modbusProtocolTcp"></span></span>
+					<span class="homey-form-radio-text"><span data-i18n="settings.connectionModeManual"></span></span>
 				</label>
 			</div>
-			<p><span data-i18n="settings.modbusProtocolHint"></span></p>
+			<p><span data-i18n="settings.connectionModeHint"></span></p>
 		</div>
 		<div class="field row">
-			<label class="homey-form-label" for="solarmanPort"><span data-i18n="settings.solarmanPort"></span></label>
-			<input class="homey-form-input" id="solarmanPort" type="number" min="1" max="65535" step="1" value="8899" title="Solarman V5 Port" />
-			<p><span data-i18n="settings.solarmanPortHint"></span></p>
-			<p class="mt-8"><button class="homey-button-secondary-shadow" id="updateSolarmanPort" title="Update Solarman V5 Port"><span data-i18n="settings.updateSolarmanPort"></span></button></p>
-		</div>
-		<div class="field row">
-			<label class="homey-form-label" for="modbusTcpPort"><span data-i18n="settings.modbusTcpPort"></span></label>
-			<input class="homey-form-input" id="modbusTcpPort" type="number" min="1" max="65535" step="1" value="502" title="Plain MODBUS TCP Port" />
-			<p><span data-i18n="settings.modbusTcpPortHint"></span></p>
-			<p class="mt-8"><button class="homey-button-secondary-shadow" id="updateModbusTcpPort" title="Update Plain MODBUS TCP Port"><span data-i18n="settings.updateModbusTcpPort"></span></button></p>
+			<p class="mt-8"><button class="homey-button-primary-full" id="saveSettings" title="Save"><span data-i18n="settings.saveSettings"></span></button></p>
 		</div>
 	</div>
 
@@ -179,6 +192,84 @@
 		</div>
 	</div>
 
+	<!-- ADD DEVICE DIALOG -->
+	<div id="addDeviceDialog" class="dialog_div">
+		<div class="dialog_box">
+			<h2 id="dialogTitle"></h2>
+			<div class="field row">
+				<label class="homey-form-label" for="dialogIp"><span data-i18n="settings.deviceIp"></span></label>
+				<input class="homey-form-input" id="dialogIp" type="text" value="" title="IP Address" />
+			</div>
+			<div class="field row">
+				<label class="homey-form-label" for="dialogSerial"><span data-i18n="settings.deviceSerial"></span></label>
+				<input class="homey-form-input" id="dialogSerial" type="number" min="0" step="1" value="" title="Serial Number" />
+			</div>
+			<div class="field row">
+				<label class="homey-form-label" for="dialogSlaveId"><span data-i18n="settings.modbusSlaveId"></span></label>
+				<input class="homey-form-input" id="dialogSlaveId" type="number" min="1" max="247" step="1" value="1" title="Modbus Slave ID" />
+			</div>
+			<div class="field row">
+				<label class="homey-form-label" for="dialogProtocol"><span data-i18n="settings.modbusProtocol"></span></label>
+				<select class="homey-form-select full-width-box" id="dialogProtocol" title="Protocol">
+					<option value="solarman" data-i18n="settings.modbusProtocolSolarman">Solarman V5</option>
+					<option value="modbus_tcp" data-i18n="settings.modbusProtocolTcp">Plain MODBUS TCP</option>
+				</select>
+			</div>
+			<div class="field row" id="dialogSolarmanPortRow">
+				<label class="homey-form-label" for="dialogSolarmanPort"><span data-i18n="settings.solarmanPort"></span></label>
+				<input class="homey-form-input" id="dialogSolarmanPort" type="number" min="1" max="65535" step="1" value="8899" title="Solarman V5 Port" />
+			</div>
+			<div class="field row" id="dialogTcpPortRow">
+				<label class="homey-form-label" for="dialogTcpPort"><span data-i18n="settings.modbusTcpPort"></span></label>
+				<input class="homey-form-input" id="dialogTcpPort" type="number" min="1" max="65535" step="1" value="502" title="Plain MODBUS TCP Port" />
+			</div>
+			<div class="field row" id="dialogConnectionReuseRow">
+				<label class="homey-form-label" for="dialogConnectionReuse"><span data-i18n="settings.connectionReuse"></span></label>
+				<select class="homey-form-select full-width-box" id="dialogConnectionReuse" title="Connection Handling">
+					<option value="persistent" data-i18n="settings.connectionReusePersistent">Keep the connection open</option>
+					<option value="per_request" data-i18n="settings.connectionReusePerRequest">New connection per request</option>
+				</select>
+			</div>
+			<div class="field row">
+				<label class="homey-form-label" for="dialogRegisterMap"><span data-i18n="settings.registerMap"></span></label>
+				<select class="homey-form-select full-width-box" id="dialogRegisterMap" title="Register Map">
+					<option value="sofar_lsw3">sofar_lsw3</option>
+					<option value="sofar_g3hyd">sofar_g3hyd</option>
+					<option value="sofar_ktlx_g">sofar_ktlx_g</option>
+					<option value="sofar_hy_es">sofar_hy_es</option>
+					<option value="solis_hybrid">solis_hybrid</option>
+					<option value="sun3p">sun3p</option>
+					<option value="deye_hybrid">deye_hybrid</option>
+					<option value="deye_sg04lp3">deye_sg04lp3</option>
+				</select>
+			</div>
+			<details class="advanced">
+				<summary><span data-i18n="settings.advanced"></span></summary>
+				<div class="field row">
+					<label class="homey-form-label" for="dialogRetryCount"><span data-i18n="settings.retryCount"></span></label>
+					<input class="homey-form-input" id="dialogRetryCount" type="number" min="0" max="10" step="1" value="2" title="Retry Count" />
+				</div>
+				<div class="field row">
+					<label class="homey-form-label" for="dialogRequestDelay"><span data-i18n="settings.requestDelay"></span></label>
+					<input class="homey-form-input" id="dialogRequestDelay" type="number" min="0" max="5000" step="10" value="100" title="Request Delay" />
+				</div>
+			</details>
+			<p class="mt-10-mb-10">
+				<button class="homey-button-primary-full" id="dialogSave" title="Save"></button>
+				<button class="homey-button-secondary-shadow" id="dialogCancel" title="Cancel"><span data-i18n="settings.cancel"></span></button>
+			</p>
+		</div>
+	</div>
+
+	<!-- TEST RESULT DIALOG -->
+	<div id="testResultDialog" class="dialog_div">
+		<div class="dialog_box">
+			<h2><span data-i18n="settings.testConnectionResult"></span></h2>
+			<textarea id="testResult" class="no-wrap full-width-box test-result" readonly title="Test Result"></textarea>
+			<p class="mt-10-mb-10"><button class="homey-button-primary-full" id="testResultClose" title="Close"><span data-i18n="settings.close"></span></button></p>
+		</div>
+	</div>
+
 	<script type="text/javascript">
 		// Create the busy indicator
 		var busyi = new busy_indicator(document.getElementById("busybox"), document.querySelector("#busybox div"));
@@ -190,8 +281,6 @@
 		var clearLogElement = document.getElementById('clearDiagLog');
 		var sendDiagLogElement = document.getElementById('sendDiagLog');
 		var manualDevicesElement = document.getElementById('manualDevices');
-		var deviceIpElement = document.getElementById('deviceIp');
-		var deviceSerialElement = document.getElementById('deviceSerial');
 		var addDeviceElement = document.getElementById('addDevice');
 		var removeDeviceElement = document.getElementById('removeDevice');
 
@@ -203,84 +292,109 @@
 		var sendResponseElement = document.getElementById('sendResponse');
 		var stopElement = document.getElementById('stop');
 		var pollingIntervalElement = document.getElementById('pollingIntervalSeconds');
-		var updatePollingIntervalElement = document.getElementById('updatePollingInterval');
-		var modbusSlaveIdElement = document.getElementById('modbusSlaveId');
-		var updateModbusSlaveIdElement = document.getElementById('updateModbusSlaveId');
-		var modbusProtocolElements = document.getElementsByName('modbusProtocol');
-		var solarmanPortElement = document.getElementById('solarmanPort');
-		var updateSolarmanPortElement = document.getElementById('updateSolarmanPort');
-		var modbusTcpPortElement = document.getElementById('modbusTcpPort');
-		var updateModbusTcpPortElement = document.getElementById('updateModbusTcpPort');
+		var connectionModeElements = document.getElementsByName('connectionMode');
+		var saveSettingsElement = document.getElementById('saveSettings');
+
+		// Manual devices tab
+		var editDeviceElement = document.getElementById('editDevice');
+		var testDeviceElement = document.getElementById('testDevice');
+
+		// Add device dialog
+		var addDeviceDialogElement = document.getElementById('addDeviceDialog');
+		var dialogTitleElement = document.getElementById('dialogTitle');
+		var dialogIpElement = document.getElementById('dialogIp');
+		var dialogSerialElement = document.getElementById('dialogSerial');
+		var dialogSlaveIdElement = document.getElementById('dialogSlaveId');
+		var dialogProtocolElement = document.getElementById('dialogProtocol');
+		var dialogSolarmanPortRowElement = document.getElementById('dialogSolarmanPortRow');
+		var dialogSolarmanPortElement = document.getElementById('dialogSolarmanPort');
+		var dialogTcpPortRowElement = document.getElementById('dialogTcpPortRow');
+		var dialogTcpPortElement = document.getElementById('dialogTcpPort');
+		var dialogConnectionReuseRowElement = document.getElementById('dialogConnectionReuseRow');
+		var dialogConnectionReuseElement = document.getElementById('dialogConnectionReuse');
+		var dialogRegisterMapElement = document.getElementById('dialogRegisterMap');
+		var dialogRetryCountElement = document.getElementById('dialogRetryCount');
+		var dialogRequestDelayElement = document.getElementById('dialogRequestDelay');
+		var dialogSaveElement = document.getElementById('dialogSave');
+		var dialogCancelElement = document.getElementById('dialogCancel');
+
+		// Test result dialog
+		var testResultDialogElement = document.getElementById('testResultDialog');
+		var testResultElement = document.getElementById('testResult');
+		var testResultCloseElement = document.getElementById('testResultClose');
 
 		var itemDisplyType = "flex";
+		var manualDevices = [];
+		var editingDeviceIndex = -1;
 
-		function updateManualDevices(manualSensors)
+		function clampNumber(value, defaultValue, minValue, maxValue)
 		{
-			if (!Array.isArray(manualSensors))
+			var number = (value === null || value === undefined || value === '') ? NaN : Number(value);
+			if (!Number.isFinite(number))
 			{
-				manualDevicesElement.value = '';
-				return;
+				number = defaultValue;
 			}
 
-			manualDevicesElement.value = manualSensors
-				.map(function(sensor)
-				{
-					if (!sensor)
-					{
-						return '';
-					}
-					var ip = sensor.ip || '';
-					var serial = sensor.serial || 0;
-					serial = serial.toString()
-					return ip + '  :  ' + serial;
-				})
-				.filter(function(line)
-				{
-					return line !== ',' && line !== '';
-				})
-				.join('\n');
+			return Math.max(minValue, Math.min(maxValue, Math.round(number)));
 		}
 
-		function resizeDevicesTextArea()
+		function describeDevice(device)
 		{
-			manualDevicesElement.style.width = '100%';
-			var top = manualDevicesElement.getBoundingClientRect().top;
-			var removeButtonBox = removeDeviceElement.getBoundingClientRect();
-			var removeButtonHeight = Math.max(34, removeButtonBox.height + 12);
-			var height = window.innerHeight - top - removeButtonHeight - 30;
-			manualDevicesElement.style.height = Math.max(120, height) + 'px';
+			var protocol = device.protocol === 'modbus_tcp' ? 'MODBUS TCP' : 'Solarman V5';
+			return device.ip + ':' + device.port + '  ' + protocol + '  SN ' + device.serial + '  ID ' + device.slaveId + '  ' + device.registerMap;
 		}
 
-		function getSelectedManualDeviceIndex()
+		// Fills in the defaults for devices added by older app versions
+		function normalizeDevice(device)
 		{
-			if (!manualDevicesElement.value)
-			{
-				return -1;
-			}
+			var protocol = (device && device.protocol === 'modbus_tcp') ? 'modbus_tcp' : 'solarman';
 
-			var start = manualDevicesElement.selectionStart;
-			var selectedPrefix = manualDevicesElement.value.substring(0, start);
-			return selectedPrefix.split('\n').length - 1;
+			return {
+				ip: (device && device.ip) ? String(device.ip).trim() : '',
+				serial: clampNumber(device ? device.serial : 0, 0, 0, 4294967295),
+				slaveId: clampNumber(device ? device.slaveId : 1, 1, 1, 247),
+				protocol: protocol,
+				port: clampNumber(device ? device.port : 0, protocol === 'modbus_tcp' ? 502 : 8899, 1, 65535),
+				registerMap: (device && device.registerMap) ? device.registerMap : 'auto',
+				connectionReuse: (device && device.connectionReuse === 'per_request') ? 'per_request' : 'persistent',
+				retryCount: clampNumber(device ? device.retryCount : 2, 2, 0, 10),
+				requestDelayMs: clampNumber(device ? device.requestDelayMs : 100, 100, 0, 5000),
+			};
 		}
 
-		function selectManualDeviceLineAtCursor()
+		function updateManualDevices(storedDevices)
 		{
-			var value = manualDevicesElement.value;
-			if (!value)
-			{
-				return;
-			}
+			manualDevices = (Array.isArray(storedDevices) ? storedDevices : [])
+				.filter(function(device) { return device && device.ip; })
+				.map(normalizeDevice);
 
-			var cursor = manualDevicesElement.selectionStart;
-			var lineStart = value.lastIndexOf('\n', cursor - 1) + 1;
-			var lineEnd = value.indexOf('\n', cursor);
-			if (lineEnd === -1)
-			{
-				lineEnd = value.length;
-			}
+			var selectedIndex = manualDevicesElement.selectedIndex;
+			manualDevicesElement.innerHTML = '';
 
-			manualDevicesElement.focus();
-			manualDevicesElement.setSelectionRange(lineStart, lineEnd);
+			manualDevices.forEach(function(device)
+			{
+				var option = document.createElement('option');
+				option.text = describeDevice(device);
+				manualDevicesElement.add(option);
+			});
+
+			if (selectedIndex >= 0 && selectedIndex < manualDevices.length)
+			{
+				manualDevicesElement.selectedIndex = selectedIndex;
+			}
+		}
+
+		function showDialog(dialog, show)
+		{
+			dialog.className = show ? 'dialog_div show' : 'dialog_div';
+		}
+
+		function updateDialogProtocolFields()
+		{
+			var isModbusTcp = dialogProtocolElement.value === 'modbus_tcp';
+			dialogSolarmanPortRowElement.style.display = isModbusTcp ? 'none' : '';
+			dialogTcpPortRowElement.style.display = isModbusTcp ? '' : 'none';
+			dialogConnectionReuseRowElement.style.display = isModbusTcp ? '' : 'none';
 		}
 
 		// a method named 'onHomeyReady' must be present in your code
@@ -350,218 +464,274 @@
 				}
 			});
 
+			Homey.on('ady.sofar.testresult', function(data)
+			{
+				if (data.line)
+				{
+					var current = testResultElement.value;
+					testResultElement.value = (current === Homey.__('settings.testing') || current === '') ? data.line : (current + '\n' + data.line);
+					testResultElement.scrollTop = testResultElement.scrollHeight;
+				}
+
+				if (data.finished)
+				{
+					waitCursor(false);
+				}
+			});
+
 			Homey.get('logEnabled', function(err, logEnabled)
 			{
 				if (err) return Homey.alert(err);
 				logEnabledElement.checked = logEnabled;
 			});
 
-			Homey.get('manualSensors', function(err, manualSensors)
+			Homey.get('manualSensors', function(err, storedDevices)
 			{
 				if (err) return Homey.alert(err);
-				updateManualDevices(manualSensors);
-				resizeDevicesTextArea();
+				updateManualDevices(storedDevices);
 			});
 
-			Homey.get('pollingIntervalSeconds', function(err, pollingIntervalSeconds)
+			function getSelectedRadioValue(elements, defaultValue)
 			{
-				if (err) return Homey.alert(err);
-
-				var value = Number(pollingIntervalSeconds);
-				if (!Number.isFinite(value))
+				for (var r = 0; r < elements.length; r++)
 				{
-					value = 15;
-				}
-
-				value = Math.max(10, Math.min(3600, Math.round(value)));
-				pollingIntervalElement.value = value;
-
-				if (value !== pollingIntervalSeconds)
-				{
-					Homey.set('pollingIntervalSeconds', value, function(setErr)
+					if (elements[r].checked)
 					{
-						if (setErr) return Homey.alert(setErr);
-					});
-				}
-			});
-
-			Homey.get('modbusSlaveId', function(err, modbusSlaveId)
-			{
-				if (err) return Homey.alert(err);
-
-				var value = Number(modbusSlaveId);
-				if (!Number.isFinite(value))
-				{
-					value = 1;
+						return elements[r].value;
+					}
 				}
 
-				value = Math.max(1, Math.min(247, Math.round(value)));
-				modbusSlaveIdElement.value = value;
-
-				if (value !== modbusSlaveId)
-				{
-					Homey.set('modbusSlaveId', value, function(setErr)
-					{
-						if (setErr) return Homey.alert(setErr);
-					});
-				}
-			});
-
-			Homey.get('modbusProtocol', function(err, modbusProtocol)
-			{
-				if (err) return Homey.alert(err);
-
-				var value = (modbusProtocol === 'solarman' || modbusProtocol === 'modbus_tcp') ? modbusProtocol : 'auto';
-				for (var i = 0; i < modbusProtocolElements.length; i++)
-				{
-					modbusProtocolElements[i].checked = (modbusProtocolElements[i].value === value);
-				}
-			});
-
-			for (var i = 0; i < modbusProtocolElements.length; i++)
-			{
-				modbusProtocolElements[i].addEventListener('click', function(e)
-				{
-					Homey.set('modbusProtocol', e.target.value, function(err)
-					{
-						if (err) return Homey.alert(err);
-					});
-				});
+				return defaultValue;
 			}
 
-			function loadPortSetting(settingKey, defaultPort, element)
+			function setSelectedRadioValue(elements, value, defaultValue)
 			{
-				Homey.get(settingKey, function(err, port)
+				var selected = defaultValue;
+				for (var r = 0; r < elements.length; r++)
 				{
-					if (err) return Homey.alert(err);
-
-					var value = (port === null || port === undefined) ? NaN : Number(port);
-					if (!Number.isFinite(value))
+					if (elements[r].value === value)
 					{
-						value = defaultPort;
+						selected = value;
+					}
+				}
+
+				for (var s = 0; s < elements.length; s++)
+				{
+					elements[s].checked = (elements[s].value === selected);
+				}
+			}
+
+			Homey.get('pollingIntervalSeconds', function(err, value)
+			{
+				if (err) return Homey.alert(err);
+				pollingIntervalElement.value = clampNumber(value, 15, 10, 3600);
+			});
+
+			Homey.get('connectionMode', function(err, value)
+			{
+				if (err) return Homey.alert(err);
+				setSelectedRadioValue(connectionModeElements, value, 'auto');
+			});
+
+			function saveSettings()
+			{
+				var pollingIntervalSeconds = clampNumber(pollingIntervalElement.value, 15, 10, 3600);
+				pollingIntervalElement.value = pollingIntervalSeconds;
+
+				waitCursor(true);
+
+				Homey.set('pollingIntervalSeconds', pollingIntervalSeconds, function(err)
+				{
+					if (err)
+					{
+						waitCursor(false);
+						return Homey.alert(err);
 					}
 
-					value = Math.max(1, Math.min(65535, Math.round(value)));
-					element.value = value;
-
-					if (value !== port)
+					Homey.set('connectionMode', getSelectedRadioValue(connectionModeElements, 'auto'), function(setErr)
 					{
-						Homey.set(settingKey, value, function(setErr)
-						{
-							if (setErr) return Homey.alert(setErr);
-						});
-					}
+						waitCursor(false);
+						if (setErr) return Homey.alert(setErr);
+						Homey.alert(Homey.__('settings.settingsSaved'));
+					});
 				});
 			}
 
-			function updatePortSetting(settingKey, defaultPort, element)
+			saveSettingsElement.addEventListener('click', function(e)
 			{
-				var value = Number(element.value);
-				if (!Number.isFinite(value))
-				{
-					value = defaultPort;
-				}
+				e.preventDefault();
+				saveSettings();
+			});
 
-				value = Math.max(1, Math.min(65535, Math.round(value)));
-				element.value = value;
-
-				Homey.set(settingKey, value, function(err)
+			function saveManualDevices(devices, onSaved)
+			{
+				Homey.set('manualSensors', devices, function(err)
 				{
 					if (err) return Homey.alert(err);
+					updateManualDevices(devices);
+					if (onSaved) onSaved();
 				});
 			}
 
-			loadPortSetting('solarmanPort', 8899, solarmanPortElement);
-			loadPortSetting('modbusTcpPort', 502, modbusTcpPortElement);
-
-			updateSolarmanPortElement.addEventListener('click', function(e)
+			function getSelectedDevice()
 			{
-				e.preventDefault();
-				updatePortSetting('solarmanPort', 8899, solarmanPortElement);
-			});
+				var index = manualDevicesElement.selectedIndex;
+				return (index >= 0 && index < manualDevices.length) ? manualDevices[index] : null;
+			}
 
-			updateModbusTcpPortElement.addEventListener('click', function(e)
+			// index of -1 opens the dialog for a new device, otherwise the selected device is edited in place
+			function openDeviceDialog(index)
 			{
-				e.preventDefault();
-				updatePortSetting('modbusTcpPort', 502, modbusTcpPortElement);
-			});
+				editingDeviceIndex = index;
+
+				var device = (index >= 0) ? manualDevices[index] : normalizeDevice({ registerMap: 'sofar_lsw3' });
+
+				dialogTitleElement.textContent = Homey.__(index >= 0 ? 'settings.editDeviceTitle' : 'settings.addDeviceTitle');
+				dialogSaveElement.textContent = Homey.__(index >= 0 ? 'settings.save' : 'settings.addDevice');
+
+				dialogIpElement.value = device.ip;
+				dialogSerialElement.value = device.serial ? device.serial : '';
+				dialogSlaveIdElement.value = device.slaveId;
+				dialogProtocolElement.value = device.protocol;
+				dialogSolarmanPortElement.value = (device.protocol === 'solarman') ? device.port : 8899;
+				dialogTcpPortElement.value = (device.protocol === 'modbus_tcp') ? device.port : 502;
+				dialogConnectionReuseElement.value = (device.protocol === 'modbus_tcp') ? device.connectionReuse : 'persistent';
+				dialogRegisterMapElement.value = device.registerMap;
+				if (!dialogRegisterMapElement.value)
+				{
+					dialogRegisterMapElement.selectedIndex = 0;
+				}
+				dialogRetryCountElement.value = device.retryCount;
+				dialogRequestDelayElement.value = device.requestDelayMs;
+
+				updateDialogProtocolFields();
+				showDialog(addDeviceDialogElement, true);
+			}
 
 			addDeviceElement.addEventListener('click', function(e)
 			{
 				e.preventDefault();
+				openDeviceDialog(-1);
+			});
 
-				var ip = deviceIpElement.value.trim();
-				var serial = deviceSerialElement.value.trim();
+			editDeviceElement.addEventListener('click', function(e)
+			{
+				e.preventDefault();
 
-				// convert serial from a string to a number
-				serial = Number(serial);
-
-				if (!ip || !serial)
+				var index = manualDevicesElement.selectedIndex;
+				if (index < 0 || index >= manualDevices.length)
 				{
-					return Homey.alert('Please enter both device IP and serial number');
+					return Homey.alert(Homey.__('settings.selectDeviceFirst'));
 				}
 
-				Homey.get('manualSensors', function(err, manualSensors)
+				openDeviceDialog(index);
+			});
+
+			manualDevicesElement.addEventListener('dblclick', function()
+			{
+				var index = manualDevicesElement.selectedIndex;
+				if (index >= 0 && index < manualDevices.length)
 				{
-					if (err) return Homey.alert(err);
+					openDeviceDialog(index);
+				}
+			});
 
-					var updatedSensors = Array.isArray(manualSensors) ? manualSensors.slice() : [];
-					updatedSensors.push({
-						ip: ip,
-						serial: serial,
-					});
+			dialogProtocolElement.addEventListener('change', updateDialogProtocolFields);
 
-					Homey.set('manualSensors', updatedSensors, function(setErr)
-					{
-						if (setErr) return Homey.alert(setErr);
-						updateManualDevices(updatedSensors);
-						deviceIpElement.value = '';
-						deviceSerialElement.value = '';
-					});
+			dialogCancelElement.addEventListener('click', function(e)
+			{
+				e.preventDefault();
+				showDialog(addDeviceDialogElement, false);
+			});
+
+			dialogSaveElement.addEventListener('click', function(e)
+			{
+				e.preventDefault();
+
+				var ip = dialogIpElement.value.trim();
+				if (!ip)
+				{
+					return Homey.alert(Homey.__('settings.deviceIpRequired'));
+				}
+
+				var protocol = dialogProtocolElement.value;
+				var serial = clampNumber(dialogSerialElement.value, 0, 0, 4294967295);
+				if ((protocol === 'solarman') && (serial === 0))
+				{
+					return Homey.alert(Homey.__('settings.deviceSerialRequired'));
+				}
+
+				var device = {
+					ip: ip,
+					serial: serial,
+					slaveId: clampNumber(dialogSlaveIdElement.value, 1, 1, 247),
+					protocol: protocol,
+					port: (protocol === 'modbus_tcp') ? clampNumber(dialogTcpPortElement.value, 502, 1, 65535) : clampNumber(dialogSolarmanPortElement.value, 8899, 1, 65535),
+					connectionReuse: dialogConnectionReuseElement.value,
+					registerMap: dialogRegisterMapElement.value,
+					retryCount: clampNumber(dialogRetryCountElement.value, 2, 0, 10),
+					requestDelayMs: clampNumber(dialogRequestDelayElement.value, 100, 0, 5000),
+				};
+
+				var updatedDevices = manualDevices.slice();
+				if (editingDeviceIndex >= 0)
+				{
+					updatedDevices[editingDeviceIndex] = device;
+				}
+				else
+				{
+					updatedDevices.push(device);
+				}
+
+				saveManualDevices(updatedDevices, function()
+				{
+					showDialog(addDeviceDialogElement, false);
 				});
 			});
 
-			manualDevicesElement.addEventListener('click', function()
+			testDeviceElement.addEventListener('click', function(e)
 			{
-				selectManualDeviceLineAtCursor();
+				e.preventDefault();
+
+				var device = getSelectedDevice();
+				if (!device)
+				{
+					return Homey.alert(Homey.__('settings.selectDeviceFirst'));
+				}
+
+				testResultElement.value = Homey.__('settings.testing');
+				showDialog(testResultDialogElement, true);
+				waitCursor(true);
+
+				Homey.api('POST', '/testConnection/', device, function(err)
+				{
+					if (err)
+					{
+						waitCursor(false);
+						testResultElement.value = (err.message || err);
+					}
+				});
+			});
+
+			testResultCloseElement.addEventListener('click', function(e)
+			{
+				e.preventDefault();
+				showDialog(testResultDialogElement, false);
 			});
 
 			removeDeviceElement.addEventListener('click', function(e)
 			{
 				e.preventDefault();
 
-				Homey.get('manualSensors', function(err, manualSensors)
+				var index = manualDevicesElement.selectedIndex;
+				if (index < 0 || index >= manualDevices.length)
 				{
-					if (err) return Homey.alert(err);
-					if (!Array.isArray(manualSensors) || manualSensors.length === 0)
-					{
-						return;
-					}
-
-					var selectedIndex = getSelectedManualDeviceIndex();
-					if (selectedIndex < 0 || selectedIndex >= manualSensors.length)
-					{
-						return Homey.alert('Select a device entry in the list first');
-					}
-
-					var updatedSensors = manualSensors.slice();
-					updatedSensors.splice(selectedIndex, 1);
-
-					Homey.set('manualSensors', updatedSensors, function(setErr)
-					{
-						if (setErr) return Homey.alert(setErr);
-						updateManualDevices(updatedSensors);
-						resizeDevicesTextArea();
-					});
-				});
-			});
-
-			window.addEventListener('resize', function()
-			{
-				if (document.getElementById('devices').style.display === 'block')
-				{
-					resizeDevicesTextArea();
+					return Homey.alert(Homey.__('settings.selectDeviceFirst'));
 				}
+
+				var updatedDevices = manualDevices.slice();
+				updatedDevices.splice(index, 1);
+				saveManualDevices(updatedDevices);
 			});
 
 			Homey.api('GET', '/getLog/',
@@ -582,44 +752,6 @@
 			logEnabledElement.addEventListener('click', function(e)
 			{
 				Homey.set('logEnabled', logEnabledElement.checked, function(err)
-				{
-					if (err) return Homey.alert(err);
-				});
-			});
-
-			updatePollingIntervalElement.addEventListener('click', function(e)
-			{
-				e.preventDefault();
-
-				var value = Number(pollingIntervalElement.value);
-				if (!Number.isFinite(value))
-				{
-					value = 15;
-				}
-
-				value = Math.max(10, Math.min(3600, Math.round(value)));
-				pollingIntervalElement.value = value;
-
-				Homey.set('pollingIntervalSeconds', value, function(err)
-				{
-					if (err) return Homey.alert(err);
-				});
-			});
-
-			updateModbusSlaveIdElement.addEventListener('click', function(e)
-			{
-				e.preventDefault();
-
-				var value = Number(modbusSlaveIdElement.value);
-				if (!Number.isFinite(value))
-				{
-					value = 1;
-				}
-
-				value = Math.max(1, Math.min(247, Math.round(value)));
-				modbusSlaveIdElement.value = value;
-
-				Homey.set('modbusSlaveId', value, function(err)
 				{
 					if (err) return Homey.alert(err);
 				});
@@ -773,14 +905,15 @@
 					logEnabledElement.checked = logEnabled;
 				});
 
+				Homey.api('GET', '/getLog/', {}, function(err, result)
+				{
+					if (err) return Homey.alert(err);
+					diagLogElement.value = result;
+				});
+
 				// Make the log text area fill the page
 				diagLogElement.setAttribute('cols', diagLogElement.parentElement.clientWidth / 8);
 				diagLogElement.style.height = (window.innerHeight - diagLogElement.offsetTop - 30) + 'px';
-			}
-			else if (tabPage == 'devices')
-			{
-				// Make the manual devices list fill the remaining page area
-				resizeDevicesTextArea();
 			}
 			else if (tabPage == 'send')
 			{

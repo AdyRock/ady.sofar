@@ -1,6 +1,6 @@
 {
 	"id": "ady.sofar",
-	"version": "1.1.59",
+	"version": "1.1.60",
 	"compatibility": ">=12.1.0",
 	"platforms": [
 		"local"
@@ -72,6 +72,10 @@
 		"getRegisters": {
 			"method": "post",
 			"path": "/getRegisters/"
+		},
+		"testConnection": {
+			"method": "post",
+			"path": "/testConnection/"
 		}
 	},
 	"contributors": {

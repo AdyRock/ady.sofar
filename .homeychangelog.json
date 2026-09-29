@@ -220,5 +220,8 @@
 	},
 	"1.1.59": {
 		"en": "Use a single TCP connection for all MODBUS communications."
+	},
+	"1.1.60": {
+		"en": "Added option to app settings to select automatic or manual connection and full control over manual connection."
 	}
 }

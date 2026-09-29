@@ -26,6 +26,10 @@ module.exports = {
 	{
 		return homey.app.getRegisterLogging();
 	},
+	async testConnection({ homey, body })
+	{
+		return homey.app.startConnectionTest(body || {});
+	},
 	async getRegisters({ homey, body })
 	{
 		if (body.start === 'stop')
