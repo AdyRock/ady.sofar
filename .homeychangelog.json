@@ -223,5 +223,8 @@
 	},
 	"1.1.60": {
 		"en": "Added option to app settings to select automatic or manual connection and full control over manual connection."
+	},
+	"1.1.61": {
+		"en": "Fix for sofar_g3hyd.json mapping."
 	}
 }
