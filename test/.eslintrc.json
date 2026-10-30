@@ -1,0 +1,11 @@
+{
+	"rules": {
+		"global-require": "off",
+		"camelcase": "off",
+		"mocha/no-setup-in-describe": "off",
+		"mocha/no-top-level-hooks": "off",
+		"mocha/no-sibling-hooks": "off",
+		"mocha/handle-done-callback": "off",
+		"mocha/no-hooks-for-single-case": "off"
+	}
+}

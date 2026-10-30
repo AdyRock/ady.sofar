@@ -205,7 +205,7 @@
 				{
 					"name": "Battery_Voltage",
 					"uom": "V",
-					"scale": 0.11,
+					"scale": 0.01,
 					"rule": 2,
 					"registers": [
 						526

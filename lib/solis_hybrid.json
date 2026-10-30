@@ -492,6 +492,7 @@
 			]
 		  },
 		  {
+			"name": "Energy_Storage_Control_Switch",
 			"uom": "",
 			"scale": 1,
 			"rule": 1,

@@ -226,5 +226,8 @@
 	},
 	"1.1.61": {
 		"en": "Fix for sofar_g3hyd.json mapping."
+	},
+	"1.1.62": {
+		"en": "A number of improvements and fixes."
 	}
 }

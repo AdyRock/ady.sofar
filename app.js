@@ -995,7 +995,18 @@ class MyApp extends Homey.App
 
 	clearRegisterLog()
 	{
-		fs.unlinkSync('/userdata/register.log');
+		try
+		{
+			fs.unlinkSync('/userdata/register.log');
+		}
+		catch (err)
+		{
+			// Ignore a missing log file, report anything else
+			if (err.code !== 'ENOENT')
+			{
+				throw err;
+			}
+		}
 	}
 
 	async GetRegisterValue(register, serial = null)

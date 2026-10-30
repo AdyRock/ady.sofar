@@ -74,15 +74,15 @@ class LanDevice extends Device
 		}
 	}
 
-	async setCapabilityOptionsSafeSafe(capability, value)
+	async setCapabilityOptionsSafe(capability, value)
 	{
 		try
 		{
-			await this.setCapabilityOptionsSafe(capability, value);
+			await this.setCapabilityOptions(capability, value);
 		}
 		catch (error)
 		{
-			this.error(`setCapabilityOptionsSafeSafe: ${error}`);
+			this.error(`setCapabilityOptionsSafe: ${error}`);
 		}
 	}
 
