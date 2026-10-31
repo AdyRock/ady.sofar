@@ -67,6 +67,7 @@ class SolarPanelDevice extends LanDevice
 				}
 
 				this.setAvailable();
+				const pvInactive = hasData('PV_Power') && data.PV_Power <= 0;
 
 				if (this.sumPV1_PV2)
 				{
@@ -109,27 +110,27 @@ class SolarPanelDevice extends LanDevice
 					this.setCapabilityValue('meter_power', data.Total_Generation).catch(this.error);
 				}
 
-				if (hasData('PV1_Power'))
+				if (!pvInactive && hasData('PV1_Power'))
 				{
 					this.setCapabilityValue('measure_power.pv1', data.PV1_Power).catch(this.error);
 				}
-				if (hasData('PV1_Voltage'))
+				if (!pvInactive && hasData('PV1_Voltage'))
 				{
 					this.setCapabilityValue('measure_voltage.pv1', data.PV1_Voltage).catch(this.error);
 				}
-				if (hasData('PV1_Current'))
+				if (!pvInactive && hasData('PV1_Current'))
 				{
 					this.setCapabilityValue('measure_current.pv1', data.PV1_Current).catch(this.error);
 				}
-				if (hasData('PV2_Power'))
+				if (!pvInactive && hasData('PV2_Power'))
 				{
 					this.setCapabilityValue('measure_power.pv2', data.PV2_Power).catch(this.error);
 				}
-				if (hasData('PV2_Voltage'))
+				if (!pvInactive && hasData('PV2_Voltage'))
 				{
 					this.setCapabilityValue('measure_voltage.pv2', data.PV2_Voltage).catch(this.error);
 				}
-				if (hasData('PV2_Current'))
+				if (!pvInactive && hasData('PV2_Current'))
 				{
 					this.setCapabilityValue('measure_current.pv2', data.PV2_Current).catch(this.error);
 				}

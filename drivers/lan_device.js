@@ -31,6 +31,16 @@ class LanDevice extends Device
 		this.log('LanDevice has been deleted');
 	}
 
+	async migrateEnergyConfiguration()
+	{
+		const manifest = this.driver && this.driver.manifest;
+		const energy = manifest && manifest.energy;
+		if (energy && !this.getEnergy())
+		{
+			await this.setEnergy(energy);
+		}
+	}
+
 	/**
 	 * onSettings is called when the user updates the device's settings.
 	 * @param {object} event the onSettings event data

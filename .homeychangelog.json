@@ -229,5 +229,8 @@
 	},
 	"1.1.62": {
 		"en": "A number of improvements and fixes."
+	},
+	"1.1.63": {
+		"en": "Improved Homey Energy reporting for house consumption, migrated energy settings for existing devices, corrected generation-time units, and ignored invalid nighttime PV readings."
 	}
 }

@@ -13,6 +13,7 @@ class BatteryDevice extends LanDevice
 	async onInit()
 	{
 		await super.onInit();
+		await this.migrateEnergyConfiguration();
 
 		this.log('BatteryDevice has been initialized');
 	}

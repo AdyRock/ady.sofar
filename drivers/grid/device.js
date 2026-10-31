@@ -13,6 +13,7 @@ class GridDevice extends LanDevice
 	async onInit()
 	{
 		await super.onInit();
+		await this.migrateEnergyConfiguration();
 
 		this.startHour = this.getSetting('start_hour');
 		this.startMin = this.getSetting('start_minute');

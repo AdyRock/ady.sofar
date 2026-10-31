@@ -4,7 +4,7 @@
         "en": "Generation Time Today"
     },
     "units": {
-      "en": "M"
+      "en": "min"
     },
     "getable": true,
     "setable": false,

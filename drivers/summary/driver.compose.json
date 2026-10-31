@@ -2,7 +2,7 @@
 	"name": {
 		"en": "Home / Inverter"
 	},
-	"class": "other",
+	"class": "sensor",
 	"capabilities": [
 		"measure_power.consumption",
 		"meter_power.today_solar",
