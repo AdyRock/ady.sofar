@@ -113,6 +113,23 @@
 	<!-- DEVICES PAGE - lists the manually configured devices and the actions that can be performed on them -->
 	<div id="devices" class="tabcontent">
 		<div class="field row">
+			<label class="homey-form-label"><span data-i18n="settings.connectionMode"></span></label>
+			<div class="homey-form-radio-set">
+				<label class="homey-form-radio">
+					<input class="homey-form-radio-input" name="connectionMode" id="connectionModeAuto" type="radio" value="auto" title="Automatic" />
+					<span class="homey-form-radio-checkmark"></span>
+					<span class="homey-form-radio-text"><span data-i18n="settings.connectionModeAuto"></span></span>
+				</label>
+				<label class="homey-form-radio">
+					<input class="homey-form-radio-input" name="connectionMode" id="connectionModeManual" type="radio" value="manual" title="Manual" />
+					<span class="homey-form-radio-checkmark"></span>
+					<span class="homey-form-radio-text"><span data-i18n="settings.connectionModeManual"></span></span>
+				</label>
+			</div>
+			<p><span data-i18n="settings.connectionModeHint"></span></p>
+			<p id="connectionModeStatus" role="status"></p>
+		</div>
+		<div class="field row">
 			<label class="homey-form-label" for="manualDevices"><span data-i18n="settings.devicesList"></span></label>
 			<select class="full-width-box device-list" id="manualDevices" size="10" title="Devices List"></select>
 			<p class="mt-10-mb-10">
@@ -152,22 +169,6 @@
 			<label class="homey-form-label" for="pollingIntervalSeconds"><span data-i18n="settings.pollingInterval"></span></label>
 			<input class="homey-form-input" id="pollingIntervalSeconds" type="number" min="10" max="3600" step="1" value="15" title="Polling Interval Seconds" />
 			<p><span data-i18n="settings.pollingIntervalHint"></span></p>
-		</div>
-		<div class="field row">
-			<label class="homey-form-label"><span data-i18n="settings.connectionMode"></span></label>
-			<div class="homey-form-radio-set">
-				<label class="homey-form-radio">
-					<input class="homey-form-radio-input" name="connectionMode" id="connectionModeAuto" type="radio" value="auto" title="Automatic" />
-					<span class="homey-form-radio-checkmark"></span>
-					<span class="homey-form-radio-text"><span data-i18n="settings.connectionModeAuto"></span></span>
-				</label>
-				<label class="homey-form-radio">
-					<input class="homey-form-radio-input" name="connectionMode" id="connectionModeManual" type="radio" value="manual" title="Manual" />
-					<span class="homey-form-radio-checkmark"></span>
-					<span class="homey-form-radio-text"><span data-i18n="settings.connectionModeManual"></span></span>
-				</label>
-			</div>
-			<p><span data-i18n="settings.connectionModeHint"></span></p>
 		</div>
 		<div class="field row">
 			<p class="mt-8"><button class="homey-button-primary-full" id="saveSettings" title="Save"><span data-i18n="settings.saveSettings"></span></button></p>
@@ -293,6 +294,7 @@
 		var stopElement = document.getElementById('stop');
 		var pollingIntervalElement = document.getElementById('pollingIntervalSeconds');
 		var connectionModeElements = document.getElementsByName('connectionMode');
+		var connectionModeStatusElement = document.getElementById('connectionModeStatus');
 		var saveSettingsElement = document.getElementById('saveSettings');
 
 		// Manual devices tab
@@ -325,6 +327,7 @@
 
 		var itemDisplyType = "flex";
 		var manualDevices = [];
+		var connectionMode = 'auto';
 		var editingDeviceIndex = -1;
 
 		function clampNumber(value, defaultValue, minValue, maxValue)
@@ -350,7 +353,7 @@
 			var protocol = (device && device.protocol === 'modbus_tcp') ? 'modbus_tcp' : 'solarman';
 
 			return {
-				ip: (device && device.ip) ? String(device.ip).trim() : '',
+				ip: (device && typeof device.ip === 'string') ? device.ip.trim() : '',
 				serial: clampNumber(device ? device.serial : 0, 0, 0, 4294967295),
 				slaveId: clampNumber(device ? device.slaveId : 1, 1, 1, 247),
 				protocol: protocol,
@@ -362,11 +365,12 @@
 			};
 		}
 
-		function updateManualDevices(storedDevices)
+		function updateManualDevices(storedDevices, Homey)
 		{
 			manualDevices = (Array.isArray(storedDevices) ? storedDevices : [])
 				.filter(function(device) { return device && device.ip; })
-				.map(normalizeDevice);
+				.map(normalizeDevice)
+				.filter(function(device) { return device.ip; });
 
 			var selectedIndex = manualDevicesElement.selectedIndex;
 			manualDevicesElement.innerHTML = '';
@@ -382,6 +386,20 @@
 			{
 				manualDevicesElement.selectedIndex = selectedIndex;
 			}
+			updateConnectionMode(Homey);
+		}
+
+		function updateConnectionMode(Homey)
+		{
+			var hasDevices = manualDevices.length > 0;
+			var effectiveMode = hasDevices ? connectionMode : 'auto';
+			for (var r = 0; r < connectionModeElements.length; r++)
+			{
+				connectionModeElements[r].checked = connectionModeElements[r].value === effectiveMode;
+				connectionModeElements[r].disabled = connectionModeElements[r].value === 'manual' && !hasDevices;
+			}
+			connectionModeStatusElement.textContent = Homey.__(!hasDevices ? 'settings.connectionModeEmpty' :
+				(effectiveMode === 'manual' ? 'settings.connectionModeActive' : 'settings.connectionModeInactive'));
 		}
 
 		function showDialog(dialog, show)
@@ -488,7 +506,7 @@
 			Homey.get('manualSensors', function(err, storedDevices)
 			{
 				if (err) return Homey.alert(err);
-				updateManualDevices(storedDevices);
+				updateManualDevices(storedDevices, Homey);
 			});
 
 			function getSelectedRadioValue(elements, defaultValue)
@@ -504,23 +522,6 @@
 				return defaultValue;
 			}
 
-			function setSelectedRadioValue(elements, value, defaultValue)
-			{
-				var selected = defaultValue;
-				for (var r = 0; r < elements.length; r++)
-				{
-					if (elements[r].value === value)
-					{
-						selected = value;
-					}
-				}
-
-				for (var s = 0; s < elements.length; s++)
-				{
-					elements[s].checked = (elements[s].value === selected);
-				}
-			}
-
 			Homey.get('pollingIntervalSeconds', function(err, value)
 			{
 				if (err) return Homey.alert(err);
@@ -530,8 +531,33 @@
 			Homey.get('connectionMode', function(err, value)
 			{
 				if (err) return Homey.alert(err);
-				setSelectedRadioValue(connectionModeElements, value, 'auto');
+				connectionMode = value === 'manual' ? 'manual' : 'auto';
+				updateConnectionMode(Homey);
 			});
+
+			function saveConnectionMode(mode, onSaved)
+			{
+				var selectedMode = manualDevices.length > 0 ? mode : 'auto';
+				Homey.set('connectionMode', selectedMode, function(err)
+				{
+					if (err)
+					{
+						updateConnectionMode(Homey);
+						return Homey.alert(err);
+					}
+					connectionMode = selectedMode;
+					updateConnectionMode(Homey);
+					if (onSaved) onSaved();
+				});
+			}
+
+			for (var r = 0; r < connectionModeElements.length; r++)
+			{
+				connectionModeElements[r].addEventListener('change', function()
+				{
+					saveConnectionMode(getSelectedRadioValue(connectionModeElements, 'auto'));
+				});
+			}
 
 			function saveSettings()
 			{
@@ -548,12 +574,8 @@
 						return Homey.alert(err);
 					}
 
-					Homey.set('connectionMode', getSelectedRadioValue(connectionModeElements, 'auto'), function(setErr)
-					{
-						waitCursor(false);
-						if (setErr) return Homey.alert(setErr);
-						Homey.alert(Homey.__('settings.settingsSaved'));
-					});
+					waitCursor(false);
+					Homey.alert(Homey.__('settings.settingsSaved'));
 				});
 			}
 
@@ -563,13 +585,13 @@
 				saveSettings();
 			});
 
-			function saveManualDevices(devices, onSaved)
+			function saveManualDevices(devices, mode, onSaved)
 			{
 				Homey.set('manualSensors', devices, function(err)
 				{
 					if (err) return Homey.alert(err);
-					updateManualDevices(devices);
-					if (onSaved) onSaved();
+					updateManualDevices(devices, Homey);
+					saveConnectionMode(mode, onSaved);
 				});
 			}
 
@@ -683,7 +705,7 @@
 					updatedDevices.push(device);
 				}
 
-				saveManualDevices(updatedDevices, function()
+				saveManualDevices(updatedDevices, 'manual', function()
 				{
 					showDialog(addDeviceDialogElement, false);
 				});
@@ -731,7 +753,7 @@
 
 				var updatedDevices = manualDevices.slice();
 				updatedDevices.splice(index, 1);
-				saveManualDevices(updatedDevices);
+				saveManualDevices(updatedDevices, connectionMode);
 			});
 
 			Homey.api('GET', '/getLog/',

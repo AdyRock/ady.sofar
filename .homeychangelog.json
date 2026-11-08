@@ -235,5 +235,8 @@
 	},
 	"1.1.64": {
 		"en": "Hidden implausible PV string readings that are inconsistent with the total PV power."
+	},
+	"1.1.65": {
+		"en": "Moved connection mode to the Manual Devices tab. Saving an added or edited device automatically selects Manual; an empty list restores Automatic. Added clear mode status messages and applied mode changes without restarting the app."
 	}
 }

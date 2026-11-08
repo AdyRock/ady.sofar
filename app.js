@@ -215,6 +215,12 @@ class MyApp extends Homey.App
 		}
 		this.lanSensors = [];
 
+		if (this.homey.settings.get('connectionMode') === 'manual' && this.getManualDevices().length === 0)
+		{
+			this.updateLog('No manual devices are configured. Switching to automatic connection mode.', 0);
+			this.homey.settings.set('connectionMode', 'auto');
+		}
+
 		if (this.getConnectionMode() === 'manual')
 		{
 			await this.setupManualDevices();
@@ -307,7 +313,7 @@ class MyApp extends Homey.App
 
 	getConnectionMode()
 	{
-		return this.homey.settings.get('connectionMode') === 'manual' ? 'manual' : 'auto';
+		return this.homey.settings.get('connectionMode') === 'manual' && this.getManualDevices().length > 0 ? 'manual' : 'auto';
 	}
 
 	getManualDevices()
@@ -318,7 +324,9 @@ class MyApp extends Homey.App
 			return [];
 		}
 
-		return manualSensors.filter((device) => device && device.ip).map((device) => this.normalizeManualDevice(device));
+		return manualSensors.filter((device) => device && device.ip)
+			.map((device) => this.normalizeManualDevice(device))
+			.filter((device) => device.ip);
 	}
 
 	// Fills in the defaults for anything the device was stored without, including entries added by older app versions
