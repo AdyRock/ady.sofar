@@ -67,7 +67,32 @@ class SolarPanelDevice extends LanDevice
 				}
 
 				this.setAvailable();
-				const pvInactive = hasData('PV_Power') && data.PV_Power <= 0;
+
+				// Some inverters return implausible values in the per-string registers (e.g. ZCS rebrands of
+				// the HYD-ES), so only publish the string readings when the string powers are consistent with
+				// the total PV power, and clear them when they are not so stale values are not displayed
+				let stringsPlausible = true;
+				if (hasData('PV_Power') && (hasData('PV1_Power') || hasData('PV2_Power')))
+				{
+					const stringPower = (hasData('PV1_Power') ? data.PV1_Power : 0) + (hasData('PV2_Power') ? data.PV2_Power : 0);
+					stringsPlausible = Math.abs(stringPower - data.PV_Power) <= Math.max(data.PV_Power * 0.15, 100);
+				}
+
+				const setStringCapability = (capability, parameterName) =>
+				{
+					if (!hasData(parameterName))
+					{
+						return;
+					}
+					if (stringsPlausible)
+					{
+						this.setCapabilityValue(capability, data[parameterName]).catch(this.error);
+					}
+					else if (this.hasCapability(capability))
+					{
+						this.setCapabilityValue(capability, null).catch(this.error);
+					}
+				};
 
 				if (this.sumPV1_PV2)
 				{
@@ -110,30 +135,12 @@ class SolarPanelDevice extends LanDevice
 					this.setCapabilityValue('meter_power', data.Total_Generation).catch(this.error);
 				}
 
-				if (!pvInactive && hasData('PV1_Power'))
-				{
-					this.setCapabilityValue('measure_power.pv1', data.PV1_Power).catch(this.error);
-				}
-				if (!pvInactive && hasData('PV1_Voltage'))
-				{
-					this.setCapabilityValue('measure_voltage.pv1', data.PV1_Voltage).catch(this.error);
-				}
-				if (!pvInactive && hasData('PV1_Current'))
-				{
-					this.setCapabilityValue('measure_current.pv1', data.PV1_Current).catch(this.error);
-				}
-				if (!pvInactive && hasData('PV2_Power'))
-				{
-					this.setCapabilityValue('measure_power.pv2', data.PV2_Power).catch(this.error);
-				}
-				if (!pvInactive && hasData('PV2_Voltage'))
-				{
-					this.setCapabilityValue('measure_voltage.pv2', data.PV2_Voltage).catch(this.error);
-				}
-				if (!pvInactive && hasData('PV2_Current'))
-				{
-					this.setCapabilityValue('measure_current.pv2', data.PV2_Current).catch(this.error);
-				}
+				setStringCapability('measure_power.pv1', 'PV1_Power');
+				setStringCapability('measure_voltage.pv1', 'PV1_Voltage');
+				setStringCapability('measure_current.pv1', 'PV1_Current');
+				setStringCapability('measure_power.pv2', 'PV2_Power');
+				setStringCapability('measure_voltage.pv2', 'PV2_Voltage');
+				setStringCapability('measure_current.pv2', 'PV2_Current');
 
 				if (this.hasCapability('measure_generation_time') && hasData('Generation_Time_Today'))
 				{

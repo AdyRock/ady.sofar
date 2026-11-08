@@ -105,6 +105,16 @@ class MyApp extends Homey.App
 			this.homeyIP = null;
 		}
 
+		try
+		{
+			// Hash of the Homey ID to identify different users logs without exposing any confidential information
+			this.homeyHash = this.hashCode(await this.homey.cloud.getHomeyId()).toString();
+		}
+		catch (err)
+		{
+			this.homeyHash = 'unknown';
+		}
+
 		await this.setupConnections();
 
 		const widget = this.homey.dashboards.getWidget('energy');
@@ -195,7 +205,8 @@ class MyApp extends Homey.App
 	}
 
 	// Sets up the inverter connections according to the selected connection mode.
-	// Manual mode uses only the configured manual devices and never starts the LAN discovery broadcast.
+	// Manual mode uses only the configured manual devices, but discovery still runs so a
+	// manual device that changes its IP address (e.g. via DHCP) can be followed automatically.
 	async setupConnections()
 	{
 		for (const sensor of this.lanSensors)
@@ -206,9 +217,7 @@ class MyApp extends Homey.App
 
 		if (this.getConnectionMode() === 'manual')
 		{
-			this.stopScanner();
 			await this.setupManualDevices();
-			return;
 		}
 
 		await this.startScanner();
@@ -262,7 +271,7 @@ class MyApp extends Homey.App
 			return;
 		}
 
-		this.updateLog(`Registered manual device ${ip}:${port} (${protocol}, slave ID ${slaveId}, register map ${registerMap})`, 0);
+		this.updateLog(`Registered manual device ${ip}:${port}, S.No: ${serial} (${protocol}, slave ID ${slaveId}, register map ${registerMap})`, 0);
 		this.lanSensors.push(new Sensor(serial, ip, port, slaveId, registerMap, protocol, connectionOptions));
 	}
 
@@ -358,6 +367,14 @@ class MyApp extends Homey.App
 	async scannerFoundADevice(ip, serial)
 	{
 		this.updateLog(`Found Inverter: IP: ${ip}, S.No: ${serial}`, 0);
+
+		if (this.getConnectionMode() === 'manual')
+		{
+			// Manual mode never auto-registers devices, discovery is only used to follow IP changes
+			this.updateManualDeviceIpFromDiscovery(ip, serial);
+			return;
+		}
+
 		await this.registerSensor(ip, serial);
 
 		if (this.localPollingEnabled && (this.lanSensorTimer === null))
@@ -367,6 +384,58 @@ class MyApp extends Homey.App
 				this.getInverterData();
 			}, 1000);
 		}
+	}
+
+	// If discovery finds a configured manual device's serial number at a new IP address, follow it
+	updateManualDeviceIpFromDiscovery(ip, serial)
+	{
+		const storedDevices = this.homey.settings.get('manualSensors');
+		if (!Array.isArray(storedDevices))
+		{
+			return;
+		}
+
+		const discoveredSerial = Number(serial);
+		let matched = false;
+		let updated = false;
+		for (const device of storedDevices)
+		{
+			// Ignore devices without a serial number as they cannot be matched to a discovery response
+			if (device && Number(device.serial) && (Number(device.serial) === discoveredSerial))
+			{
+				matched = true;
+				if (device.ip !== ip)
+				{
+					this.updateLog(`Manual device with serial ${serial} found at ${ip} (was ${device.ip}), updating its IP address`, 0);
+					device.ip = ip;
+					updated = true;
+				}
+			}
+		}
+
+		if (!matched)
+		{
+			this.updateLog(`Ignoring discovered inverter ${serial} because it is not in the manual devices list`, 0);
+			return;
+		}
+
+		if (!updated)
+		{
+			this.updateLog(`Discovered inverter ${serial} matches manual device ${ip}, no IP address update needed`, 0);
+			return;
+		}
+
+		// Update the live sensors immediately, then persist the new IP.
+		// Saving the setting also triggers a reconnect using the updated manual device list.
+		for (const sensor of this.lanSensors)
+		{
+			if (Number(sensor.getSerial()) === discoveredSerial)
+			{
+				sensor.setHost(ip);
+			}
+		}
+
+		this.homey.settings.set('manualSensors', storedDevices);
 	}
 
 	async getInverterData()
@@ -1179,7 +1248,7 @@ class MyApp extends Homey.App
 					{
 						from: `"Homey User" <${Homey.env.MAIL_USER}>`, // sender address
 						to: Homey.env.MAIL_RECIPIENT, // list of receivers
-						subject: `Sofar & Solarman ${body.logType} log (${Homey.manifest.version})`, // Subject line
+						subject: `Sofar & Solarman ${body.logType} log (${this.homeyHash} : ${Homey.manifest.version})`, // Subject line
 						text: logData, // plain text body
 					},
 				);
@@ -1189,7 +1258,7 @@ class MyApp extends Homey.App
 
 				// Preview only available when sending through an Ethereal account
 				this.log('Preview URL: ', nodemailer.getTestMessageUrl(info));
-				return this.homey.__('settings.logSent');
+				return this.homey.__('settings.logSent', { hash: this.homeyHash });
 			}
 			catch (err)
 			{

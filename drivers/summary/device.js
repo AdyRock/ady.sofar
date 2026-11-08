@@ -58,7 +58,22 @@ class InverterDevice extends LanDevice
 		{
 			await this.addCapabilitySafe('system_status.fault_5');
 		}
+
+		await this.migrateHouseEnergyConfiguration();
+
 		this.log('StationDevice has been initialized');
+	}
+
+	async migrateHouseEnergyConfiguration()
+	{
+		// Remove the experimental imported-meter mapping from a test build: it pulled this device's
+		// consumption into the grid arrow of the new Homey Energy flow view. The cumulative flag the
+		// legacy Energy view relies on is kept.
+		const energy = this.getEnergy();
+		if (energy && energy.cumulative && energy.cumulativeImportedCapability === 'meter_power')
+		{
+			await this.setEnergy({ cumulative: true });
+		}
 	}
 
 	async checkCapabilities(serial)

@@ -232,5 +232,8 @@
 	},
 	"1.1.63": {
 		"en": "Improved Homey Energy reporting for house consumption, migrated energy settings for existing devices, corrected generation-time units, and ignored invalid nighttime PV readings."
+	},
+	"1.1.64": {
+		"en": "Hidden implausible PV string readings that are inconsistent with the total PV power."
 	}
 }
