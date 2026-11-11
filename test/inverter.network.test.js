@@ -91,7 +91,7 @@ function buildTcpResponse(transactionId, registerValues, fc = 3)
 }
 
 // Builds a Solarman V5 response frame wrapping a MODBUS RTU response
-function buildV5Response(registerValues, { fc = 3, corruptChecksum = false } = {})
+function buildV5Response(registerValues, { fc = 3, corruptChecksum = false, sequence = 0 } = {})
 {
 	const data = [];
 	for (const value of registerValues)
@@ -104,6 +104,7 @@ function buildV5Response(registerValues, { fc = 3, corruptChecksum = false } = {
 
 	// The client extracts the MODBUS section from offset 25, so pad the header to 25 bytes total
 	const header = [0xA5].concat(new Array(24).fill(0));
+	header[5] = sequence; // The logger echoes the request sequence byte here
 	const body = header.concat(modbusSection);
 
 	let checksum = 0;
@@ -253,6 +254,42 @@ describe('MODBUS TCP end to end', () =>
 		assert.strictEqual(connections, 1);
 	});
 
+	test('send_request discards a stale frame from an earlier transaction and uses the matching one', async () =>
+	{
+		const port = await startServer((socket) =>
+		{
+			socket.on('data', (data) =>
+			{
+				const { transactionId } = parseTcpRequest(data);
+				// A late reply to a previous request arrives first, then the real response
+				socket.write(Buffer.concat([
+					buildTcpResponse((transactionId - 1) & 0xFFFF, [5250]),
+					buildTcpResponse(transactionId, [474]),
+				]));
+			});
+		});
+
+		const inverter = makeInverter(port, 'modbus_tcp');
+		const result = await inverter.send_request(0, 0, 3);
+		assert.strictEqual(result.readUInt16BE(0), 474);
+	});
+
+	test('send_request rejects a response with more registers than requested', async () =>
+	{
+		const port = await startServer((socket) =>
+		{
+			socket.on('data', (data) =>
+			{
+				const { transactionId } = parseTcpRequest(data);
+				// Correct transaction but the payload belongs to a larger request block
+				socket.write(buildTcpResponse(transactionId, [5250, 100, 200]));
+			});
+		});
+
+		const inverter = makeInverter(port, 'modbus_tcp');
+		await assert.rejects(inverter.send_request(0, 0, 3), /Unexpected MODBUS response length/);
+	});
+
 	test('get_statistics parses register data into named values', async () =>
 	{
 		const port = await startServer((socket) =>
@@ -307,9 +344,9 @@ describe('Solarman V5 end to end', () =>
 	{
 		const port = await startServer((socket) =>
 		{
-			socket.on('data', () =>
+			socket.on('data', (data) =>
 			{
-				socket.write(buildV5Response([5001, 2300]));
+				socket.write(buildV5Response([5001, 2300], { sequence: data[5] }));
 			});
 		});
 
@@ -318,6 +355,36 @@ describe('Solarman V5 end to end', () =>
 		assert.strictEqual(result.length, 4);
 		assert.strictEqual(result.readUInt16BE(0), 5001);
 		assert.strictEqual(result.readUInt16BE(2), 2300);
+	});
+
+	test('send_request rejects a stale V5 response with a mismatched sequence byte', async () =>
+	{
+		const port = await startServer((socket) =>
+		{
+			socket.on('data', (data) =>
+			{
+				// Echo the wrong sequence, as if this were a late reply to an earlier request
+				socket.write(buildV5Response([5250], { sequence: (data[5] + 1) & 0xFF }));
+			});
+		});
+
+		const inverter = makeInverter(port, 'solarman');
+		await assert.rejects(inverter.send_request(0, 0, 3), /Stale V5 response/);
+	});
+
+	test('send_request rejects a V5 response with more registers than requested', async () =>
+	{
+		const port = await startServer((socket) =>
+		{
+			socket.on('data', (data) =>
+			{
+				// Correct sequence but the payload belongs to a larger request block
+				socket.write(buildV5Response([5250, 100, 200], { sequence: data[5] }));
+			});
+		});
+
+		const inverter = makeInverter(port, 'solarman');
+		await assert.rejects(inverter.send_request(0, 0, 3), /Unexpected MODBUS response length/);
 	});
 
 	test('send_request rejects on an invalid V5 checksum', async () =>
@@ -370,9 +437,9 @@ describe('Solarman V5 end to end', () =>
 	{
 		const port = await startServer((socket) =>
 		{
-			socket.on('data', () =>
+			socket.on('data', (data) =>
 			{
-				socket.write(buildV5Response([5020, 0xFFF6]));
+				socket.write(buildV5Response([5020, 0xFFF6], { sequence: data[5] }));
 			});
 		});
 

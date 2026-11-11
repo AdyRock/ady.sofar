@@ -82,7 +82,28 @@ describe('Solarman V5 request framing', () =>
 	{
 		const inverter = makeInverter();
 		const request = inverter.generate_request(512, 1, 3);
-		assert.deepStrictEqual(request, Array.from(inverter.retryRequest));
+
+		// The known-good packet was captured with a zero sequence byte; the live request now carries
+		// an incrementing sequence at offset 5, so patch it (and the checksum) into the expectation
+		const expected = Array.from(inverter.retryRequest);
+		expected[5] = 1;
+		let checksum = 0;
+		for (let i = 1; i < expected.length - 2; i++)
+		{
+			checksum += expected[i];
+		}
+		expected[expected.length - 2] = checksum & 0xFF;
+
+		assert.deepStrictEqual(request, expected);
+	});
+
+	test('consecutive requests carry different sequence bytes so stale responses are detectable', () =>
+	{
+		const inverter = makeInverter();
+		const first = inverter.generate_request(512, 1, 3);
+		const second = inverter.generate_request(512, 1, 3);
+		assert.strictEqual(first[5], 1);
+		assert.strictEqual(second[5], 2);
 	});
 
 	test('regression: the serial number is always encoded as 4 bytes', () =>

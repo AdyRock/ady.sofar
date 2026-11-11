@@ -145,7 +145,7 @@ test('grid and battery devices migrate manifest energy settings without replacin
 	assert.strictEqual(device.energyChanges, 0);
 });
 
-test('summary exposes standard cumulative house consumption to Homey Energy', async () =>
+test('summary exposes house consumption capabilities without a cumulative energy config', async () =>
 {
 	const inverter = { inverter: { parameter_definition: definition } };
 	const device = new SummaryDevice();
@@ -156,8 +156,9 @@ test('summary exposes standard cumulative house consumption to Homey Energy', as
 	assert.strictEqual(appManifest.drivers.find((driver) => driver.id === 'summary').class, 'sensor');
 	assert.ok(device.capabilities.includes('measure_power'));
 	assert.ok(device.capabilities.includes('meter_power'));
-	assert.strictEqual(device.energy.cumulative, true);
-	assert.strictEqual(device.energy.cumulativeImportedCapability, undefined);
+	// Athom: only the Grid device should be cumulative; Summary must not set an energy config
+	assert.strictEqual(device.energy, null);
+	assert.strictEqual(device.energyChanges, 0);
 
 	const data = parseRegisters(531, [74]);
 	data.Total_Consumption = 1234.56;
@@ -167,24 +168,29 @@ test('summary exposes standard cumulative house consumption to Homey Energy', as
 	assert.strictEqual(device.values['measure_power.consumption'], data.Consumption);
 });
 
-test('summary migration removes the experimental imported-meter mapping', async () =>
+test('summary migration removes the cumulative energy configuration', async () =>
 {
-	// A device configured by the experimental test build loses the imported capability mapping
+	// A device configured by the experimental test build loses the whole cumulative config
 	const device = new SummaryDevice();
 	device.capabilities = ['meter_power'];
 	device.energy = { cumulative: true, cumulativeImportedCapability: 'meter_power' };
 	await device.migrateHouseEnergyConfiguration();
-	assert.strictEqual(device.energy.cumulative, true);
-	assert.strictEqual(device.energy.cumulativeImportedCapability, undefined);
+	assert.deepStrictEqual(Object.keys(device.energy), []);
 	assert.strictEqual(device.energyChanges, 1);
 
 	// Running the migration again leaves the configuration untouched
 	await device.migrateHouseEnergyConfiguration();
 	assert.strictEqual(device.energyChanges, 1);
 
-	// A device without the experimental mapping is left untouched
+	// A device configured as a plain cumulative meter by earlier versions is also cleared
+	const cumulativeDevice = new SummaryDevice();
+	cumulativeDevice.energy = { cumulative: true };
+	await cumulativeDevice.migrateHouseEnergyConfiguration();
+	assert.deepStrictEqual(Object.keys(cumulativeDevice.energy), []);
+	assert.strictEqual(cumulativeDevice.energyChanges, 1);
+
+	// A device without an energy override is left untouched
 	const bareDevice = new SummaryDevice();
-	bareDevice.energy = { cumulative: true };
 	await bareDevice.migrateHouseEnergyConfiguration();
 	assert.strictEqual(bareDevice.energyChanges, 0);
 });
@@ -213,6 +219,29 @@ test('nighttime PV string register values are ignored when total PV power is zer
 	});
 
 	assert.deepStrictEqual(device.values, { measure_power: 0 });
+});
+
+test('phantom PV string voltage is cleared when the panels are inactive', async () =>
+{
+	const device = new SolarPanelDevice();
+	device.CapabilitiesChecked = true;
+	device.sumPV1_PV2 = false;
+	device.capabilities = ['measure_power.pv1', 'measure_voltage.pv1', 'measure_current.pv1'];
+	device.values['measure_voltage.pv1'] = 1126.8;
+
+	// Values reported by a ZCS HYD 3000-ES at night: string power and current read zero but the
+	// voltage register contains garbage
+	await device.updateLanDeviceValues('hy-es', {
+		PV_Power: 0,
+		PV1_Power: 0,
+		PV1_Voltage: 1126.8,
+		PV1_Current: 0,
+	});
+
+	assert.strictEqual(device.values.measure_power, 0);
+	assert.strictEqual(device.values['measure_power.pv1'], null);
+	assert.strictEqual(device.values['measure_voltage.pv1'], null);
+	assert.strictEqual(device.values['measure_current.pv1'], null);
 });
 
 test('daytime PV string register values are cleared when inconsistent with total PV power', async () =>

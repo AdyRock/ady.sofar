@@ -238,5 +238,8 @@
 	},
 	"1.1.65": {
 		"en": "Moved connection mode to the Manual Devices tab. Saving an added or edited device automatically selects Manual; an empty list restores Automatic. Added clear mode status messages and applied mode changes without restarting the app."
+	},
+	"1.1.66": {
+		"en": "Fixed corrupted readings (such as a false export of 52.5 kWh) caused by late inverter responses being matched to the wrong request, and cleared phantom PV string voltages while the panels are inactive."
 	}
 }

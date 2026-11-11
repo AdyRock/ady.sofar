@@ -66,13 +66,14 @@ class InverterDevice extends LanDevice
 
 	async migrateHouseEnergyConfiguration()
 	{
-		// Remove the experimental imported-meter mapping from a test build: it pulled this device's
-		// consumption into the grid arrow of the new Homey Energy flow view. The cumulative flag the
-		// legacy Energy view relies on is kept.
+		// Athom confirmed only the Grid device should be cumulative: Homey Energy derives house
+		// consumption as imported - exported + generated + discharged - charged, so the Summary
+		// device must not be a cumulative meter. Remove the cumulative flag (and the experimental
+		// imported-meter mapping from a test build) from devices configured by earlier versions.
 		const energy = this.getEnergy();
-		if (energy && energy.cumulative && energy.cumulativeImportedCapability === 'meter_power')
+		if (energy && energy.cumulative)
 		{
-			await this.setEnergy({ cumulative: true });
+			await this.setEnergy({});
 		}
 	}
 
@@ -96,10 +97,6 @@ class InverterDevice extends LanDevice
 					await this.addRemoveCapability(['measure_power.consumption'], group.items, 'Consumption');
 					await this.addRemoveCapability(['meter_power.today_consumption'], group.items, 'Consumed_Today');
 					await this.addRemoveCapability(['system_status.country'], group.items, 'Country');
-					if (group.items.some((item) => item.name === 'Consumption') && !this.getEnergy())
-					{
-						await this.setEnergy({ cumulative: true });
-					}
 				}
 			}
 		}

@@ -69,13 +69,21 @@ class SolarPanelDevice extends LanDevice
 				this.setAvailable();
 
 				// Some inverters return implausible values in the per-string registers (e.g. ZCS rebrands of
-				// the HYD-ES), so only publish the string readings when the string powers are consistent with
-				// the total PV power, and clear them when they are not so stale values are not displayed
+				// the HYD-ES), so only publish the string readings when the panels are active and the string
+				// powers are consistent with the total PV power, and clear them otherwise so leftover
+				// register values (like a phantom string voltage at night) are not displayed
 				let stringsPlausible = true;
-				if (hasData('PV_Power') && (hasData('PV1_Power') || hasData('PV2_Power')))
+				if (hasData('PV_Power'))
 				{
-					const stringPower = (hasData('PV1_Power') ? data.PV1_Power : 0) + (hasData('PV2_Power') ? data.PV2_Power : 0);
-					stringsPlausible = Math.abs(stringPower - data.PV_Power) <= Math.max(data.PV_Power * 0.15, 100);
+					if (data.PV_Power <= 0)
+					{
+						stringsPlausible = false;
+					}
+					else if (hasData('PV1_Power') || hasData('PV2_Power'))
+					{
+						const stringPower = (hasData('PV1_Power') ? data.PV1_Power : 0) + (hasData('PV2_Power') ? data.PV2_Power : 0);
+						stringsPlausible = Math.abs(stringPower - data.PV_Power) <= Math.max(data.PV_Power * 0.15, 100);
+					}
 				}
 
 				const setStringCapability = (capability, parameterName) =>
